@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { PRODUCTS, PROMO_CODES, PICKUP_LOCATIONS, STORE_PHONE_NUMBER as DEFAULT_PHONE } from '../data/mockData';
 
 const ShopContext = createContext();
@@ -11,7 +11,7 @@ export const ShopProvider = ({ children }) => {
   ]);
   const [wishlist, setWishlist] = useState(['prod-3']);
   
-  // Dynamic Store Phone Number for WhatsApp Checkout (persisted in localStorage)
+  // Dynamic Store Phone Number for WhatsApp Checkout
   const [storePhoneNumber, setStorePhoneNumberState] = useState(() => {
     return localStorage.getItem('aura_store_phone') || DEFAULT_PHONE;
   });
@@ -33,11 +33,11 @@ export const ShopProvider = ({ children }) => {
   // Delivery vs Pickup choice
   const [deliveryMethod, setDeliveryMethod] = useState('delivery');
   const [deliveryDetails, setDeliveryDetails] = useState({
-    name: 'Jane Doe',
-    phone: '+1 (555) 234-5678',
-    address: '742 Evergreen Terrace',
-    city: 'Springfield, CA 90210',
-    notes: 'Please leave at front door if unattended.'
+    name: 'Mariam Hassan',
+    phone: '+20 100 234 5678',
+    address: '15 El-Bostan Street',
+    city: 'Heliopolis, Cairo',
+    notes: 'Please call upon arrival.'
   });
   const [selectedPickupLocation, setSelectedPickupLocation] = useState(PICKUP_LOCATIONS[0]);
 
@@ -138,7 +138,7 @@ export const ShopProvider = ({ children }) => {
     });
   };
 
-  // Calculations
+  // EGP Calculations
   const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
   const subtotal = cart.reduce((total, item) => total + (item.product.price * item.quantity), 0);
   
@@ -146,8 +146,9 @@ export const ShopProvider = ({ children }) => {
     ? (subtotal * (appliedCoupon.discountPercent / 100))
     : 0;
 
+  // Free delivery over EGP 600, else EGP 50 delivery fee
   const deliveryFee = (deliveryMethod === 'delivery' && subtotal > 0)
-    ? (subtotal >= 100 ? 0 : 5.00)
+    ? (subtotal >= 600 ? 0 : 50)
     : 0;
 
   const total = Math.max(0, subtotal - discountAmount + deliveryFee);

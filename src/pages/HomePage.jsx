@@ -1,13 +1,12 @@
 import React from 'react';
 import { useShop } from '../context/ShopContext';
-import { PRODUCTS } from '../data/mockData';
+import { PRODUCTS, formatPrice } from '../data/mockData';
 import { ProductCard } from '../components/ProductCard';
 import { Sparkles, ArrowRight, ShieldCheck, Heart, Star, Award, Compass } from 'lucide-react';
 
 export const HomePage = () => {
   const { navigateTo } = useShop();
 
-  // Featured & Bestsellers
   const featuredProducts = PRODUCTS.filter(p => p.isFeatured);
   const heroProduct = PRODUCTS[1]; // Ocean Breeze Bangle
 
@@ -30,7 +29,7 @@ export const HomePage = () => {
             <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-100 border border-brand-200 text-brand-800 text-xs font-medium uppercase tracking-widest">
                 <Sparkles className="w-3.5 h-3.5 text-brand-500" />
-                Handcrafted Boutique Collection 2026
+                Handcrafted Boutique Collection Cairo 2026
               </div>
 
               <h1 className="font-serif text-4xl sm:text-6xl font-light text-noir-900 leading-[1.15] tracking-tight">
@@ -95,7 +94,7 @@ export const HomePage = () => {
                     <span className="text-xs font-semibold uppercase tracking-widest text-brand-400">Featured Spotlight</span>
                     <h3 className="font-serif text-2xl font-medium mt-1">{heroProduct.name}</h3>
                     <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/20">
-                      <span className="text-lg font-bold text-white">${heroProduct.price.toFixed(2)}</span>
+                      <span className="text-lg font-bold text-white">{formatPrice(heroProduct.price)}</span>
                       <span className="text-xs font-medium uppercase tracking-wider bg-white/20 backdrop-blur-md px-3 py-1 rounded-full">
                         Shop Now →
                       </span>

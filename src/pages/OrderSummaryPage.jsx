@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useShop } from '../context/ShopContext';
+import { formatPrice } from '../data/mockData';
 import { 
   MessageSquare, Copy, Check, Sparkles, ShoppingBag, 
   MapPin, Phone, User, Tag, Truck, Store, ArrowLeft, RefreshCcw, Settings 
@@ -26,13 +27,12 @@ export const OrderSummaryPage = () => {
   const [copied, setCopied] = useState(false);
   const [orderId] = useState(() => `AUR-${Math.floor(10000 + Math.random() * 90000)}`);
 
-  // Clean phone number for wa.me link (strip spaces/dashes if any)
   const cleanPhone = storePhoneNumber.replace(/[^0-9+]/g, '');
 
-  // Generate formatted WhatsApp message text
+  // Generate formatted WhatsApp message text with EGP
   const formattedOrderText = useMemo(() => {
     const itemsList = cart.map(item => 
-      `• ${item.quantity}x ${item.product.name} ($${item.product.price.toFixed(2)} ea)`
+      `• ${item.quantity}x ${item.product.name} (${formatPrice(item.product.price)} ea)`
     ).join('\n');
 
     const fulfillmentText = deliveryMethod === 'delivery' 
@@ -40,10 +40,10 @@ export const OrderSummaryPage = () => {
       : `🏪 *METHOD:* Boutique Store Pickup\n📍 *Store:* ${selectedPickupLocation.name}\n📍 *Address:* ${selectedPickupLocation.address}`;
 
     const discountText = appliedCoupon 
-      ? `\n🏷️ *Discount (${appliedCoupon.code}):* -$${discountAmount.toFixed(2)}`
+      ? `\n🏷️ *Discount (${appliedCoupon.code}):* -${formatPrice(discountAmount)}`
       : '';
 
-    const deliveryFeeText = deliveryFee > 0 ? `\n🚚 *Delivery Fee:* $${deliveryFee.toFixed(2)}` : '';
+    const deliveryFeeText = deliveryFee > 0 ? `\n🚚 *Delivery Fee:* ${formatPrice(deliveryFee)}` : `\n🚚 *Delivery Fee:* FREE`;
 
     return `🛍️ *NEW ORDER FROM AURA & CO. WEBSITE*
 ----------------------------------------
@@ -58,8 +58,8 @@ ${fulfillmentText}
 ${itemsList}
 
 ----------------------------------------
-💵 *Subtotal:* $${subtotal.toFixed(2)}${discountText}${deliveryFeeText}
-✨ *TOTAL DUE:* $${total.toFixed(2)}
+💵 *Subtotal:* ${formatPrice(subtotal)}${discountText}${deliveryFeeText}
+✨ *TOTAL DUE:* ${formatPrice(total)}
 ----------------------------------------
 Thank you! Please confirm item availability and pickup/delivery window.`;
   }, [cart, orderId, deliveryDetails, deliveryMethod, selectedPickupLocation, subtotal, appliedCoupon, discountAmount, deliveryFee, total]);
@@ -127,11 +127,11 @@ Thank you! Please confirm item availability and pickup/delivery window.`;
                     <img src={product.image} alt={product.name} className="w-12 h-12 object-cover rounded-xl border border-brand-100" />
                     <div>
                       <span className="font-semibold text-noir-900 block">{product.name}</span>
-                      <span className="text-zinc-400">Qty: {quantity} × ${product.price.toFixed(2)}</span>
+                      <span className="text-zinc-400">Qty: {quantity} × {formatPrice(product.price)}</span>
                     </div>
                   </div>
                   <span className="font-bold text-noir-900">
-                    ${(product.price * quantity).toFixed(2)}
+                    {formatPrice(product.price * quantity)}
                   </span>
                 </div>
               ))}
@@ -170,26 +170,31 @@ Thank you! Please confirm item availability and pickup/delivery window.`;
             <div className="pt-4 border-t border-brand-100 space-y-2 text-xs">
               <div className="flex justify-between text-zinc-600">
                 <span>Subtotal</span>
-                <span className="font-semibold text-noir-900">${subtotal.toFixed(2)}</span>
+                <span className="font-semibold text-noir-900">{formatPrice(subtotal)}</span>
               </div>
 
               {appliedCoupon && (
                 <div className="flex justify-between text-emerald-600 font-semibold">
                   <span>Discount ({appliedCoupon.code})</span>
-                  <span>-${discountAmount.toFixed(2)}</span>
+                  <span>-{formatPrice(discountAmount)}</span>
                 </div>
               )}
 
-              {deliveryFee > 0 && (
+              {deliveryFee > 0 ? (
                 <div className="flex justify-between text-zinc-600">
                   <span>Delivery Fee</span>
-                  <span className="font-semibold text-noir-900">${deliveryFee.toFixed(2)}</span>
+                  <span className="font-semibold text-noir-900">{formatPrice(deliveryFee)}</span>
+                </div>
+              ) : (
+                <div className="flex justify-between text-emerald-600 font-semibold">
+                  <span>Delivery Fee</span>
+                  <span>FREE</span>
                 </div>
               )}
 
               <div className="pt-3 border-t border-brand-100 flex justify-between items-baseline">
                 <span className="font-serif text-xl font-bold text-noir-900">Total Payable</span>
-                <span className="text-2xl font-bold text-noir-900">${total.toFixed(2)}</span>
+                <span className="text-2xl font-bold text-noir-900">{formatPrice(total)}</span>
               </div>
             </div>
 

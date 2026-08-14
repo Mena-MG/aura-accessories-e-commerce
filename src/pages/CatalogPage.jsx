@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { PRODUCTS } from '../data/mockData';
+import { PRODUCTS, formatPrice } from '../data/mockData';
 import { ProductCard } from '../components/ProductCard';
 import { Filter, SlidersHorizontal, ArrowUpDown, X, RotateCcw } from 'lucide-react';
 
@@ -7,7 +7,7 @@ export const CatalogPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedMaterial, setSelectedMaterial] = useState('All');
   const [selectedColor, setSelectedColor] = useState('All');
-  const [maxPrice, setMaxPrice] = useState(100);
+  const [maxPrice, setMaxPrice] = useState(1500);
   const [sortBy, setSortBy] = useState('featured');
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
@@ -29,7 +29,7 @@ export const CatalogPage = () => {
       if (sortBy === 'price-high') return b.price - a.price;
       if (sortBy === 'rating') return b.rating - a.rating;
       if (sortBy === 'newest') return b.id.localeCompare(a.id);
-      return 0; // featured default order
+      return 0;
     });
   }, [selectedCategory, selectedMaterial, selectedColor, maxPrice, sortBy]);
 
@@ -37,14 +37,14 @@ export const CatalogPage = () => {
     setSelectedCategory('All');
     setSelectedMaterial('All');
     setSelectedColor('All');
-    setMaxPrice(100);
+    setMaxPrice(1500);
     setSortBy('featured');
   };
 
   const activeFilterCount = (selectedCategory !== 'All' ? 1 : 0) +
     (selectedMaterial !== 'All' ? 1 : 0) +
     (selectedColor !== 'All' ? 1 : 0) +
-    (maxPrice < 100 ? 1 : 0);
+    (maxPrice < 1500 ? 1 : 0);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
@@ -108,20 +108,20 @@ export const CatalogPage = () => {
           <div className="space-y-2.5 pt-4 border-t border-brand-100">
             <div className="flex justify-between items-center text-xs">
               <h4 className="font-bold uppercase tracking-wider text-noir-900">Max Price</h4>
-              <span className="font-semibold text-brand-600">${maxPrice}</span>
+              <span className="font-semibold text-brand-600">{formatPrice(maxPrice)}</span>
             </div>
             <input
               type="range"
-              min="20"
-              max="100"
-              step="5"
+              min="200"
+              max="1500"
+              step="50"
               value={maxPrice}
               onChange={(e) => setMaxPrice(Number(e.target.value))}
               className="w-full accent-brand-500 cursor-pointer"
             />
             <div className="flex justify-between text-[10px] text-zinc-400">
-              <span>$20</span>
-              <span>$100</span>
+              <span>200 EGP</span>
+              <span>1,500 EGP</span>
             </div>
           </div>
 
@@ -232,10 +232,10 @@ export const CatalogPage = () => {
                   <X className="w-3.5 h-3.5 cursor-pointer" onClick={() => setSelectedColor('All')} />
                 </span>
               )}
-              {maxPrice < 100 && (
+              {maxPrice < 1500 && (
                 <span className="bg-brand-100 text-brand-900 text-xs px-3 py-1 rounded-full flex items-center gap-1.5 font-medium">
-                  Under ${maxPrice}
-                  <X className="w-3.5 h-3.5 cursor-pointer" onClick={() => setMaxPrice(100)} />
+                  Under {formatPrice(maxPrice)}
+                  <X className="w-3.5 h-3.5 cursor-pointer" onClick={() => setMaxPrice(1500)} />
                 </span>
               )}
             </div>
@@ -294,9 +294,9 @@ export const CatalogPage = () => {
 
               {/* Mobile Price */}
               <div className="py-4 border-t border-brand-100 space-y-2">
-                <h4 className="text-xs font-bold uppercase tracking-wider">Max Price (${maxPrice})</h4>
+                <h4 className="text-xs font-bold uppercase tracking-wider">Max Price ({formatPrice(maxPrice)})</h4>
                 <input
-                  type="range" min="20" max="100" step="5" value={maxPrice}
+                  type="range" min="200" max="1500" step="50" value={maxPrice}
                   onChange={(e) => setMaxPrice(Number(e.target.value))}
                   className="w-full accent-brand-500"
                 />

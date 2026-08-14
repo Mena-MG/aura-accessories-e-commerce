@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useShop } from '../context/ShopContext';
-import { PRODUCTS } from '../data/mockData';
+import { PRODUCTS, formatPrice } from '../data/mockData';
 import { ProductCard } from '../components/ProductCard';
 import { 
   ShoppingBag, Heart, Star, Sparkles, CheckCircle2, 
@@ -102,11 +102,11 @@ export const ProductDetailPage = () => {
             </h1>
             <div className="flex items-baseline gap-3 pt-2">
               <span className="text-2xl sm:text-3xl font-semibold text-noir-900">
-                ${selectedProduct.price.toFixed(2)}
+                {formatPrice(selectedProduct.price)}
               </span>
               {selectedProduct.originalPrice && (
                 <span className="text-sm text-slate-400 line-through">
-                  ${selectedProduct.originalPrice.toFixed(2)}
+                  {formatPrice(selectedProduct.originalPrice)}
                 </span>
               )}
               <span className="bg-emerald-50 text-emerald-700 text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
@@ -172,7 +172,7 @@ export const ProductDetailPage = () => {
               ) : (
                 <>
                   <ShoppingBag className="w-4 h-4 text-brand-500" />
-                  <span>Add to Shopping Cart — ${(selectedProduct.price * quantity).toFixed(2)}</span>
+                  <span>Add to Shopping Cart — {formatPrice(selectedProduct.price * quantity)}</span>
                 </>
               )}
             </button>

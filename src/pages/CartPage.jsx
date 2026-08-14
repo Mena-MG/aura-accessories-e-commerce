@@ -1,5 +1,6 @@
 import React from 'react';
 import { useShop } from '../context/ShopContext';
+import { formatPrice } from '../data/mockData';
 import { 
   ShoppingBag, Trash2, Plus, Minus, Tag, Check, 
   ArrowRight, ArrowLeft, ShieldCheck, Sparkles, AlertCircle 
@@ -96,7 +97,7 @@ export const CartPage = () => {
                 </h3>
                 <p className="text-xs text-zinc-400 font-light">Material: {product.material}</p>
                 <div className="text-sm font-semibold text-noir-900 pt-1">
-                  ${product.price.toFixed(2)}
+                  {formatPrice(product.price)}
                 </div>
               </div>
 
@@ -121,8 +122,8 @@ export const CartPage = () => {
                 </div>
 
                 {/* Subtotal per item */}
-                <span className="text-sm font-bold text-noir-900 w-20 text-right">
-                  ${(product.price * quantity).toFixed(2)}
+                <span className="text-sm font-bold text-noir-900 w-24 text-right">
+                  {formatPrice(product.price * quantity)}
                 </span>
 
                 {/* Remove button */}
@@ -141,7 +142,7 @@ export const CartPage = () => {
           {/* Quick Info Box */}
           <div className="bg-brand-50/70 p-4 rounded-xl border border-brand-200/50 flex items-center gap-3 text-xs text-brand-900">
             <Sparkles className="w-4 h-4 text-brand-500 flex-shrink-0" />
-            <span>Orders over $50 include complimentary branded gift boxes and satin pouches.</span>
+            <span>Orders over 600 EGP include complimentary branded gift packaging & free delivery!</span>
           </div>
 
         </div>
@@ -157,7 +158,7 @@ export const CartPage = () => {
             {/* Subtotal */}
             <div className="flex justify-between items-center text-xs">
               <span className="text-noir-800/70">Items Subtotal</span>
-              <span className="font-semibold text-noir-900">${subtotal.toFixed(2)}</span>
+              <span className="font-semibold text-noir-900">{formatPrice(subtotal)}</span>
             </div>
 
             {/* Coupon Code Section */}
@@ -176,7 +177,7 @@ export const CartPage = () => {
                         {appliedCoupon.code}
                       </span>
                       <span className="text-[11px] text-emerald-700">
-                        {appliedCoupon.label} (-${discountAmount.toFixed(2)})
+                        {appliedCoupon.label} (-{formatPrice(discountAmount)})
                       </span>
                     </div>
                   </div>
@@ -224,7 +225,7 @@ export const CartPage = () => {
             {appliedCoupon && (
               <div className="flex justify-between items-center text-xs text-emerald-600 font-semibold">
                 <span>Discount ({appliedCoupon.code})</span>
-                <span>-${discountAmount.toFixed(2)}</span>
+                <span>-{formatPrice(discountAmount)}</span>
               </div>
             )}
 
@@ -235,7 +236,7 @@ export const CartPage = () => {
                 <span className="text-[11px] text-zinc-400 font-light">Delivery calculated next step</span>
               </div>
               <span className="text-2xl font-bold text-noir-900">
-                ${(subtotal - discountAmount).toFixed(2)}
+                {formatPrice(subtotal - discountAmount)}
               </span>
             </div>
 

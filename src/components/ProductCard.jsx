@@ -1,5 +1,6 @@
 import React from 'react';
 import { useShop } from '../context/ShopContext';
+import { formatPrice } from '../data/mockData';
 import { ShoppingBag, Heart, Star, Sparkles } from 'lucide-react';
 
 export const ProductCard = ({ product }) => {
@@ -94,11 +95,11 @@ export const ProductCard = ({ product }) => {
         <div className="mt-4 pt-3 border-t border-brand-100/70 flex items-center justify-between">
           <div className="flex items-baseline gap-2">
             <span className="text-lg font-semibold text-noir-900">
-              ${product.price.toFixed(2)}
+              {formatPrice(product.price)}
             </span>
             {product.originalPrice && (
               <span className="text-xs text-slate-400 line-through">
-                ${product.originalPrice.toFixed(2)}
+                {formatPrice(product.originalPrice)}
               </span>
             )}
           </div>

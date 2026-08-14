@@ -1,4 +1,10 @@
-// Centralized Mock Data for AURA STUDIOS Accessories Boutique
+// Centralized Mock Data for AURA STUDIOS Accessories Boutique (Egyptian Currency EGP)
+
+export const CURRENCY = 'EGP';
+
+export const formatPrice = (amount) => {
+  return `${amount.toLocaleString('en-US')} EGP`;
+};
 
 export const PROMO_CODES = {
   'WELCOME10': { code: 'WELCOME10', discountPercent: 10, label: '10% Welcome Discount' },
@@ -8,28 +14,28 @@ export const PROMO_CODES = {
 export const PICKUP_LOCATIONS = [
   {
     id: 'loc-1',
-    name: 'Aura Flagship Boutique — Downtown',
-    address: '428 Grand Avenue, Suite 102, Fashion District',
-    hours: 'Mon – Sat: 10:00 AM – 8:00 PM | Sun: 11:00 AM – 6:00 PM',
-    phone: '+1 (555) 019-2831',
+    name: 'Aura Flagship Boutique — Zamalek',
+    address: '26 26th of July Street, Zamalek, Cairo',
+    hours: 'Mon – Sat: 10:00 AM – 10:00 PM | Sun: 12:00 PM – 8:00 PM',
+    phone: '+20 100 555 0192',
     stockStatus: 'Ready for pickup in 2 hours',
     isDefault: true,
   },
   {
     id: 'loc-2',
-    name: 'Atelier Lumière — Grand Gallery Mall',
-    address: '890 Promenade Blvd, Level 2 (Near North Entrance)',
-    hours: 'Mon – Sun: 10:00 AM – 10:00 PM',
-    phone: '+1 (555) 019-2832',
+    name: 'Atelier Lumière — Mall of Arabia',
+    address: 'Gate 5, Ground Floor, Sheikh Zayed, Giza',
+    hours: 'Mon – Sun: 10:00 AM – 11:00 PM',
+    phone: '+20 100 555 0193',
     stockStatus: 'Ready for pickup same day',
     isDefault: false,
   },
   {
     id: 'loc-3',
-    name: 'Aura Studio & Crafts Workshop',
-    address: '15 Artisan Way, Loft 4B',
-    hours: 'Mon – Fri: 9:00 AM – 6:00 PM',
-    phone: '+1 (555) 019-2833',
+    name: 'Aura Studio & Crafts Workshop — Maadi',
+    address: 'Road 9, Building 42, Degla, Maadi, Cairo',
+    hours: 'Mon – Fri: 9:00 AM – 7:00 PM',
+    phone: '+20 100 555 0194',
     stockStatus: 'Ready for pickup next business day',
     isDefault: false,
   }
@@ -39,8 +45,8 @@ export const PRODUCTS = [
   {
     id: 'prod-1',
     name: 'Sunlit Pearl & Lemon Charm Keychain',
-    price: 28.00,
-    originalPrice: 35.00,
+    price: 280,
+    originalPrice: 350,
     category: 'Charms & Keychains',
     material: 'Pearls & Acrylic',
     color: 'Yellow & Clear',
@@ -63,8 +69,8 @@ export const PRODUCTS = [
   {
     id: 'prod-2',
     name: 'Ocean Breeze Seashell Charm Bangle',
-    price: 45.00,
-    originalPrice: 55.00,
+    price: 450,
+    originalPrice: 550,
     category: 'Bracelets',
     material: 'Enamel & Silver Plated',
     color: 'Ocean Blue',
@@ -87,8 +93,8 @@ export const PRODUCTS = [
   {
     id: 'prod-3',
     name: 'Royal Sapphire Clover Pendant Necklace',
-    price: 52.00,
-    originalPrice: 65.00,
+    price: 520,
+    originalPrice: 650,
     category: 'Necklaces',
     material: 'Sterling Silver',
     color: 'Royal Blue',
@@ -111,8 +117,8 @@ export const PRODUCTS = [
   {
     id: 'prod-4',
     name: 'Hawkins Club Beaded Lanyard & Card Case',
-    price: 34.00,
-    originalPrice: 40.00,
+    price: 340,
+    originalPrice: 400,
     category: 'Lanyards & Holders',
     material: 'Beaded Strap',
     color: 'Crimson Red',
@@ -135,8 +141,8 @@ export const PRODUCTS = [
   {
     id: 'prod-5',
     name: 'Celestial Aurelia Rose Gold Watch',
-    price: 89.00,
-    originalPrice: 110.00,
+    price: 1190,
+    originalPrice: 1450,
     category: 'Watches',
     material: 'Rose Gold & Mesh',
     color: 'Rose Gold',
@@ -159,8 +165,8 @@ export const PRODUCTS = [
   {
     id: 'prod-6',
     name: 'Velour Quilted Crossbody Mini Bag',
-    price: 78.00,
-    originalPrice: 95.00,
+    price: 890,
+    originalPrice: 1100,
     category: 'Bags',
     material: 'Vegan Leather',
     color: 'Cream Neutral',
@@ -183,8 +189,8 @@ export const PRODUCTS = [
   {
     id: 'prod-7',
     name: 'Golden Hour Starburst Drop Earrings',
-    price: 36.00,
-    originalPrice: 42.00,
+    price: 360,
+    originalPrice: 420,
     category: 'Earrings',
     material: 'Gold Plated',
     color: 'Yellow & Gold',
@@ -206,8 +212,8 @@ export const PRODUCTS = [
   {
     id: 'prod-8',
     name: 'Blush Mulberry Silk Hair Scrunchie & Clip Set',
-    price: 24.00,
-    originalPrice: 30.00,
+    price: 240,
+    originalPrice: 300,
     category: 'Accessories',
     material: 'Mulberry Silk',
     color: 'Blush Pink',
@@ -228,4 +234,4 @@ export const PRODUCTS = [
   }
 ];
 
-export const STORE_PHONE_NUMBER = '+15550192837'; // For WhatsApp link (wa.me)
+export const STORE_PHONE_NUMBER = '+201005550192'; // Default WhatsApp number (Egypt format)
