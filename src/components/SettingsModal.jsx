@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useShop } from '../context/ShopContext';
-import { X, Settings, Phone, Check, MessageSquare, Info, RefreshCw } from 'lucide-react';
+import { X, Settings, Phone, Globe, MessageSquare } from 'lucide-react';
 
 export const SettingsModal = () => {
-  const { settingsOpen, setSettingsOpen, storePhoneNumber, setStorePhoneNumber } = useShop();
+  const { settingsOpen, setSettingsOpen, storePhoneNumber, setStorePhoneNumber, language, setLanguage, t } = useShop();
   const [phoneInput, setPhoneInput] = useState(storePhoneNumber);
 
   if (!settingsOpen) return null;
@@ -17,7 +17,7 @@ export const SettingsModal = () => {
   };
 
   const presetNumbers = [
-    { label: 'Default Prototype Test', number: '+15550192837' },
+    { label: 'Cairo Store (+20)', number: '+201005550192' },
     { label: 'International Format (+1 800)', number: '+18005550199' },
     { label: 'UK Test (+44)', number: '+447700900077' },
   ];
@@ -33,8 +33,8 @@ export const SettingsModal = () => {
               <Settings className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-serif text-lg font-medium">Boutique Settings</h3>
-              <p className="text-[11px] text-zinc-400">Customize prototype configurations</p>
+              <h3 className="font-serif text-lg font-medium">{t('boutiqueSettings')}</h3>
+              <p className="text-[11px] text-zinc-400">Language & WhatsApp Configuration</p>
             </div>
           </div>
 
@@ -49,29 +49,57 @@ export const SettingsModal = () => {
         {/* Modal Body */}
         <form onSubmit={handleSave} className="p-6 pt-0 space-y-5">
           
+          {/* Language Selection Option */}
           <div className="space-y-2">
+            <label className="text-xs font-bold uppercase tracking-wider text-noir-900 flex items-center gap-2">
+              <Globe className="w-4 h-4 text-brand-600" />
+              {t('languageSelect')}
+            </label>
+
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => setLanguage('en')}
+                className={`py-3 px-4 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-2 ${
+                  language === 'en'
+                    ? 'bg-noir-900 text-white border-noir-900 shadow-sm'
+                    : 'bg-brand-50 text-noir-800 border-brand-200 hover:bg-brand-100'
+                }`}
+              >
+                <span>🇬🇧 English</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setLanguage('ar')}
+                className={`py-3 px-4 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-2 ${
+                  language === 'ar'
+                    ? 'bg-noir-900 text-white border-noir-900 shadow-sm'
+                    : 'bg-brand-50 text-noir-800 border-brand-200 hover:bg-brand-100'
+                }`}
+              >
+                <span>🇪🇬 العربية (RTL)</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Store Phone Option */}
+          <div className="space-y-2 pt-3 border-t border-brand-100">
             <label htmlFor="store-phone-input" className="text-xs font-bold uppercase tracking-wider text-noir-900 flex items-center gap-2">
               <MessageSquare className="w-4 h-4 text-emerald-600" />
-              Store WhatsApp Phone Number
+              {t('storePhone')}
             </label>
-            <p className="text-xs text-zinc-500 font-light">
-              Orders sent via the <strong>"Send via WhatsApp"</strong> checkout button will be addressed to this phone number.
-            </p>
-
             <div className="relative">
-              <Phone className="w-4 h-4 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Phone className="w-4 h-4 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2 rtl:right-3.5 rtl:left-auto" />
               <input
                 id="store-phone-input"
                 type="text"
                 value={phoneInput}
                 onChange={(e) => setPhoneInput(e.target.value)}
-                placeholder="+15550192837 (include country code without spaces)"
-                className="w-full text-xs font-mono bg-brand-50 border border-brand-200 rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                placeholder="+201005550192"
+                className="w-full text-xs font-mono bg-brand-50 border border-brand-200 rounded-xl pl-10 pr-4 rtl:pr-10 rtl:pl-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500"
               />
             </div>
-            <span className="text-[11px] text-zinc-400 block">
-              Format: <code className="bg-brand-100 text-noir-900 px-1.5 py-0.5 rounded font-mono">+15550192837</code> or <code className="bg-brand-100 text-noir-900 px-1.5 py-0.5 rounded font-mono">+447700900077</code>
-            </span>
           </div>
 
           {/* Quick Presets */}
@@ -83,7 +111,7 @@ export const SettingsModal = () => {
                   key={idx}
                   type="button"
                   onClick={() => setPhoneInput(preset.number)}
-                  className="w-full text-left p-2.5 rounded-xl bg-brand-50 hover:bg-brand-100 border border-brand-100 text-xs flex items-center justify-between transition-colors"
+                  className="w-full text-left rtl:text-right p-2.5 rounded-xl bg-brand-50 hover:bg-brand-100 border border-brand-100 text-xs flex items-center justify-between transition-colors"
                 >
                   <span className="text-noir-800 font-medium">{preset.label}</span>
                   <code className="text-[11px] font-mono text-brand-700">{preset.number}</code>
@@ -99,13 +127,13 @@ export const SettingsModal = () => {
               onClick={() => setSettingsOpen(false)}
               className="px-5 py-2.5 rounded-full text-xs font-semibold text-zinc-600 hover:text-noir-900"
             >
-              Cancel
+              {t('cancel')}
             </button>
             <button
               type="submit"
               className="px-6 py-2.5 bg-noir-900 hover:bg-brand-600 text-white rounded-full text-xs font-semibold uppercase tracking-wider transition-colors shadow-md"
             >
-              Save Settings
+              {t('saveSettings')}
             </button>
           </div>
 

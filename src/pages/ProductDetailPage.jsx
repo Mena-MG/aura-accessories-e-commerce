@@ -4,11 +4,11 @@ import { PRODUCTS, formatPrice } from '../data/mockData';
 import { ProductCard } from '../components/ProductCard';
 import { 
   ShoppingBag, Heart, Star, Sparkles, CheckCircle2, 
-  ShieldCheck, Truck, ArrowLeft, Plus, Minus, MessageSquare, Share2 
+  ArrowLeft, Plus, Minus, MessageSquare, Share2 
 } from 'lucide-react';
 
 export const ProductDetailPage = () => {
-  const { selectedProduct, addToCart, navigateTo, wishlist, toggleWishlist, showToast, storePhoneNumber } = useShop();
+  const { selectedProduct, addToCart, navigateTo, wishlist, toggleWishlist, showToast, storePhoneNumber, t } = useShop();
   const [quantity, setQuantity] = useState(1);
   const [addedAnimation, setAddedAnimation] = useState(false);
 
@@ -40,8 +40,8 @@ export const ProductDetailPage = () => {
         onClick={() => navigateTo('catalog')}
         className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-noir-800/70 hover:text-brand-600 transition-colors"
       >
-        <ArrowLeft className="w-4 h-4" />
-        <span>Back to Shop Catalog</span>
+        <ArrowLeft className="w-4 h-4 rtl:rotate-180" />
+        <span>{t('backToCatalog')}</span>
       </button>
 
       {/* Main Product Detail Grid */}
@@ -56,7 +56,7 @@ export const ProductDetailPage = () => {
               className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
             />
             {selectedProduct.badge && (
-              <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-brand-200 shadow-sm flex items-center gap-1.5">
+              <div className="absolute top-4 left-4 rtl:right-4 rtl:left-auto bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-brand-200 shadow-sm flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-brand-500" />
                 <span className="text-xs font-semibold uppercase tracking-wider text-brand-900">
                   {selectedProduct.badge}
@@ -66,7 +66,7 @@ export const ProductDetailPage = () => {
 
             <button
               onClick={() => toggleWishlist(selectedProduct.id)}
-              className={`absolute top-4 right-4 w-10 h-10 rounded-full backdrop-blur-md flex items-center justify-center transition-all ${
+              className={`absolute top-4 right-4 rtl:left-4 rtl:right-auto w-10 h-10 rounded-full backdrop-blur-md flex items-center justify-center transition-all ${
                 isWishlisted ? 'bg-rose-50 text-rose-500 shadow-sm' : 'bg-white/80 text-noir-800 hover:bg-white'
               }`}
             >
@@ -90,7 +90,7 @@ export const ProductDetailPage = () => {
                   <Star key={i} className="w-3.5 h-3.5 fill-current" />
                 ))}
               </div>
-              <span className="text-noir-900 ml-1">{selectedProduct.rating}</span>
+              <span className="text-noir-900 ml-1 rtl:mr-1">{selectedProduct.rating}</span>
               <span className="text-zinc-400 font-normal">({selectedProduct.reviewsCount} reviews)</span>
             </div>
           </div>
@@ -110,7 +110,7 @@ export const ProductDetailPage = () => {
                 </span>
               )}
               <span className="bg-emerald-50 text-emerald-700 text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
-                In Stock & Ready to Ship
+                {t('inStock')}
               </span>
             </div>
           </div>
@@ -123,11 +123,11 @@ export const ProductDetailPage = () => {
           {/* Key Attribute Pills */}
           <div className="grid grid-cols-2 gap-3 py-2 text-xs">
             <div className="p-3 bg-brand-50 rounded-xl border border-brand-100/80">
-              <span className="text-[10px] uppercase font-bold text-zinc-400 block">Material</span>
+              <span className="text-[10px] uppercase font-bold text-zinc-400 block">{t('material')}</span>
               <span className="font-semibold text-noir-900">{selectedProduct.material}</span>
             </div>
             <div className="p-3 bg-brand-50 rounded-xl border border-brand-100/80">
-              <span className="text-[10px] uppercase font-bold text-zinc-400 block">Color Palette</span>
+              <span className="text-[10px] uppercase font-bold text-zinc-400 block">{t('colorPalette')}</span>
               <span className="font-semibold text-noir-900">{selectedProduct.color}</span>
             </div>
           </div>
@@ -135,7 +135,7 @@ export const ProductDetailPage = () => {
           {/* Quantity Selector & Action Buttons */}
           <div className="space-y-4 pt-4 border-t border-brand-100">
             <div className="flex items-center gap-4">
-              <span className="text-xs font-bold uppercase tracking-wider text-noir-900">Quantity:</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-noir-900">{t('quantity')}</span>
               
               {/* Stepper */}
               <div className="flex items-center border border-brand-200 rounded-xl bg-brand-50/50 p-1">
@@ -167,12 +167,12 @@ export const ProductDetailPage = () => {
               {addedAnimation ? (
                 <>
                   <CheckCircle2 className="w-5 h-5 text-white animate-bounce" />
-                  <span>Added {quantity} to Cart!</span>
+                  <span>{t('addedToCart')}</span>
                 </>
               ) : (
                 <>
                   <ShoppingBag className="w-4 h-4 text-brand-500" />
-                  <span>Add to Shopping Cart — {formatPrice(selectedProduct.price * quantity)}</span>
+                  <span>{t('addToCart')} — {formatPrice(selectedProduct.price * quantity)}</span>
                 </>
               )}
             </button>
@@ -186,7 +186,7 @@ export const ProductDetailPage = () => {
                 className="flex-1 py-3 px-4 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/80 rounded-full text-xs font-semibold flex items-center justify-center gap-2 transition-colors"
               >
                 <MessageSquare className="w-4 h-4 text-emerald-600" />
-                <span>Inquire via WhatsApp ({storePhoneNumber})</span>
+                <span>{t('inquireWhatsApp')} ({storePhoneNumber})</span>
               </a>
 
               <button
@@ -201,7 +201,7 @@ export const ProductDetailPage = () => {
 
           {/* Features bullet list */}
           <div className="pt-6 border-t border-brand-100 space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-noir-900">Handcrafting & Details</h4>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-noir-900">{t('handcraftingDetails')}</h4>
             <ul className="space-y-2 text-xs text-noir-800/70">
               {selectedProduct.features.map((feat, idx) => (
                 <li key={idx} className="flex items-start gap-2">
@@ -218,8 +218,8 @@ export const ProductDetailPage = () => {
       {/* RELATED PRODUCTS RECOMMENDATIONS */}
       <section className="pt-12 border-t border-brand-200/60 space-y-8">
         <div className="text-center max-w-xl mx-auto space-y-1">
-          <span className="text-xs font-semibold uppercase tracking-widest text-brand-600">Complementary Pieces</span>
-          <h3 className="font-serif text-2xl sm:text-3xl font-light text-noir-900">You May Also Love</h3>
+          <span className="text-xs font-semibold uppercase tracking-widest text-brand-600">{t('complementaryPieces')}</span>
+          <h3 className="font-serif text-2xl sm:text-3xl font-light text-noir-900">{t('youMayAlsoLove')}</h3>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">

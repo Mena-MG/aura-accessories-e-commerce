@@ -3,7 +3,7 @@ import { useShop } from '../context/ShopContext';
 import { formatPrice } from '../data/mockData';
 import { 
   ShoppingBag, Trash2, Plus, Minus, Tag, Check, 
-  ArrowRight, ArrowLeft, ShieldCheck, Sparkles, AlertCircle 
+  ArrowRight, ArrowLeft, Sparkles, AlertCircle 
 } from 'lucide-react';
 
 export const CartPage = () => {
@@ -19,8 +19,8 @@ export const CartPage = () => {
     applyDiscountCode, 
     removeDiscountCode, 
     discountAmount, 
-    total, 
-    navigateTo 
+    navigateTo,
+    t 
   } = useShop();
 
   const handleApplyCoupon = (e) => {
@@ -34,15 +34,15 @@ export const CartPage = () => {
         <div className="w-20 h-20 bg-brand-100 rounded-full flex items-center justify-center mx-auto text-brand-600">
           <ShoppingBag className="w-10 h-10" />
         </div>
-        <h2 className="font-serif text-3xl font-light text-noir-900">Your Shopping Bag is Empty</h2>
+        <h2 className="font-serif text-3xl font-light text-noir-900">{t('emptyBag')}</h2>
         <p className="text-xs sm:text-sm text-zinc-500 max-w-md mx-auto">
-          Explore our artisanal collection of charm bangles, crystal clover necklaces, and handcrafted keychains.
+          {t('catalogDesc')}
         </p>
         <button
           onClick={() => navigateTo('catalog')}
           className="px-8 py-3.5 bg-noir-900 hover:bg-brand-600 text-white font-medium text-xs uppercase tracking-widest rounded-full transition-colors shadow-luxe"
         >
-          Explore Catalog Now
+          {t('exploreCatalog')}
         </button>
       </div>
     );
@@ -54,15 +54,15 @@ export const CartPage = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-brand-200/60 pb-6">
         <div>
-          <span className="text-xs font-semibold uppercase tracking-widest text-brand-600">Shopping Bag</span>
-          <h1 className="font-serif text-3xl sm:text-4xl font-light text-noir-900 mt-1">Review Your Order</h1>
+          <span className="text-xs font-semibold uppercase tracking-widest text-brand-600">{t('shoppingBag')}</span>
+          <h1 className="font-serif text-3xl sm:text-4xl font-light text-noir-900 mt-1">{t('reviewOrder')}</h1>
         </div>
         <button
           onClick={() => navigateTo('catalog')}
           className="mt-4 sm:mt-0 text-xs font-bold uppercase tracking-wider text-brand-700 hover:text-noir-900 transition-colors flex items-center gap-1.5"
         >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Continue Shopping</span>
+          <ArrowLeft className="w-4 h-4 rtl:rotate-180" />
+          <span>{t('continueShopping')}</span>
         </button>
       </div>
 
@@ -85,7 +85,7 @@ export const CartPage = () => {
               </div>
 
               {/* Product Info */}
-              <div className="flex-1 text-center sm:text-left space-y-1">
+              <div className="flex-1 text-center sm:text-left rtl:sm:text-right space-y-1">
                 <span className="text-[10px] font-bold uppercase tracking-widest text-brand-600 block">
                   {product.category}
                 </span>
@@ -95,7 +95,7 @@ export const CartPage = () => {
                 >
                   {product.name}
                 </h3>
-                <p className="text-xs text-zinc-400 font-light">Material: {product.material}</p>
+                <p className="text-xs text-zinc-400 font-light">{t('material')}: {product.material}</p>
                 <div className="text-sm font-semibold text-noir-900 pt-1">
                   {formatPrice(product.price)}
                 </div>
@@ -122,7 +122,7 @@ export const CartPage = () => {
                 </div>
 
                 {/* Subtotal per item */}
-                <span className="text-sm font-bold text-noir-900 w-24 text-right">
+                <span className="text-sm font-bold text-noir-900 w-24 text-right rtl:text-left">
                   {formatPrice(product.price * quantity)}
                 </span>
 
@@ -142,7 +142,7 @@ export const CartPage = () => {
           {/* Quick Info Box */}
           <div className="bg-brand-50/70 p-4 rounded-xl border border-brand-200/50 flex items-center gap-3 text-xs text-brand-900">
             <Sparkles className="w-4 h-4 text-brand-500 flex-shrink-0" />
-            <span>Orders over 600 EGP include complimentary branded gift packaging & free delivery!</span>
+            <span>{t('giftNotice')}</span>
           </div>
 
         </div>
@@ -152,12 +152,12 @@ export const CartPage = () => {
           
           <div className="bg-white p-6 rounded-2xl border border-brand-200/60 shadow-soft space-y-6">
             <h2 className="font-serif text-xl font-medium text-noir-900 border-b border-brand-100 pb-4">
-              Order Summary
+              {t('reviewOrder')}
             </h2>
 
             {/* Subtotal */}
             <div className="flex justify-between items-center text-xs">
-              <span className="text-noir-800/70">Items Subtotal</span>
+              <span className="text-noir-800/70">{t('itemsSubtotal')}</span>
               <span className="font-semibold text-noir-900">{formatPrice(subtotal)}</span>
             </div>
 
@@ -165,7 +165,7 @@ export const CartPage = () => {
             <div className="space-y-3 pt-4 border-t border-brand-100">
               <label htmlFor="coupon-input" className="text-xs font-bold uppercase tracking-wider text-noir-900 flex items-center gap-1.5">
                 <Tag className="w-3.5 h-3.5 text-brand-600" />
-                Discount Code
+                {t('discountCode')}
               </label>
 
               {appliedCoupon ? (
@@ -185,7 +185,7 @@ export const CartPage = () => {
                     onClick={removeDiscountCode}
                     className="text-xs font-semibold text-rose-600 hover:underline"
                   >
-                    Remove
+                    {t('remove')}
                   </button>
                 </div>
               ) : (
@@ -203,7 +203,7 @@ export const CartPage = () => {
                       type="submit"
                       className="px-4 py-2.5 bg-noir-900 hover:bg-brand-600 text-white rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors"
                     >
-                      Apply
+                      {t('apply')}
                     </button>
                   </div>
 
@@ -232,8 +232,7 @@ export const CartPage = () => {
             {/* Estimated Total */}
             <div className="pt-4 border-t border-brand-100 flex justify-between items-baseline">
               <div>
-                <span className="font-serif text-lg font-bold text-noir-900 block">Subtotal Due</span>
-                <span className="text-[11px] text-zinc-400 font-light">Delivery calculated next step</span>
+                <span className="font-serif text-lg font-bold text-noir-900 block">{t('subtotalDue')}</span>
               </div>
               <span className="text-2xl font-bold text-noir-900">
                 {formatPrice(subtotal - discountAmount)}
@@ -245,8 +244,8 @@ export const CartPage = () => {
               onClick={() => navigateTo('delivery')}
               className="w-full py-4 bg-noir-900 hover:bg-brand-600 text-white font-medium text-xs uppercase tracking-widest rounded-full transition-all duration-300 shadow-luxe flex items-center justify-center gap-2 group"
             >
-              <span>Proceed to Delivery / Pickup</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <span>{t('proceedToDelivery')}</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
             </button>
 
           </div>

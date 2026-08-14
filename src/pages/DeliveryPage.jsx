@@ -1,7 +1,7 @@
 import React from 'react';
 import { useShop } from '../context/ShopContext';
 import { PICKUP_LOCATIONS } from '../data/mockData';
-import { Truck, Store, MapPin, Phone, Clock, ArrowRight, ArrowLeft, CheckCircle2, User, Home } from 'lucide-react';
+import { Truck, Store, MapPin, Clock, ArrowRight, ArrowLeft, CheckCircle2, User, Home } from 'lucide-react';
 
 export const DeliveryPage = () => {
   const { 
@@ -11,7 +11,8 @@ export const DeliveryPage = () => {
     setDeliveryDetails, 
     selectedPickupLocation, 
     setSelectedPickupLocation,
-    navigateTo 
+    navigateTo,
+    t
   } = useShop();
 
   const handleInputChange = (e) => {
@@ -30,15 +31,15 @@ export const DeliveryPage = () => {
       {/* Header Breadcrumb */}
       <div className="flex items-center justify-between border-b border-brand-200/60 pb-6">
         <div>
-          <span className="text-xs font-semibold uppercase tracking-widest text-brand-600">Checkout Step 2</span>
-          <h1 className="font-serif text-3xl sm:text-4xl font-light text-noir-900 mt-1">Fulfillment Method</h1>
+          <span className="text-xs font-semibold uppercase tracking-widest text-brand-600">{t('checkoutStep2')}</span>
+          <h1 className="font-serif text-3xl sm:text-4xl font-light text-noir-900 mt-1">{t('fulfillmentMethod')}</h1>
         </div>
         <button
           onClick={() => navigateTo('cart')}
           className="text-xs font-bold uppercase tracking-wider text-brand-700 hover:text-noir-900 transition-colors flex items-center gap-1.5"
         >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to Cart</span>
+          <ArrowLeft className="w-4 h-4 rtl:rotate-180" />
+          <span>{t('shoppingBag')}</span>
         </button>
       </div>
 
@@ -53,7 +54,7 @@ export const DeliveryPage = () => {
           }`}
         >
           <Truck className="w-4 h-4 text-brand-500" />
-          <span>Courier Delivery</span>
+          <span>{t('courierDelivery')}</span>
         </button>
 
         <button
@@ -65,7 +66,7 @@ export const DeliveryPage = () => {
           }`}
         >
           <Store className="w-4 h-4 text-brand-500" />
-          <span>Boutique Pickup</span>
+          <span>{t('boutiquePickup')}</span>
         </button>
       </div>
 
@@ -74,13 +75,13 @@ export const DeliveryPage = () => {
         <form onSubmit={handleContinue} className="bg-white p-6 sm:p-8 rounded-3xl border border-brand-200/60 shadow-soft space-y-6 animate-fade-in">
           <div className="flex items-center gap-2 border-b border-brand-100 pb-4">
             <Home className="w-5 h-5 text-brand-600" />
-            <h2 className="font-serif text-xl font-medium text-noir-900">Enter Shipping Address</h2>
+            <h2 className="font-serif text-xl font-medium text-noir-900">{t('enterShippingAddress')}</h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {/* Full Name */}
             <div className="space-y-1.5">
-              <label htmlFor="delivery-name" className="text-xs font-bold uppercase tracking-wider text-noir-900">Full Name *</label>
+              <label htmlFor="delivery-name" className="text-xs font-bold uppercase tracking-wider text-noir-900">{t('fullName')}</label>
               <input
                 id="delivery-name"
                 type="text"
@@ -88,14 +89,14 @@ export const DeliveryPage = () => {
                 required
                 value={deliveryDetails.name}
                 onChange={handleInputChange}
-                placeholder="e.g. Jane Doe"
+                placeholder="e.g. Mariam Hassan"
                 className="w-full text-xs bg-brand-50 border border-brand-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500"
               />
             </div>
 
             {/* Phone Number */}
             <div className="space-y-1.5">
-              <label htmlFor="delivery-phone" className="text-xs font-bold uppercase tracking-wider text-noir-900">Phone Number (For WhatsApp / Courier) *</label>
+              <label htmlFor="delivery-phone" className="text-xs font-bold uppercase tracking-wider text-noir-900">{t('phoneNumber')}</label>
               <input
                 id="delivery-phone"
                 type="tel"
@@ -103,14 +104,14 @@ export const DeliveryPage = () => {
                 required
                 value={deliveryDetails.phone}
                 onChange={handleInputChange}
-                placeholder="e.g. +1 (555) 234-5678"
+                placeholder="e.g. +20 100 234 5678"
                 className="w-full text-xs bg-brand-50 border border-brand-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500"
               />
             </div>
 
             {/* Street Address */}
             <div className="sm:col-span-2 space-y-1.5">
-              <label htmlFor="delivery-address" className="text-xs font-bold uppercase tracking-wider text-noir-900">Street Address *</label>
+              <label htmlFor="delivery-address" className="text-xs font-bold uppercase tracking-wider text-noir-900">{t('streetAddress')}</label>
               <input
                 id="delivery-address"
                 type="text"
@@ -118,14 +119,14 @@ export const DeliveryPage = () => {
                 required
                 value={deliveryDetails.address}
                 onChange={handleInputChange}
-                placeholder="e.g. 742 Evergreen Terrace"
+                placeholder="e.g. 15 El-Bostan Street"
                 className="w-full text-xs bg-brand-50 border border-brand-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500"
               />
             </div>
 
             {/* City / Region */}
             <div className="space-y-1.5">
-              <label htmlFor="delivery-city" className="text-xs font-bold uppercase tracking-wider text-noir-900">City & Postal Code *</label>
+              <label htmlFor="delivery-city" className="text-xs font-bold uppercase tracking-wider text-noir-900">{t('cityPostal')}</label>
               <input
                 id="delivery-city"
                 type="text"
@@ -133,21 +134,21 @@ export const DeliveryPage = () => {
                 required
                 value={deliveryDetails.city}
                 onChange={handleInputChange}
-                placeholder="e.g. Springfield, CA 90210"
+                placeholder="e.g. Heliopolis, Cairo"
                 className="w-full text-xs bg-brand-50 border border-brand-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500"
               />
             </div>
 
             {/* Courier Notes */}
             <div className="space-y-1.5">
-              <label htmlFor="delivery-notes" className="text-xs font-bold uppercase tracking-wider text-noir-900">Special Delivery Instructions</label>
+              <label htmlFor="delivery-notes" className="text-xs font-bold uppercase tracking-wider text-noir-900">{t('specialInstructions')}</label>
               <input
                 id="delivery-notes"
                 type="text"
                 name="notes"
                 value={deliveryDetails.notes}
                 onChange={handleInputChange}
-                placeholder="e.g. Leave at front porch, call upon arrival"
+                placeholder="e.g. Call upon arrival"
                 className="w-full text-xs bg-brand-50 border border-brand-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500"
               />
             </div>
@@ -158,8 +159,8 @@ export const DeliveryPage = () => {
               type="submit"
               className="w-full sm:w-auto px-8 py-4 bg-noir-900 hover:bg-brand-600 text-white font-medium text-xs uppercase tracking-widest rounded-full transition-all duration-300 shadow-luxe flex items-center justify-center gap-2"
             >
-              <span>Continue to Order Recap</span>
-              <ArrowRight className="w-4 h-4" />
+              <span>{t('continueToRecap')}</span>
+              <ArrowRight className="w-4 h-4 rtl:rotate-180" />
             </button>
           </div>
         </form>
@@ -171,11 +172,8 @@ export const DeliveryPage = () => {
           <div className="bg-white p-6 rounded-3xl border border-brand-200/60 shadow-soft space-y-4">
             <div className="flex items-center gap-2 border-b border-brand-100 pb-3">
               <Store className="w-5 h-5 text-brand-600" />
-              <h2 className="font-serif text-xl font-medium text-noir-900">Select a Boutique Location</h2>
+              <h2 className="font-serif text-xl font-medium text-noir-900">{t('selectBoutique')}</h2>
             </div>
-            <p className="text-xs text-zinc-500 font-light">
-              Choose your preferred store. Your order will be prepared and held for 7 days.
-            </p>
 
             <div className="grid grid-cols-1 gap-4 pt-2">
               {PICKUP_LOCATIONS.map((loc) => {
@@ -195,7 +193,7 @@ export const DeliveryPage = () => {
                         <span className="font-serif text-lg font-semibold text-noir-900">{loc.name}</span>
                         {isSelected && (
                           <span className="bg-brand-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
-                            <CheckCircle2 className="w-3 h-3" /> Selected
+                            <CheckCircle2 className="w-3 h-3" /> {t('selected')}
                           </span>
                         )}
                       </div>
@@ -223,7 +221,7 @@ export const DeliveryPage = () => {
                           : 'bg-brand-100 text-noir-900 hover:bg-brand-200'
                       }`}
                     >
-                      {isSelected ? 'Selected' : 'Choose Store'}
+                      {isSelected ? t('selected') : t('chooseStore')}
                     </button>
                   </div>
                 );
@@ -235,32 +233,32 @@ export const DeliveryPage = () => {
           <div className="bg-white p-6 rounded-3xl border border-brand-200/60 shadow-soft space-y-4">
             <h3 className="text-xs font-bold uppercase tracking-wider text-noir-900 flex items-center gap-2">
               <User className="w-4 h-4 text-brand-600" />
-              Pickup Contact Information
+              {t('pickupContactInfo')}
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label htmlFor="pickup-name" className="text-[11px] font-semibold text-zinc-500">Name for Pickup *</label>
+                <label htmlFor="pickup-name" className="text-[11px] font-semibold text-zinc-500">{t('fullName')}</label>
                 <input
                   id="pickup-name"
                   type="text"
                   name="name"
                   value={deliveryDetails.name}
                   onChange={handleInputChange}
-                  placeholder="Jane Doe"
+                  placeholder="Mariam Hassan"
                   className="w-full text-xs bg-brand-50 border border-brand-200 rounded-xl px-3.5 py-2.5"
                 />
               </div>
 
               <div className="space-y-1">
-                <label htmlFor="pickup-phone" className="text-[11px] font-semibold text-zinc-500">WhatsApp / Phone Number *</label>
+                <label htmlFor="pickup-phone" className="text-[11px] font-semibold text-zinc-500">{t('phoneNumber')}</label>
                 <input
                   id="pickup-phone"
                   type="tel"
                   name="phone"
                   value={deliveryDetails.phone}
                   onChange={handleInputChange}
-                  placeholder="+1 (555) 234-5678"
+                  placeholder="+20 100 234 5678"
                   className="w-full text-xs bg-brand-50 border border-brand-200 rounded-xl px-3.5 py-2.5"
                 />
               </div>
@@ -272,8 +270,8 @@ export const DeliveryPage = () => {
               onClick={() => navigateTo('summary')}
               className="w-full sm:w-auto px-8 py-4 bg-noir-900 hover:bg-brand-600 text-white font-medium text-xs uppercase tracking-widest rounded-full transition-all duration-300 shadow-luxe flex items-center justify-center gap-2"
             >
-              <span>Continue to Order Recap</span>
-              <ArrowRight className="w-4 h-4" />
+              <span>{t('continueToRecap')}</span>
+              <ArrowRight className="w-4 h-4 rtl:rotate-180" />
             </button>
           </div>
         </div>

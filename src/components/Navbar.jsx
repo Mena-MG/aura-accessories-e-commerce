@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
 import { useShop } from '../context/ShopContext';
-import { ShoppingBag, Heart, Search, Menu, X, Sparkles, Settings } from 'lucide-react';
+import { ShoppingBag, Heart, Menu, X, Sparkles, Settings, Globe } from 'lucide-react';
 
 export const Navbar = () => {
-  const { activePage, navigateTo, cartItemCount, wishlist, setSettingsOpen } = useShop();
+  const { activePage, navigateTo, cartItemCount, wishlist, setSettingsOpen, language, setLanguage, t } = useShop();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { id: 'home', label: 'Home' },
-    { id: 'catalog', label: 'Shop Catalog' },
-    { id: 'cart', label: 'My Cart' },
-    { id: 'delivery', label: 'Delivery / Pickup' },
+    { id: 'home', label: t('home') },
+    { id: 'catalog', label: t('catalog') },
+    { id: 'cart', label: t('cart') },
+    { id: 'delivery', label: t('delivery') },
   ];
 
   return (
     <header className="sticky top-0 z-40 glass-header border-b border-brand-200/50 transition-all duration-300">
       {/* Top Announcement Bar */}
       <div className="bg-noir-900 text-white text-[11px] font-light py-2 px-4 text-center tracking-widest uppercase flex items-center justify-center gap-2">
-        <Sparkles className="w-3 h-3 text-brand-500 animate-pulse-subtle" />
-        <span>Complimentary Gift Packaging on Orders Over $50 — Use Code <strong className="text-brand-500 font-semibold">WELCOME10</strong> for 10% Off</span>
+        <Sparkles className="w-3.5 h-3.5 text-brand-500 animate-pulse-subtle" />
+        <span>{t('announcement')} <strong className="text-brand-500 font-semibold">WELCOME10</strong></span>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -42,12 +42,12 @@ export const Navbar = () => {
               AURA <span className="text-brand-500 font-light">&</span> CO.
             </span>
             <span className="text-[9px] font-sans tracking-[0.3em] uppercase text-brand-700/80 -mt-1 font-medium">
-              Artisanal Accessories
+              {t('brandSub')}
             </span>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-8 rtl:space-x-reverse">
             {navLinks.map((link) => (
               <button
                 key={link.id}
@@ -67,13 +67,23 @@ export const Navbar = () => {
           </nav>
 
           {/* Right Action Controls */}
-          <div className="flex items-center space-x-2 sm:space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-3 rtl:space-x-reverse">
             
+            {/* Language Switcher Pill */}
+            <button
+              onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
+              className="px-2.5 py-1 rounded-full bg-brand-100/80 hover:bg-brand-200 text-noir-900 text-xs font-bold transition-all border border-brand-200 flex items-center gap-1.5"
+              title="Change Language / تغيير اللغة"
+            >
+              <Globe className="w-3.5 h-3.5 text-brand-700" />
+              <span>{language === 'en' ? 'عربي' : 'EN'}</span>
+            </button>
+
             {/* Settings Icon */}
             <button
               onClick={() => setSettingsOpen(true)}
               className="p-2 text-noir-800 hover:text-brand-600 transition-colors rounded-full hover:bg-brand-100/60"
-              title="Store Settings (Change WhatsApp Phone)"
+              title={t('settings')}
             >
               <Settings className="w-5 h-5" />
             </button>
@@ -82,7 +92,7 @@ export const Navbar = () => {
             <button
               onClick={() => navigateTo('catalog')}
               className="relative p-2 text-noir-800 hover:text-brand-600 transition-colors rounded-full hover:bg-brand-100/60"
-              title="Wishlist"
+              title={t('wishlist')}
             >
               <Heart className="w-5 h-5" />
               {wishlist.length > 0 && (
@@ -96,10 +106,10 @@ export const Navbar = () => {
             <button
               onClick={() => navigateTo('cart')}
               className="relative bg-brand-50 hover:bg-brand-500 hover:text-white text-noir-900 px-3.5 py-2 rounded-full border border-brand-200/80 transition-all duration-300 flex items-center gap-2 group shadow-sm"
-              title="View Cart"
+              title={t('cart')}
             >
               <ShoppingBag className="w-4 h-4 text-brand-600 group-hover:text-white transition-colors" />
-              <span className="text-xs font-bold font-sans">Cart</span>
+              <span className="text-xs font-bold font-sans">{t('cart')}</span>
               <span className="bg-brand-500 group-hover:bg-white group-hover:text-noir-900 text-white text-[11px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center transition-colors">
                 {cartItemCount}
               </span>
@@ -119,23 +129,33 @@ export const Navbar = () => {
                 navigateTo(link.id);
                 setMobileMenuOpen(false);
               }}
-              className={`block w-full text-left py-2 text-sm font-semibold uppercase tracking-wider ${
+              className={`block w-full text-left rtl:text-right py-2 text-sm font-semibold uppercase tracking-wider ${
                 activePage === link.id ? 'text-brand-600' : 'text-noir-800'
               }`}
             >
               {link.label}
             </button>
           ))}
-          <button
-            onClick={() => {
-              setSettingsOpen(true);
-              setMobileMenuOpen(false);
-            }}
-            className="block w-full text-left py-2 text-sm font-semibold uppercase tracking-wider text-brand-600 flex items-center gap-2"
-          >
-            <Settings className="w-4 h-4" />
-            <span>Store Settings</span>
-          </button>
+
+          <div className="pt-2 border-t border-brand-100 flex items-center justify-between">
+            <button
+              onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
+              className="text-sm font-bold text-brand-700 flex items-center gap-2"
+            >
+              <Globe className="w-4 h-4" />
+              <span>{language === 'en' ? 'التحويل للغة العربية' : 'Switch to English'}</span>
+            </button>
+
+            <button
+              onClick={() => {
+                setSettingsOpen(true);
+                setMobileMenuOpen(false);
+              }}
+              className="text-noir-800 hover:text-brand-600 p-2"
+            >
+              <Settings className="w-5 h-5" />
+            </button>
+          </div>
         </div>
       )}
     </header>

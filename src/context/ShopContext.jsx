@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { PRODUCTS, PROMO_CODES, PICKUP_LOCATIONS, STORE_PHONE_NUMBER as DEFAULT_PHONE } from '../data/mockData';
+import { translations } from '../data/translations';
 
 const ShopContext = createContext();
 
@@ -11,6 +12,27 @@ export const ShopProvider = ({ children }) => {
   ]);
   const [wishlist, setWishlist] = useState(['prod-3']);
   
+  // Language & i18n State ('en' | 'ar')
+  const [language, setLanguageState] = useState(() => {
+    return localStorage.getItem('aura_language') || 'en';
+  });
+
+  const setLanguage = (lang) => {
+    setLanguageState(lang);
+    localStorage.setItem('aura_language', lang);
+  };
+
+  // Sync dir="rtl" / dir="ltr" on html root tag
+  useEffect(() => {
+    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = language;
+  }, [language]);
+
+  // Translation helper function
+  const t = (key) => {
+    return translations[language]?.[key] || translations.en?.[key] || key;
+  };
+
   // Dynamic Store Phone Number for WhatsApp Checkout
   const [storePhoneNumber, setStorePhoneNumberState] = useState(() => {
     return localStorage.getItem('aura_store_phone') || DEFAULT_PHONE;
@@ -146,7 +168,6 @@ export const ShopProvider = ({ children }) => {
     ? (subtotal * (appliedCoupon.discountPercent / 100))
     : 0;
 
-  // Free delivery over EGP 600, else EGP 50 delivery fee
   const deliveryFee = (deliveryMethod === 'delivery' && subtotal > 0)
     ? (subtotal >= 600 ? 0 : 50)
     : 0;
@@ -190,7 +211,10 @@ export const ShopProvider = ({ children }) => {
       storePhoneNumber,
       setStorePhoneNumber,
       settingsOpen,
-      setSettingsOpen
+      setSettingsOpen,
+      language,
+      setLanguage,
+      t
     }}>
       {children}
     </ShopContext.Provider>
