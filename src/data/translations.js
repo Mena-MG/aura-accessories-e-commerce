@@ -14,6 +14,13 @@ export const translations = {
     settings: "Settings",
     wishlist: "Wishlist",
     
+    // Themes
+    themeSelect: "Global Website Theme Style",
+    themeClassic: "Classic Alabaster",
+    themeDark: "Dark Obsidian Glamour",
+    themeRose: "French Rose & Blush",
+    themeOcean: "Coastal Riviera Sapphire",
+    
     // Hero Section
     heroBadge: "Handcrafted Boutique Collection Cairo 2026",
     heroTitle1: "Artisanal Adornments for",
@@ -162,6 +169,13 @@ export const translations = {
     delivery: "التوصيل والاستلام",
     settings: "الإعدادات",
     wishlist: "المفضلة",
+    
+    // Themes
+    themeSelect: "ستايل وتصميم الموقع بالكامل",
+    themeClassic: "البوتيك العاجي (Classic)",
+    themeDark: "الظلام الفاخر (Dark Obsidian)",
+    themeRose: "الورد الفرنسي (Rose & Blush)",
+    themeOcean: "الأزرق الساحلي (Coastal Riviera)",
     
     // Hero Section
     heroBadge: "تشكيلة البوتيك اليدوية — القاهرة 2026",

@@ -12,6 +12,22 @@ export const ShopProvider = ({ children }) => {
   ]);
   const [wishlist, setWishlist] = useState(['prod-3']);
   
+  // Theme State ('classic' | 'dark-glamour' | 'rose-blush' | 'ocean-coastal')
+  const [theme, setThemeState] = useState(() => {
+    return localStorage.getItem('aura_theme') || 'classic';
+  });
+
+  const setTheme = (newTheme) => {
+    setThemeState(newTheme);
+    localStorage.setItem('aura_theme', newTheme);
+    showToast(`Applied ${newTheme.replace('-', ' ')} theme across whole site ✨`, 'success');
+  };
+
+  // Sync data-theme attribute on <html> tag for global CSS styling
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
   // Language & i18n State ('en' | 'ar')
   const [language, setLanguageState] = useState(() => {
     return localStorage.getItem('aura_language') || 'en';
@@ -214,6 +230,8 @@ export const ShopProvider = ({ children }) => {
       setSettingsOpen,
       language,
       setLanguage,
+      theme,
+      setTheme,
       t
     }}>
       {children}

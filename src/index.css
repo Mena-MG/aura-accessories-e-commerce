@@ -2,11 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
+:root, [data-theme="classic"] {
+  --bg-primary: #FDFBF7;
+  --bg-card: #FFFFFF;
+  --bg-secondary: #F7F3EC;
+  --text-main: #161513;
+  --text-muted: #666056;
+  --accent-gold: #C5A059;
+  --accent-hover: #AB843E;
+  --border-color: rgba(222, 209, 188, 0.7);
+  --header-bg: rgba(253, 251, 247, 0.85);
+}
+
+[data-theme="dark-glamour"] {
+  --bg-primary: #0D0C0B;
+  --bg-card: #181614;
+  --bg-secondary: #211E1B;
+  --text-main: #F4EFEA;
+  --text-muted: #A89F91;
+  --accent-gold: #E6C280;
+  --accent-hover: #D4AF37;
+  --border-color: rgba(230, 194, 128, 0.2);
+  --header-bg: rgba(13, 12, 11, 0.85);
+}
+
+[data-theme="rose-blush"] {
+  --bg-primary: #FDF6F6;
+  --bg-card: #FFFFFF;
+  --bg-secondary: #F7EBEB;
+  --text-main: #36121D;
+  --text-muted: #825866;
+  --accent-gold: #D4889B;
+  --accent-hover: #B85F75;
+  --border-color: rgba(232, 211, 211, 0.8);
+  --header-bg: rgba(253, 246, 246, 0.85);
+}
+
+[data-theme="ocean-coastal"] {
+  --bg-primary: #F4F8FA;
+  --bg-card: #FFFFFF;
+  --bg-secondary: #E8F1F5;
+  --text-main: #0B2545;
+  --text-muted: #4F6D7A;
+  --accent-gold: #00A896;
+  --accent-hover: #028090;
+  --border-color: rgba(200, 220, 230, 0.8);
+  --header-bg: rgba(244, 248, 250, 0.85);
+}
+
 @layer base {
   body {
-    background-color: #FDFBF7;
-    color: #161513;
+    background-color: var(--bg-primary);
+    color: var(--text-main);
     overflow-x: hidden;
+    transition: background-color 0.4s ease, color 0.4s ease;
   }
 }
 
@@ -17,31 +66,37 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #F7F3EC;
+  background: var(--bg-secondary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #CBB79B;
+  background: var(--accent-gold);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #C5A059;
+  background: var(--accent-hover);
 }
 
 /* Custom styling utilities */
 .glass-header {
-  background: rgba(253, 251, 247, 0.85);
+  background: var(--header-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
+.theme-card {
+  background-color: var(--bg-card);
+  border-color: var(--border-color);
+  color: var(--text-main);
+}
+
 .gold-gradient-text {
-  background: linear-gradient(135deg, #AB843E 0%, #C5A059 50%, #E3CA92 100%);
+  background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent-gold) 50%, #E3CA92 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .gold-gradient-bg {
-  background: linear-gradient(135deg, #C5A059 0%, #AB843E 100%);
+  background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-hover) 100%);
 }

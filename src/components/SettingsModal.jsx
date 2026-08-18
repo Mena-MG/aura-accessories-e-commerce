@@ -1,9 +1,20 @@
 import React, { useState } from 'react';
 import { useShop } from '../context/ShopContext';
-import { X, Settings, Phone, Globe, MessageSquare } from 'lucide-react';
+import { X, Settings, Phone, Globe, MessageSquare, Palette, Check } from 'lucide-react';
 
 export const SettingsModal = () => {
-  const { settingsOpen, setSettingsOpen, storePhoneNumber, setStorePhoneNumber, language, setLanguage, t } = useShop();
+  const { 
+    settingsOpen, 
+    setSettingsOpen, 
+    storePhoneNumber, 
+    setStorePhoneNumber, 
+    language, 
+    setLanguage, 
+    theme, 
+    setTheme, 
+    t 
+  } = useShop();
+
   const [phoneInput, setPhoneInput] = useState(storePhoneNumber);
 
   if (!settingsOpen) return null;
@@ -16,6 +27,37 @@ export const SettingsModal = () => {
     setSettingsOpen(false);
   };
 
+  const themeOptions = [
+    { 
+      id: 'classic', 
+      name: t('themeClassic'), 
+      bg: '#FDFBF7', 
+      accent: '#C5A059', 
+      border: '#DED1BC' 
+    },
+    { 
+      id: 'dark-glamour', 
+      name: t('themeDark'), 
+      bg: '#0D0C0B', 
+      accent: '#E6C280', 
+      border: '#332E27' 
+    },
+    { 
+      id: 'rose-blush', 
+      name: t('themeRose'), 
+      bg: '#FDF6F6', 
+      accent: '#D4889B', 
+      border: '#E8D3D3' 
+    },
+    { 
+      id: 'ocean-coastal', 
+      name: t('themeOcean'), 
+      bg: '#F4F8FA', 
+      accent: '#00A896', 
+      border: '#C8DCE6' 
+    },
+  ];
+
   const presetNumbers = [
     { label: 'Cairo Store (+20)', number: '+201005550192' },
     { label: 'International Format (+1 800)', number: '+18005550199' },
@@ -24,7 +66,7 @@ export const SettingsModal = () => {
 
   return (
     <div className="fixed inset-0 z-50 bg-noir-950/70 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in">
-      <div className="bg-white max-w-md w-full rounded-3xl border border-brand-200 shadow-floating overflow-hidden space-y-6">
+      <div className="bg-white max-w-lg w-full rounded-3xl border border-brand-200 shadow-floating overflow-hidden space-y-6">
         
         {/* Modal Header */}
         <div className="bg-noir-900 text-white p-6 flex items-center justify-between">
@@ -34,7 +76,7 @@ export const SettingsModal = () => {
             </div>
             <div>
               <h3 className="font-serif text-lg font-medium">{t('boutiqueSettings')}</h3>
-              <p className="text-[11px] text-zinc-400">Language & WhatsApp Configuration</p>
+              <p className="text-[11px] text-zinc-400">Theme Styles, i18n & WhatsApp Setup</p>
             </div>
           </div>
 
@@ -47,10 +89,54 @@ export const SettingsModal = () => {
         </div>
 
         {/* Modal Body */}
-        <form onSubmit={handleSave} className="p-6 pt-0 space-y-5">
+        <form onSubmit={handleSave} className="p-6 pt-0 space-y-5 max-h-[80vh] overflow-y-auto">
           
-          {/* Language Selection Option */}
+          {/* SECTION 1: GLOBAL THEME STYLE SELECTOR */}
           <div className="space-y-2">
+            <label className="text-xs font-bold uppercase tracking-wider text-noir-900 flex items-center gap-2">
+              <Palette className="w-4 h-4 text-brand-600" />
+              {t('themeSelect')}
+            </label>
+            <p className="text-xs text-zinc-500 font-light">
+              Applies custom color palettes, background tones, and card styling across the <strong>ENTIRE website</strong>.
+            </p>
+
+            <div className="grid grid-cols-2 gap-3 pt-1">
+              {themeOptions.map((opt) => {
+                const isSelected = theme === opt.id;
+                return (
+                  <div
+                    key={opt.id}
+                    onClick={() => setTheme(opt.id)}
+                    className={`p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center gap-3 relative ${
+                      isSelected
+                        ? 'border-brand-500 bg-brand-50/70 shadow-sm'
+                        : 'border-stone-200 bg-white hover:border-brand-300'
+                    }`}
+                  >
+                    {/* Color Swatch Dot */}
+                    <div 
+                      className="w-6 h-6 rounded-full flex-shrink-0 border flex items-center justify-center shadow-inner"
+                      style={{ backgroundColor: opt.bg, borderColor: opt.border }}
+                    >
+                      <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: opt.accent }} />
+                    </div>
+
+                    <span className="text-xs font-semibold text-noir-900 flex-1 line-clamp-1">
+                      {opt.name}
+                    </span>
+
+                    {isSelected && (
+                      <Check className="w-4 h-4 text-brand-600 flex-shrink-0" />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* SECTION 2: LANGUAGE SELECTION */}
+          <div className="space-y-2 pt-3 border-t border-brand-100">
             <label className="text-xs font-bold uppercase tracking-wider text-noir-900 flex items-center gap-2">
               <Globe className="w-4 h-4 text-brand-600" />
               {t('languageSelect')}
@@ -83,7 +169,7 @@ export const SettingsModal = () => {
             </div>
           </div>
 
-          {/* Store Phone Option */}
+          {/* SECTION 3: STORE PHONE NUMBER */}
           <div className="space-y-2 pt-3 border-t border-brand-100">
             <label htmlFor="store-phone-input" className="text-xs font-bold uppercase tracking-wider text-noir-900 flex items-center gap-2">
               <MessageSquare className="w-4 h-4 text-emerald-600" />
