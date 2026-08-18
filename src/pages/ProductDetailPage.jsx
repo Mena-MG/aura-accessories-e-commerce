@@ -33,7 +33,7 @@ export const ProductDetailPage = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-16 animate-fade-in">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 sm:space-y-16 animate-fade-in">
       
       {/* Back Button Breadcrumb */}
       <button
@@ -45,7 +45,7 @@ export const ProductDetailPage = () => {
       </button>
 
       {/* Main Product Detail Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start">
         
         {/* Left Column: Product Image Gallery / Showcase */}
         <div className="lg:col-span-6 space-y-4">
@@ -141,14 +141,14 @@ export const ProductDetailPage = () => {
               <div className="flex items-center border border-brand-200 rounded-xl bg-brand-50/50 p-1">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="w-8 h-8 rounded-lg hover:bg-white text-noir-800 flex items-center justify-center transition-colors"
+                  className="w-9 h-9 sm:w-8 sm:h-8 rounded-lg hover:bg-white text-noir-800 flex items-center justify-center transition-colors"
                 >
                   <Minus className="w-3.5 h-3.5" />
                 </button>
                 <span className="w-10 text-center font-bold text-xs text-noir-900">{quantity}</span>
                 <button
                   onClick={() => setQuantity(quantity + 1)}
-                  className="w-8 h-8 rounded-lg hover:bg-white text-noir-800 flex items-center justify-center transition-colors"
+                  className="w-9 h-9 sm:w-8 sm:h-8 rounded-lg hover:bg-white text-noir-800 flex items-center justify-center transition-colors"
                 >
                   <Plus className="w-3.5 h-3.5" />
                 </button>

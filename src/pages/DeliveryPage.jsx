@@ -29,7 +29,7 @@ export const DeliveryPage = () => {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in">
       
       {/* Header Breadcrumb */}
-      <div className="flex items-center justify-between border-b border-brand-200/60 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-brand-200/60 pb-6">
         <div>
           <span className="text-xs font-semibold uppercase tracking-widest text-brand-600">{t('checkoutStep2')}</span>
           <h1 className="font-serif text-3xl sm:text-4xl font-light text-noir-900 mt-1">{t('fulfillmentMethod')}</h1>
@@ -47,7 +47,7 @@ export const DeliveryPage = () => {
       <div className="grid grid-cols-2 p-1.5 bg-brand-100/70 rounded-2xl border border-brand-200 max-w-lg mx-auto">
         <button
           onClick={() => setDeliveryMethod('delivery')}
-          className={`py-3.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 ${
+          className={`py-3 px-2 sm:py-3.5 sm:px-4 rounded-xl text-xs font-bold uppercase tracking-normal sm:tracking-wider transition-all duration-300 flex items-center justify-center gap-2 ${
             deliveryMethod === 'delivery'
               ? 'bg-noir-900 text-white shadow-md'
               : 'text-noir-800 hover:text-brand-600'
@@ -59,7 +59,7 @@ export const DeliveryPage = () => {
 
         <button
           onClick={() => setDeliveryMethod('pickup')}
-          className={`py-3.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 ${
+          className={`py-3 px-2 sm:py-3.5 sm:px-4 rounded-xl text-xs font-bold uppercase tracking-normal sm:tracking-wider transition-all duration-300 flex items-center justify-center gap-2 ${
             deliveryMethod === 'pickup'
               ? 'bg-noir-900 text-white shadow-md'
               : 'text-noir-800 hover:text-brand-600'
@@ -90,7 +90,7 @@ export const DeliveryPage = () => {
                 value={deliveryDetails.name}
                 onChange={handleInputChange}
                 placeholder="e.g. Mariam Hassan"
-                className="w-full text-xs bg-brand-50 border border-brand-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                className="w-full text-base sm:text-xs bg-brand-50 border border-brand-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500"
               />
             </div>
 
@@ -105,7 +105,7 @@ export const DeliveryPage = () => {
                 value={deliveryDetails.phone}
                 onChange={handleInputChange}
                 placeholder="e.g. +20 100 234 5678"
-                className="w-full text-xs bg-brand-50 border border-brand-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                className="w-full text-base sm:text-xs bg-brand-50 border border-brand-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500"
               />
             </div>
 
@@ -120,7 +120,7 @@ export const DeliveryPage = () => {
                 value={deliveryDetails.address}
                 onChange={handleInputChange}
                 placeholder="e.g. 15 El-Bostan Street"
-                className="w-full text-xs bg-brand-50 border border-brand-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                className="w-full text-base sm:text-xs bg-brand-50 border border-brand-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500"
               />
             </div>
 
@@ -135,7 +135,7 @@ export const DeliveryPage = () => {
                 value={deliveryDetails.city}
                 onChange={handleInputChange}
                 placeholder="e.g. Heliopolis, Cairo"
-                className="w-full text-xs bg-brand-50 border border-brand-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                className="w-full text-base sm:text-xs bg-brand-50 border border-brand-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500"
               />
             </div>
 
@@ -149,7 +149,7 @@ export const DeliveryPage = () => {
                 value={deliveryDetails.notes}
                 onChange={handleInputChange}
                 placeholder="e.g. Call upon arrival"
-                className="w-full text-xs bg-brand-50 border border-brand-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                className="w-full text-base sm:text-xs bg-brand-50 border border-brand-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500"
               />
             </div>
           </div>
@@ -246,7 +246,7 @@ export const DeliveryPage = () => {
                   value={deliveryDetails.name}
                   onChange={handleInputChange}
                   placeholder="Mariam Hassan"
-                  className="w-full text-xs bg-brand-50 border border-brand-200 rounded-xl px-3.5 py-2.5"
+                  className="w-full text-base sm:text-xs bg-brand-50 border border-brand-200 rounded-xl px-3.5 py-2.5"
                 />
               </div>
 
@@ -259,7 +259,7 @@ export const DeliveryPage = () => {
                   value={deliveryDetails.phone}
                   onChange={handleInputChange}
                   placeholder="+20 100 234 5678"
-                  className="w-full text-xs bg-brand-50 border border-brand-200 rounded-xl px-3.5 py-2.5"
+                  className="w-full text-base sm:text-xs bg-brand-50 border border-brand-200 rounded-xl px-3.5 py-2.5"
                 />
               </div>
             </div>

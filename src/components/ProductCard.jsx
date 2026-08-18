@@ -26,9 +26,9 @@ export const ProductCard = ({ product }) => {
 
         {/* Badge */}
         {product.badge && (
-          <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full border border-brand-200/50 shadow-sm flex items-center gap-1.5">
+          <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-2 py-0.5 sm:px-3 sm:py-1 rounded-full border border-brand-200/50 shadow-sm flex items-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5 text-brand-500" />
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-brand-900">
+            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-brand-900">
               {product.badge}
             </span>
           </div>
@@ -41,7 +41,7 @@ export const ProductCard = ({ product }) => {
             toggleWishlist(product.id);
           }}
           aria-label="Add to wishlist"
-          className={`absolute top-3 right-3 w-9 h-9 rounded-full backdrop-blur-md flex items-center justify-center transition-all duration-300 ${
+          className={`absolute top-3 right-3 w-10 h-10 rounded-full backdrop-blur-md flex items-center justify-center transition-all duration-300 ${
             isWishlisted 
               ? 'bg-rose-50 text-rose-500 shadow-sm' 
               : 'bg-white/80 text-noir-800 hover:bg-white hover:text-rose-500'
@@ -66,7 +66,7 @@ export const ProductCard = ({ product }) => {
       </div>
 
       {/* Content */}
-      <div className="p-5 flex flex-col flex-1 justify-between bg-white">
+      <div className="p-3 sm:p-5 flex flex-col flex-1 justify-between bg-white">
         <div>
           <div className="flex items-center justify-between gap-2 mb-1.5">
             <span className="text-[11px] font-medium tracking-widest text-brand-600 uppercase">
@@ -81,7 +81,7 @@ export const ProductCard = ({ product }) => {
 
           <h3 
             onClick={() => navigateTo('product-detail', product.id)}
-            className="font-serif text-lg font-medium text-noir-900 line-clamp-1 hover:text-brand-600 transition-colors cursor-pointer"
+            className="font-serif text-base sm:text-lg font-medium text-noir-900 line-clamp-1 hover:text-brand-600 transition-colors cursor-pointer"
           >
             {product.name}
           </h3>
@@ -107,7 +107,7 @@ export const ProductCard = ({ product }) => {
           <button
             onClick={() => addToCart(product, 1)}
             aria-label="Add to cart"
-            className="sm:hidden w-8 h-8 rounded-full bg-brand-50 hover:bg-brand-500 hover:text-white text-brand-700 flex items-center justify-center transition-colors"
+            className="sm:hidden w-10 h-10 rounded-full bg-brand-50 hover:bg-brand-500 hover:text-white text-brand-700 flex items-center justify-center transition-colors"
           >
             <ShoppingBag className="w-4 h-4" />
           </button>

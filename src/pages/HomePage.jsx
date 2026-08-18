@@ -18,7 +18,7 @@ export const HomePage = () => {
   ];
 
   return (
-    <div className="space-y-20 animate-fade-in">
+    <div className="space-y-10 sm:space-y-20 animate-fade-in">
       
       {/* HERO SECTION */}
       <section className="relative overflow-hidden pt-8 pb-16 lg:py-24 bg-gradient-to-b from-brand-100/50 via-brand-50 to-white border-b border-brand-200/50">
@@ -32,7 +32,7 @@ export const HomePage = () => {
                 {t('heroBadge')}
               </div>
 
-              <h1 className="font-serif text-4xl sm:text-6xl font-light text-noir-900 leading-[1.15] tracking-tight">
+              <h1 className="font-serif text-3xl sm:text-4xl lg:text-6xl font-light text-noir-900 leading-[1.15] tracking-tight">
                 {t('heroTitle1')} <span className="italic font-normal gold-gradient-text">{t('heroTitle2')}</span>
               </h1>
 
@@ -59,18 +59,18 @@ export const HomePage = () => {
               </div>
 
               {/* Trust highlights */}
-              <div className="pt-6 grid grid-cols-3 gap-4 border-t border-brand-200/60 text-center lg:text-left rtl:lg:text-right">
+              <div className="pt-6 grid grid-cols-3 gap-2 sm:gap-4 border-t border-brand-200/60 text-center lg:text-left rtl:lg:text-right">
                 <div>
-                  <div className="text-xl font-serif font-bold text-noir-900">100%</div>
-                  <div className="text-[11px] text-zinc-500 uppercase tracking-wider">{t('handmadeQuality')}</div>
+                  <div className="text-base sm:text-xl font-serif font-bold text-noir-900">100%</div>
+                  <div className="text-[10px] sm:text-[11px] text-zinc-500 uppercase tracking-wider">{t('handmadeQuality')}</div>
                 </div>
                 <div>
-                  <div className="text-xl font-serif font-bold text-noir-900">WhatsApp</div>
-                  <div className="text-[11px] text-zinc-500 uppercase tracking-wider">{t('instantCheckout')}</div>
+                  <div className="text-base sm:text-xl font-serif font-bold text-noir-900">WhatsApp</div>
+                  <div className="text-[10px] sm:text-[11px] text-zinc-500 uppercase tracking-wider">{t('instantCheckout')}</div>
                 </div>
                 <div>
-                  <div className="text-xl font-serif font-bold text-noir-900">Same Day</div>
-                  <div className="text-[11px] text-zinc-500 uppercase tracking-wider">{t('sameDayPickup')}</div>
+                  <div className="text-base sm:text-xl font-serif font-bold text-noir-900">Same Day</div>
+                  <div className="text-[10px] sm:text-[11px] text-zinc-500 uppercase tracking-wider">{t('sameDayPickup')}</div>
                 </div>
               </div>
             </div>
@@ -160,7 +160,7 @@ export const HomePage = () => {
 
       {/* PROMO BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl bg-noir-900 text-white p-8 sm:p-12 overflow-hidden border border-noir-800 shadow-floating">
+        <div className="relative rounded-3xl bg-noir-900 text-white p-5 sm:p-8 md:p-12 overflow-hidden border border-noir-800 shadow-floating">
           <div className="absolute top-0 right-0 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl" />
           
           <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
@@ -174,7 +174,7 @@ export const HomePage = () => {
             <div className="md:col-span-4 flex justify-start md:justify-end">
               <button
                 onClick={() => navigateTo('catalog')}
-                className="px-8 py-3.5 bg-brand-500 hover:bg-brand-600 text-white font-medium text-xs uppercase tracking-widest rounded-full transition-colors shadow-luxe"
+                className="w-full sm:w-auto px-8 py-3.5 bg-brand-500 hover:bg-brand-600 text-white font-medium text-xs uppercase tracking-widest rounded-full transition-colors shadow-luxe"
               >
                 {t('claimDiscount')}
               </button>

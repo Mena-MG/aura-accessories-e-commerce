@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { useShop } from '../../../context/ShopContext';
 import { formatPrice } from '../../../data/mockData';
 import { ShoppingBag, Trash2, Plus, Minus, Tag, Check, ArrowRight, ArrowLeft, Sparkles, AlertCircle } from 'lucide-react';
@@ -46,7 +46,7 @@ export const DarkCartPage = () => {
         <div className="lg:col-span-8 space-y-4">
           {cart.map(({ product, quantity }) => (
             <div key={product.id} className="p-4 sm:p-6 rounded-2xl flex flex-col sm:flex-row items-center gap-6" style={{ background: D.card, border: `1px solid ${D.cardBorder}` }}>
-              <div onClick={() => navigateTo('product-detail', product.id)} className="w-24 h-24 rounded-xl overflow-hidden cursor-pointer flex-shrink-0" style={{ background: D.accentBg, border: `1px solid ${D.cardBorder}` }}>
+              <div onClick={() => navigateTo('product-detail', product.id)} className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden cursor-pointer flex-shrink-0" style={{ background: D.accentBg, border: `1px solid ${D.cardBorder}` }}>
                 <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
               </div>
               <div className="flex-1 text-center sm:text-left rtl:sm:text-right space-y-1">
@@ -57,11 +57,11 @@ export const DarkCartPage = () => {
               </div>
               <div className="flex items-center gap-3">
                 <div className="flex items-center rounded-xl p-1" style={{ border: `1px solid ${D.cardBorder}`, background: D.accentBg }}>
-                  <button onClick={() => updateCartQuantity(product.id, quantity - 1)} className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ color: D.text }}><Minus className="w-3 h-3" /></button>
+                  <button onClick={() => updateCartQuantity(product.id, quantity - 1)} className="w-9 h-9 sm:w-7 sm:h-7 rounded-lg flex items-center justify-center" style={{ color: D.text }}><Minus className="w-3 h-3" /></button>
                   <span className="w-8 text-center font-bold text-xs" style={{ color: D.accent }}>{quantity}</span>
-                  <button onClick={() => updateCartQuantity(product.id, quantity + 1)} className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ color: D.text }}><Plus className="w-3 h-3" /></button>
+                  <button onClick={() => updateCartQuantity(product.id, quantity + 1)} className="w-9 h-9 sm:w-7 sm:h-7 rounded-lg flex items-center justify-center" style={{ color: D.text }}><Plus className="w-3 h-3" /></button>
                 </div>
-                <span className="text-sm font-bold w-24 text-right rtl:text-left" style={{ color: D.text }}>{formatPrice(product.price * quantity)}</span>
+                <span className="text-sm font-bold w-20 sm:w-24 text-right rtl:text-left" style={{ color: D.text }}>{formatPrice(product.price * quantity)}</span>
                 <button onClick={() => removeFromCart(product.id)} className="p-2 transition-colors" style={{ color: D.muted }}><Trash2 className="w-4 h-4 hover:text-red-400" /></button>
               </div>
             </div>

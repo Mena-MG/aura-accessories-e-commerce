@@ -1,4 +1,4 @@
-﻿// Rose Blush Theme — All 6 Page Variants
+// Rose Blush Theme — All 6 Page Variants
 // Colors: bg #FDF6F6, card #fff, text #36121D, muted #825866, accent #D4889B
 
 import React, { useState, useMemo } from 'react';
@@ -44,9 +44,9 @@ export const RoseHomePage = () => {
   ];
 
   return (
-    <div className="space-y-20 animate-fade-in" style={{ background: R.bg, color: R.text }}>
+    <div className="space-y-10 sm:space-y-20 animate-fade-in" style={{ background: R.bg, color: R.text }}>
       {/* Hero */}
-      <section className="relative overflow-hidden pt-8 pb-16 lg:py-24" style={{ background: 'linear-gradient(180deg, #F9EBED 0%, #FDF6F6 100%)', borderBottom: `1px solid ${R.border}` }}>
+      <section className="relative overflow-hidden pt-8 pb-8 lg:pb-16 lg:py-24" style={{ background: 'linear-gradient(180deg, #F9EBED 0%, #FDF6F6 100%)', borderBottom: `1px solid ${R.border}` }}>
         <div className="absolute top-0 right-0 w-80 h-80 rounded-full opacity-30 pointer-events-none" style={{ background: 'radial-gradient(circle, #D4889B 0%, transparent 70%)' }} />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -54,7 +54,7 @@ export const RoseHomePage = () => {
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest" style={{ background: R.accentBg, border: `1px solid ${R.cardBorder}`, color: R.accent }}>
                 <Sparkles className="w-3.5 h-3.5" /> {t('heroBadge')}
               </div>
-              <h1 className="font-serif text-4xl sm:text-6xl font-light leading-[1.15] tracking-tight" style={{ color: R.text }}>
+              <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl font-light leading-[1.15] tracking-tight" style={{ color: R.text }}>
                 {t('heroTitle1')} <span className="italic font-normal" style={{ background: 'linear-gradient(135deg, #B85F75 0%, #D4889B 50%, #E8A8B8 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{t('heroTitle2')}</span>
               </h1>
               <p className="text-base sm:text-lg font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed" style={{ color: R.muted }}>{t('heroDesc')}</p>
@@ -66,11 +66,11 @@ export const RoseHomePage = () => {
                   <Crown className="w-4 h-4" /> <span>{t('viewFeatured')}</span>
                 </button>
               </div>
-              <div className="pt-6 grid grid-cols-3 gap-4" style={{ borderTop: `1px solid ${R.border}` }}>
+              <div className="pt-6 grid grid-cols-3 gap-2 sm:gap-4" style={{ borderTop: `1px solid ${R.border}` }}>
                 {[['100%', t('handmadeQuality')], ['WhatsApp', t('instantCheckout')], ['Same Day', t('sameDayPickup')]].map(([val, label]) => (
                   <div key={label} className="text-center lg:text-left">
-                    <div className="text-xl font-serif font-bold" style={{ color: R.accent }}>{val}</div>
-                    <div className="text-[11px] uppercase tracking-wider mt-0.5" style={{ color: R.muted }}>{label}</div>
+                    <div className="text-base sm:text-xl font-serif font-bold" style={{ color: R.accent }}>{val}</div>
+                    <div className="text-[10px] sm:text-[11px] uppercase tracking-wider mt-0.5" style={{ color: R.muted }}>{label}</div>
                   </div>
                 ))}
               </div>
@@ -132,7 +132,7 @@ export const RoseHomePage = () => {
 
       {/* Promo Banner */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="relative rounded-3xl p-8 sm:p-12 overflow-hidden" style={{ background: 'linear-gradient(135deg, #36121D 0%, #5C2233 100%)', boxShadow: '0 20px 60px rgba(54,18,29,0.2)' }}>
+        <div className="relative rounded-3xl p-5 sm:p-8 md:p-12 overflow-hidden" style={{ background: 'linear-gradient(135deg, #36121D 0%, #5C2233 100%)', boxShadow: '0 20px 60px rgba(54,18,29,0.2)' }}>
           <div className="absolute top-0 right-0 w-80 h-80 rounded-full opacity-20 pointer-events-none" style={{ background: 'radial-gradient(circle, #D4889B 0%, transparent 70%)' }} />
           <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
             <div className="md:col-span-8 space-y-3">
@@ -143,7 +143,7 @@ export const RoseHomePage = () => {
               </p>
             </div>
             <div className="md:col-span-4 flex justify-start md:justify-end">
-              <button onClick={() => navigateTo('catalog')} className="px-8 py-3.5 font-medium text-xs uppercase tracking-widest rounded-full transition-all" style={R.btnPrimary}>{t('claimDiscount')}</button>
+              <button onClick={() => navigateTo('catalog')} className="w-full sm:w-auto px-8 py-3.5 font-medium text-xs uppercase tracking-widest rounded-full transition-all" style={R.btnPrimary}>{t('claimDiscount')}</button>
             </div>
           </div>
         </div>
@@ -412,7 +412,7 @@ export const RoseCartPage = () => {
         <div className="lg:col-span-8 space-y-4">
           {cart.map(({ product, quantity }) => (
             <div key={product.id} className="p-4 sm:p-6 rounded-2xl flex flex-col sm:flex-row items-center gap-6" style={{ background: R.card, border: `1px solid ${R.cardBorder}`, boxShadow: '0 4px 20px rgba(212,136,155,0.06)' }}>
-              <div onClick={() => navigateTo('product-detail', product.id)} className="w-24 h-24 rounded-xl overflow-hidden cursor-pointer flex-shrink-0" style={{ background: R.accentBg, border: `1px solid ${R.cardBorder}` }}>
+              <div onClick={() => navigateTo('product-detail', product.id)} className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden cursor-pointer flex-shrink-0" style={{ background: R.accentBg, border: `1px solid ${R.cardBorder}` }}>
                 <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
               </div>
               <div className="flex-1 text-center sm:text-left rtl:sm:text-right space-y-1">
@@ -423,11 +423,11 @@ export const RoseCartPage = () => {
               </div>
               <div className="flex items-center gap-3">
                 <div className="flex items-center rounded-xl p-1" style={{ border: `1px solid ${R.cardBorder}`, background: R.accentBg }}>
-                  <button onClick={() => updateCartQuantity(product.id, quantity - 1)} className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ color: R.text }}><Minus className="w-3 h-3" /></button>
+                  <button onClick={() => updateCartQuantity(product.id, quantity - 1)} className="w-9 h-9 sm:w-7 sm:h-7 rounded-lg flex items-center justify-center" style={{ color: R.text }}><Minus className="w-3 h-3" /></button>
                   <span className="w-8 text-center font-bold text-xs" style={{ color: R.accent }}>{quantity}</span>
-                  <button onClick={() => updateCartQuantity(product.id, quantity + 1)} className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ color: R.text }}><Plus className="w-3 h-3" /></button>
+                  <button onClick={() => updateCartQuantity(product.id, quantity + 1)} className="w-9 h-9 sm:w-7 sm:h-7 rounded-lg flex items-center justify-center" style={{ color: R.text }}><Plus className="w-3 h-3" /></button>
                 </div>
-                <span className="text-sm font-bold w-24 text-right rtl:text-left" style={{ color: R.text }}>{formatPrice(product.price * quantity)}</span>
+                <span className="text-sm font-bold w-20 sm:w-24 text-right rtl:text-left" style={{ color: R.text }}>{formatPrice(product.price * quantity)}</span>
                 <button onClick={() => removeFromCart(product.id)} className="p-2 transition-colors" style={{ color: R.muted }}><Trash2 className="w-4 h-4" /></button>
               </div>
             </div>
@@ -497,7 +497,7 @@ export const RoseDeliveryPage = () => {
       </div>
       <div className="grid grid-cols-2 p-1.5 rounded-2xl max-w-lg mx-auto" style={{ background: R.accentBg, border: `1px solid ${R.cardBorder}` }}>
         {[['delivery', t('courierDelivery'), Truck], ['pickup', t('boutiquePickup'), Store]].map(([method, label, Icon]) => (
-          <button key={method} onClick={() => setDeliveryMethod(method)} className="py-3.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2" style={deliveryMethod === method ? { ...R.btnPrimary, boxShadow: '0 4px 12px rgba(212,136,155,0.3)' } : { color: R.muted }}>
+          <button key={method} onClick={() => setDeliveryMethod(method)} className="py-3 px-2 sm:py-3.5 sm:px-4 rounded-xl text-xs font-bold uppercase tracking-normal sm:tracking-wider transition-all duration-300 flex items-center justify-center gap-2" style={deliveryMethod === method ? { ...R.btnPrimary, boxShadow: '0 4px 12px rgba(212,136,155,0.3)' } : { color: R.muted }}>
             <Icon className="w-4 h-4" /> <span>{label}</span>
           </button>
         ))}
@@ -512,17 +512,17 @@ export const RoseDeliveryPage = () => {
             {[{ id: 'name', label: t('fullName'), ph: 'e.g. Mariam Hassan', type: 'text', req: true }, { id: 'phone', label: t('phoneNumber'), ph: 'e.g. +20 100 234 5678', type: 'tel', req: true }].map(({ id, label, ph, type, req }) => (
               <div key={id} className="space-y-1.5">
                 <label htmlFor={`rose-${id}`} className="text-xs font-bold uppercase tracking-wider" style={{ color: R.text }}>{label}</label>
-                <input id={`rose-${id}`} type={type} name={id} required={req} value={deliveryDetails[id]} onChange={handleInputChange} placeholder={ph} className="w-full text-xs rounded-xl px-4 py-3 focus:outline-none" style={inputStyle} />
+                <input id={`rose-${id}`} type={type} name={id} required={req} value={deliveryDetails[id]} onChange={handleInputChange} placeholder={ph} className="w-full text-base sm:text-xs rounded-xl px-4 py-3 focus:outline-none" style={inputStyle} />
               </div>
             ))}
             <div className="sm:col-span-2 space-y-1.5">
               <label htmlFor="rose-address" className="text-xs font-bold uppercase tracking-wider" style={{ color: R.text }}>{t('streetAddress')}</label>
-              <input id="rose-address" type="text" name="address" required value={deliveryDetails.address} onChange={handleInputChange} placeholder="e.g. 15 El-Bostan Street" className="w-full text-xs rounded-xl px-4 py-3 focus:outline-none" style={inputStyle} />
+              <input id="rose-address" type="text" name="address" required value={deliveryDetails.address} onChange={handleInputChange} placeholder="e.g. 15 El-Bostan Street" className="w-full text-base sm:text-xs rounded-xl px-4 py-3 focus:outline-none" style={inputStyle} />
             </div>
             {[{ id: 'city', label: t('cityPostal'), ph: 'e.g. Heliopolis, Cairo', req: true }, { id: 'notes', label: t('specialInstructions'), ph: 'e.g. Call upon arrival', req: false }].map(({ id, label, ph, req }) => (
               <div key={id} className="space-y-1.5">
                 <label htmlFor={`rose-${id}`} className="text-xs font-bold uppercase tracking-wider" style={{ color: R.text }}>{label}</label>
-                <input id={`rose-${id}`} type="text" name={id} required={req} value={deliveryDetails[id]} onChange={handleInputChange} placeholder={ph} className="w-full text-xs rounded-xl px-4 py-3 focus:outline-none" style={inputStyle} />
+                <input id={`rose-${id}`} type="text" name={id} required={req} value={deliveryDetails[id]} onChange={handleInputChange} placeholder={ph} className="w-full text-base sm:text-xs rounded-xl px-4 py-3 focus:outline-none" style={inputStyle} />
               </div>
             ))}
           </div>
@@ -663,7 +663,7 @@ export const RoseOrderSummaryPage = () => {
               {copied ? <Check className="w-4 h-4" style={{ color: '#34D399' }} /> : <Copy className="w-4 h-4" />} <span>{copied ? t('copied') : t('copyOrderSummary')}</span>
             </button>
           </div>
-          <div className="flex justify-between items-center text-xs">
+          <div className="flex flex-col sm:flex-row gap-3 sm:justify-between items-center text-xs">
             <button onClick={() => navigateTo('delivery')} className="flex items-center gap-1 font-semibold hover:opacity-70 transition-opacity" style={{ color: R.muted }}><ArrowLeft className="w-3.5 h-3.5" /> <span>{t('editDeliveryInfo')}</span></button>
             <button onClick={() => { clearCart(); navigateTo('home'); showToast('Order complete! Thank you!', 'success'); }} className="font-bold flex items-center gap-1 hover:opacity-70 transition-opacity" style={{ color: R.accent }}><RefreshCcw className="w-3.5 h-3.5" /> <span>{t('startNewOrder')}</span></button>
           </div>

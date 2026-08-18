@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { useShop } from '../../../context/ShopContext';
 import { PRODUCTS, formatPrice } from '../../../data/mockData';
 import { ProductCard } from '../../../components/ProductCard';
@@ -17,10 +17,10 @@ export const DarkHomePage = () => {
   ];
 
   return (
-    <div className="space-y-20 animate-fade-in" style={{ background: '#0D0C0B', color: '#F4EFEA' }}>
+    <div className="space-y-10 sm:space-y-20 animate-fade-in" style={{ background: '#0D0C0B', color: '#F4EFEA' }}>
 
       {/* DARK HERO */}
-      <section className="relative overflow-hidden pt-8 pb-20 lg:py-28" style={{ background: 'linear-gradient(180deg, #111009 0%, #0D0C0B 100%)' }}>
+      <section className="relative overflow-hidden pt-8 pb-8 lg:pb-16 lg:py-28" style={{ background: 'linear-gradient(180deg, #111009 0%, #0D0C0B 100%)' }}>
         {/* Glow orbs */}
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(197,160,89,0.10) 0%, transparent 70%)' }} />
         <div className="absolute top-0 right-0 w-72 h-72 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(230,194,128,0.08) 0%, transparent 70%)' }} />
@@ -34,7 +34,7 @@ export const DarkHomePage = () => {
                 {t('heroBadge')}
               </div>
 
-              <h1 className="font-serif text-4xl sm:text-6xl font-extralight leading-[1.1] tracking-tight" style={{ color: '#F4EFEA' }}>
+              <h1 className="font-serif text-3xl sm:text-4xl lg:text-6xl font-extralight leading-[1.1] tracking-tight" style={{ color: '#F4EFEA' }}>
                 {t('heroTitle1')} <br />
                 <span className="italic font-normal" style={{ background: 'linear-gradient(135deg, #AB843E 0%, #E6C280 50%, #F0DBA0 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                   {t('heroTitle2')}
@@ -57,11 +57,11 @@ export const DarkHomePage = () => {
               </div>
 
               {/* Stats */}
-              <div className="pt-6 grid grid-cols-3 gap-4 border-t" style={{ borderColor: 'rgba(197,160,89,0.2)' }}>
+              <div className="pt-6 grid grid-cols-3 gap-2 sm:gap-4 border-t" style={{ borderColor: 'rgba(197,160,89,0.2)' }}>
                 {[['100%', t('handmadeQuality')], ['WhatsApp', t('instantCheckout')], ['Same Day', t('sameDayPickup')]].map(([val, label]) => (
                   <div key={label} className="text-center lg:text-left">
-                    <div className="text-xl font-serif font-bold" style={{ color: '#E6C280' }}>{val}</div>
-                    <div className="text-[11px] uppercase tracking-wider mt-0.5" style={{ color: '#A89F91' }}>{label}</div>
+                    <div className="text-base sm:text-xl font-serif font-bold" style={{ color: '#E6C280' }}>{val}</div>
+                    <div className="text-[10px] sm:text-[11px] uppercase tracking-wider mt-0.5" style={{ color: '#A89F91' }}>{label}</div>
                   </div>
                 ))}
               </div>
@@ -131,7 +131,7 @@ export const DarkHomePage = () => {
 
       {/* DARK PROMO BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="relative rounded-3xl p-8 sm:p-12 overflow-hidden" style={{ background: 'linear-gradient(135deg, #1A1611 0%, #0D0C0B 100%)', border: '1px solid rgba(197,160,89,0.25)', boxShadow: '0 0 80px rgba(197,160,89,0.05)' }}>
+        <div className="relative rounded-3xl p-5 sm:p-8 md:p-12 overflow-hidden" style={{ background: 'linear-gradient(135deg, #1A1611 0%, #0D0C0B 100%)', border: '1px solid rgba(197,160,89,0.25)', boxShadow: '0 0 80px rgba(197,160,89,0.05)' }}>
           <div className="absolute top-0 right-0 w-80 h-80 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(197,160,89,0.08) 0%, transparent 70%)' }} />
           <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
             <div className="md:col-span-8 space-y-3">
@@ -142,7 +142,7 @@ export const DarkHomePage = () => {
               </p>
             </div>
             <div className="md:col-span-4 flex justify-start md:justify-end">
-              <button onClick={() => navigateTo('catalog')} className="px-8 py-3.5 font-medium text-xs uppercase tracking-widest rounded-full transition-all" style={{ background: 'linear-gradient(135deg, #C5A059, #E6C280)', color: '#0D0C0B' }}>
+              <button onClick={() => navigateTo('catalog')} className="w-full sm:w-auto px-8 py-3.5 font-medium text-xs uppercase tracking-widest rounded-full transition-all" style={{ background: 'linear-gradient(135deg, #C5A059, #E6C280)', color: '#0D0C0B' }}>
                 {t('claimDiscount')}
               </button>
             </div>

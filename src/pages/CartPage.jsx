@@ -79,7 +79,7 @@ export const CartPage = () => {
               {/* Product Thumbnail */}
               <div 
                 onClick={() => navigateTo('product-detail', product.id)}
-                className="w-24 h-24 aspect-square bg-brand-50 rounded-xl overflow-hidden cursor-pointer flex-shrink-0 border border-brand-100"
+                className="w-20 h-20 sm:w-24 sm:h-24 aspect-square bg-brand-50 rounded-xl overflow-hidden cursor-pointer flex-shrink-0 border border-brand-100"
               >
                 <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
               </div>
@@ -106,7 +106,7 @@ export const CartPage = () => {
                 <div className="flex items-center border border-brand-200 rounded-xl bg-brand-50/50 p-1">
                   <button
                     onClick={() => updateCartQuantity(product.id, quantity - 1)}
-                    className="w-7 h-7 rounded-lg hover:bg-white text-noir-800 flex items-center justify-center transition-colors"
+                    className="w-9 h-9 sm:w-7 sm:h-7 rounded-lg hover:bg-white text-noir-800 flex items-center justify-center transition-colors"
                     aria-label="Decrease quantity"
                   >
                     <Minus className="w-3 h-3" />
@@ -114,7 +114,7 @@ export const CartPage = () => {
                   <span className="w-8 text-center font-bold text-xs text-noir-900">{quantity}</span>
                   <button
                     onClick={() => updateCartQuantity(product.id, quantity + 1)}
-                    className="w-7 h-7 rounded-lg hover:bg-white text-noir-800 flex items-center justify-center transition-colors"
+                    className="w-9 h-9 sm:w-7 sm:h-7 rounded-lg hover:bg-white text-noir-800 flex items-center justify-center transition-colors"
                     aria-label="Increase quantity"
                   >
                     <Plus className="w-3 h-3" />
@@ -122,7 +122,7 @@ export const CartPage = () => {
                 </div>
 
                 {/* Subtotal per item */}
-                <span className="text-sm font-bold text-noir-900 w-24 text-right rtl:text-left">
+                <span className="text-sm font-bold text-noir-900 w-20 sm:w-24 text-right rtl:text-left">
                   {formatPrice(product.price * quantity)}
                 </span>
 

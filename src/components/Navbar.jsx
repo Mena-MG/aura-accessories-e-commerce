@@ -102,12 +102,12 @@ export const Navbar = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-16 sm:h-20">
           
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`md:hidden p-2 transition-colors ${style.linkInactive}`}
+            className={`md:hidden p-2.5 transition-colors ${style.linkInactive}`}
             aria-label="Toggle Navigation Menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -187,7 +187,7 @@ export const Navbar = () => {
               title={t('cart')}
             >
               <ShoppingBag className="w-4 h-4" />
-              <span className="text-xs font-bold">{t('cart')}</span>
+              <span className="text-xs font-bold"><span className="hidden sm:inline">{t('cart')}</span></span>
               <span className={`text-[11px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center transition-colors ${style.badgeBg}`}>
                 {cartItemCount}
               </span>
@@ -199,7 +199,7 @@ export const Navbar = () => {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className={`md:hidden backdrop-blur-lg border-b px-6 py-6 space-y-4 animate-slide-up ${style.wrapper}`}>
+        <div className="md:hidden backdrop-blur-lg border-b px-4 py-5 space-y-3 animate-slide-up bg-inherit">
           {navLinks.map((link) => (
             <button
               key={link.id}
@@ -207,7 +207,7 @@ export const Navbar = () => {
                 navigateTo(link.id);
                 setMobileMenuOpen(false);
               }}
-              className={`block w-full text-left rtl:text-right py-2 text-sm font-semibold uppercase tracking-wider ${
+              className={`block w-full text-left rtl:text-right py-3 text-sm font-semibold uppercase tracking-wider ${
                 activePage === link.id ? style.linkActive : style.linkInactive
               }`}
             >

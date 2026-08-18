@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useShop } from '../../../context/ShopContext';
 import { PRODUCTS, formatPrice } from '../../../data/mockData';
 import { ProductCard } from '../../../components/ProductCard';
@@ -25,12 +25,12 @@ export const DarkProductDetailPage = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-16 animate-fade-in">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 sm:space-y-16 animate-fade-in">
       <button onClick={() => navigateTo('catalog')} className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider transition-colors" style={{ color: D.muted }}>
         <ArrowLeft className="w-4 h-4 rtl:rotate-180" /> <span>{t('backToCatalog')}</span>
       </button>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start">
         {/* Image */}
         <div className="lg:col-span-6 space-y-4">
           <div className="relative aspect-square w-full rounded-3xl overflow-hidden group" style={{ background: D.card, border: `1px solid ${D.cardBorder}`, boxShadow: '0 0 60px rgba(197,160,89,0.08)' }}>
@@ -84,11 +84,11 @@ export const DarkProductDetailPage = () => {
             <div className="flex items-center gap-4">
               <span className="text-xs font-bold uppercase tracking-wider" style={{ color: D.text }}>{t('quantity')}</span>
               <div className="flex items-center rounded-xl p-1" style={{ border: `1px solid ${D.cardBorder}`, background: D.accentBg }}>
-                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors" style={{ color: D.text }}>
+                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="w-9 h-9 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center transition-colors" style={{ color: D.text }}>
                   <Minus className="w-3.5 h-3.5" />
                 </button>
                 <span className="w-10 text-center font-bold text-xs" style={{ color: D.accent }}>{quantity}</span>
-                <button onClick={() => setQuantity(quantity + 1)} className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors" style={{ color: D.text }}>
+                <button onClick={() => setQuantity(quantity + 1)} className="w-9 h-9 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center transition-colors" style={{ color: D.text }}>
                   <Plus className="w-3.5 h-3.5" />
                 </button>
               </div>

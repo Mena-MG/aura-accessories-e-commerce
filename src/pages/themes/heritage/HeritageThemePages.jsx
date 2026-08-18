@@ -44,7 +44,7 @@ export const HeritageHomePage = () => {
   ];
 
   return (
-    <div className="space-y-16 animate-fade-in font-mono" style={{ background: H.bg, color: H.text }}>
+    <div className="space-y-8 sm:space-y-16 animate-fade-in font-mono" style={{ background: H.bg, color: H.text }}>
       
       {/* HERO SECTION */}
       <section className="relative overflow-hidden pt-8 pb-16 lg:py-20 border-b-2" style={{ borderColor: H.text, background: '#EFE9DE' }}>
@@ -52,12 +52,12 @@ export const HeritageHomePage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             
             <div className="lg:col-span-7 space-y-6 text-center lg:text-left rtl:lg:text-right">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded border-2 text-xs font-bold uppercase tracking-wider" style={{ borderColor: H.text, background: '#FFFDF8', color: H.accent }}>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded border-2 text-[10px] sm:text-xs font-bold uppercase tracking-normal sm:tracking-wider" style={{ borderColor: H.text, background: '#FFFDF8', color: H.accent }}>
                 <Hammer className="w-3.5 h-3.5" />
                 <span>HANDCRAFTED IN CAIRO • EST 2026</span>
               </div>
 
-              <h1 className="font-serif text-4xl sm:text-6xl font-bold leading-tight" style={{ color: H.text }}>
+              <h1 className="font-serif text-2xl sm:text-4xl md:text-6xl font-bold leading-tight" style={{ color: H.text }}>
                 {t('heroTitle1')} <span className="italic underline underline-offset-8" style={{ color: H.accent }}>{t('heroTitle2')}</span>
               </h1>
 
@@ -77,11 +77,11 @@ export const HeritageHomePage = () => {
                 </button>
               </div>
 
-              <div className="pt-6 grid grid-cols-3 gap-4 border-t-2" style={{ borderColor: H.text }}>
+              <div className="pt-6 grid grid-cols-3 gap-2 sm:gap-4 border-t-2" style={{ borderColor: H.text }}>
                 {[['100%', t('handmadeQuality')], ['WhatsApp', t('instantCheckout')], ['Same Day', t('sameDayPickup')]].map(([val, label]) => (
                   <div key={label} className="text-center lg:text-left">
-                    <div className="text-xl font-bold" style={{ color: H.accent }}>{val}</div>
-                    <div className="text-[10px] uppercase font-mono mt-0.5" style={{ color: H.muted }}>{label}</div>
+                    <div className="text-base sm:text-xl font-bold" style={{ color: H.accent }}>{val}</div>
+                    <div className="text-[9px] sm:text-[10px] uppercase font-mono mt-0.5" style={{ color: H.muted }}>{label}</div>
                   </div>
                 ))}
               </div>
@@ -89,7 +89,7 @@ export const HeritageHomePage = () => {
 
             <div className="lg:col-span-5">
               <div className="relative mx-auto max-w-md lg:max-w-none">
-                <div onClick={() => navigateTo('product-detail', heroProduct.id)} className="relative border-2 overflow-hidden cursor-pointer group shadow-[8px_8px_0px_#2A2421]" style={{ borderColor: H.text, background: H.card }}>
+                <div onClick={() => navigateTo('product-detail', heroProduct.id)} className="relative border-2 overflow-hidden cursor-pointer group shadow-[4px_4px_0px_#2A2421] sm:shadow-[8px_8px_0px_#2A2421]" style={{ borderColor: H.text, background: H.card }}>
                   <img src={heroProduct.image} alt={heroProduct.name} className="w-full aspect-[4/5] object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="p-4 border-t-2 bg-[#FFFDF8]" style={{ borderColor: H.text }}>
                     <span className="text-[10px] font-bold uppercase tracking-wider block" style={{ color: H.accent }}>{t('featuredSpotlight')}</span>
@@ -115,7 +115,7 @@ export const HeritageHomePage = () => {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {categories.map((cat, idx) => (
-            <div key={idx} onClick={() => navigateTo('catalog')} className="group relative aspect-[3/4] border-2 overflow-hidden cursor-pointer shadow-[4px_4px_0px_#2A2421]" style={{ borderColor: H.text }}>
+            <div key={idx} onClick={() => navigateTo('catalog')} className="group relative aspect-[3/4] border-2 overflow-hidden cursor-pointer shadow-[2px_2px_0px_#2A2421] sm:shadow-[4px_4px_0px_#2A2421]" style={{ borderColor: H.text }}>
               <img src={cat.image} alt={cat.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               <div className="absolute inset-0 p-3 flex flex-col justify-end text-white" style={{ background: 'linear-gradient(to top, rgba(42,36,33,0.9) 0%, transparent 80%)' }}>
                 <h3 className="font-serif text-base font-bold">{cat.name}</h3>
@@ -148,7 +148,7 @@ export const HeritageHomePage = () => {
 
       {/* PROMO BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="border-2 p-8 sm:p-10 shadow-[8px_8px_0px_#2A2421]" style={{ background: '#2A2421', color: '#F7F4EE', borderColor: '#2A2421' }}>
+        <div className="border-2 p-5 sm:p-8 md:p-10 shadow-[4px_4px_0px_#2A2421] sm:shadow-[8px_8px_0px_#2A2421]" style={{ background: '#2A2421', color: '#F7F4EE', borderColor: '#2A2421' }}>
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
             <div className="md:col-span-8 space-y-2">
               <span className="text-xs font-bold uppercase tracking-widest" style={{ color: '#EFE9DE' }}>{t('exclusiveOffer')}</span>
@@ -158,7 +158,7 @@ export const HeritageHomePage = () => {
               </p>
             </div>
             <div className="md:col-span-4 flex justify-start md:justify-end">
-              <button onClick={() => navigateTo('catalog')} className="px-8 py-3.5 font-bold text-xs uppercase tracking-widest border-2 bg-white text-[#2A2421] hover:bg-[#C85A32] hover:text-white transition-colors" style={{ borderColor: '#F7F4EE' }}>
+              <button onClick={() => navigateTo('catalog')} className="w-full md:w-auto px-8 py-3.5 font-bold text-xs uppercase tracking-widest border-2 bg-white text-[#2A2421] hover:bg-[#C85A32] hover:text-white transition-colors" style={{ borderColor: '#F7F4EE' }}>
                 {t('claimDiscount')}
               </button>
             </div>
@@ -392,7 +392,7 @@ export const HeritageCartPage = () => {
         <div className="lg:col-span-8 space-y-4">
           {cart.map(({ product, quantity }) => (
             <div key={product.id} className="p-4 border-2 flex flex-col sm:flex-row items-center gap-4 shadow-[4px_4px_0px_#2A2421]" style={{ background: H.card, borderColor: H.text }}>
-              <img src={product.image} alt={product.name} className="w-20 h-20 object-cover border-2" style={{ borderColor: H.text }} />
+              <img src={product.image} alt={product.name} className="w-16 h-16 sm:w-20 sm:h-20 object-cover border-2" style={{ borderColor: H.text }} />
               <div className="flex-1 text-center sm:text-left rtl:sm:text-right">
                 <span className="text-[10px] font-bold uppercase block" style={{ color: H.accent }}>{product.category}</span>
                 <h3 className="font-serif text-base font-bold">{product.name}</h3>
@@ -400,11 +400,11 @@ export const HeritageCartPage = () => {
               </div>
               <div className="flex items-center gap-3">
                 <div className="flex items-center border-2" style={{ borderColor: H.text }}>
-                  <button onClick={() => updateCartQuantity(product.id, quantity - 1)} className="w-7 h-7 font-bold"><Minus className="w-3 h-3 mx-auto" /></button>
-                  <span className="w-7 text-center text-xs font-bold">{quantity}</span>
-                  <button onClick={() => updateCartQuantity(product.id, quantity + 1)} className="w-7 h-7 font-bold"><Plus className="w-3 h-3 mx-auto" /></button>
+                  <button onClick={() => updateCartQuantity(product.id, quantity - 1)} className="w-9 h-9 sm:w-7 sm:h-7 font-bold"><Minus className="w-3 h-3 mx-auto" /></button>
+                  <span className="w-9 sm:w-7 text-center text-xs font-bold">{quantity}</span>
+                  <button onClick={() => updateCartQuantity(product.id, quantity + 1)} className="w-9 h-9 sm:w-7 sm:h-7 font-bold"><Plus className="w-3 h-3 mx-auto" /></button>
                 </div>
-                <span className="text-xs font-bold w-20 text-right">{formatPrice(product.price * quantity)}</span>
+                <span className="text-xs font-bold w-16 sm:w-20 text-right">{formatPrice(product.price * quantity)}</span>
                 <button onClick={() => removeFromCart(product.id)} className="p-1.5 hover:text-red-600"><Trash2 className="w-4 h-4" /></button>
               </div>
             </div>
@@ -471,9 +471,9 @@ export const HeritageDeliveryPage = () => {
             {PICKUP_LOCATIONS.map(loc => {
               const isSelected = selectedPickupLocation.id === loc.id;
               return (
-                <div key={loc.id} onClick={() => setSelectedPickupLocation(loc)} className="p-4 border-2 cursor-pointer flex justify-between items-center" style={{ borderColor: H.text, background: isSelected ? H.accentBg : '#white' }}>
+                <div key={loc.id} onClick={() => setSelectedPickupLocation(loc)} className="p-4 border-2 cursor-pointer flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-3" style={{ borderColor: H.text, background: isSelected ? H.accentBg : '#white' }}>
                   <div><div className="font-bold text-sm">{loc.name}</div><div className="text-xs text-stone-600">{loc.address}</div></div>
-                  <button type="button" className="px-3 py-1 text-xs font-bold border-2" style={{ borderColor: H.text, background: isSelected ? H.accent : 'transparent', color: isSelected ? '#fff' : H.text }}>{isSelected ? t('selected') : t('chooseStore')}</button>
+                  <button type="button" className="w-full sm:w-auto px-3 py-1 text-xs font-bold border-2" style={{ borderColor: H.text, background: isSelected ? H.accent : 'transparent', color: isSelected ? '#fff' : H.text }}>{isSelected ? t('selected') : t('chooseStore')}</button>
                 </div>
               );
             })}
@@ -514,7 +514,7 @@ export const HeritageOrderSummaryPage = () => {
         <div className="lg:col-span-7 p-5 border-2 space-y-4 shadow-[4px_4px_0px_#2A2421]" style={{ background: H.card, borderColor: H.text }}>
           <div className="flex justify-between border-b-2 pb-2" style={{ borderColor: H.text }}><span className="font-bold">Order #{orderId}</span><span className="text-xs font-bold" style={{ color: H.accent }}>Pending</span></div>
           {cart.map(({ product, quantity }) => (
-            <div key={product.id} className="flex justify-between text-xs font-bold"><span>{quantity}x {product.name}</span><span>{formatPrice(product.price * quantity)}</span></div>
+            <div key={product.id} className="flex flex-wrap justify-between gap-1 text-xs font-bold"><span>{quantity}x {product.name}</span><span>{formatPrice(product.price * quantity)}</span></div>
           ))}
           <div className="border-t-2 pt-2 flex justify-between font-bold text-base" style={{ borderColor: H.text }}><span>Total</span><span style={{ color: H.accent }}>{formatPrice(total)}</span></div>
         </div>

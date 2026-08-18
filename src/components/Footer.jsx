@@ -9,8 +9,8 @@ export const Footer = () => {
     switch (theme) {
       case 'dark-glamour':
         return {
-          wrapper: "bg-[#0D0C0B] text-[#F4EFEA] border-t border-[#E6C280]/20 mt-20",
-          topBar: "border-b border-[#E6C280]/15 bg-[#181614] py-8",
+          wrapper: "bg-[#0D0C0B] text-[#F4EFEA] border-t border-[#E6C280]/20 mt-10 sm:mt-20",
+          topBar: "border-b border-[#E6C280]/15 bg-[#181614] py-5 sm:py-8",
           iconColor: "text-[#E6C280]",
           titleColor: "text-[#E6C280]",
           textColor: "text-[#A89F91]",
@@ -19,8 +19,8 @@ export const Footer = () => {
         };
       case 'rose-blush':
         return {
-          wrapper: "bg-[#36121D] text-[#FDF6F6] border-t border-[#D4889B]/30 mt-20",
-          topBar: "border-b border-[#D4889B]/20 bg-[#260A14] py-8",
+          wrapper: "bg-[#36121D] text-[#FDF6F6] border-t border-[#D4889B]/30 mt-10 sm:mt-20",
+          topBar: "border-b border-[#D4889B]/20 bg-[#260A14] py-5 sm:py-8",
           iconColor: "text-[#D4889B]",
           titleColor: "text-[#D4889B]",
           textColor: "text-[#E8C5CE]",
@@ -29,8 +29,8 @@ export const Footer = () => {
         };
       case 'ocean-coastal':
         return {
-          wrapper: "bg-[#0B2545] text-[#EDF5F9] border-t border-[#00A896]/30 mt-20",
-          topBar: "border-b border-[#00A896]/20 bg-[#06172E] py-8",
+          wrapper: "bg-[#0B2545] text-[#EDF5F9] border-t border-[#00A896]/30 mt-10 sm:mt-20",
+          topBar: "border-b border-[#00A896]/20 bg-[#06172E] py-5 sm:py-8",
           iconColor: "text-[#00A896]",
           titleColor: "text-[#00A896]",
           textColor: "text-[#8CA8BE]",
@@ -39,8 +39,8 @@ export const Footer = () => {
         };
       case 'artisanal-heritage':
         return {
-          wrapper: "bg-[#2A2421] text-[#F7F4EE] border-t-2 border-[#C85A32] mt-20 font-mono",
-          topBar: "border-b border-[#C85A32]/30 bg-[#1E1917] py-8",
+          wrapper: "bg-[#2A2421] text-[#F7F4EE] border-t-2 border-[#C85A32] mt-10 sm:mt-20 font-mono",
+          topBar: "border-b border-[#C85A32]/30 bg-[#1E1917] py-5 sm:py-8",
           iconColor: "text-[#C85A32]",
           titleColor: "text-[#C85A32]",
           textColor: "text-[#B8ACA3]",
@@ -49,8 +49,8 @@ export const Footer = () => {
         };
       case 'cyber-luxe':
         return {
-          wrapper: "bg-[#060709] text-[#E2E8F0] border-t border-[#00F0FF]/30 mt-20 shadow-[0_-10px_30px_rgba(0,240,255,0.08)]",
-          topBar: "border-b border-[#00F0FF]/20 bg-[#0D0F14] py-8",
+          wrapper: "bg-[#060709] text-[#E2E8F0] border-t border-[#00F0FF]/30 mt-10 sm:mt-20 shadow-[0_-10px_30px_rgba(0,240,255,0.08)]",
+          topBar: "border-b border-[#00F0FF]/20 bg-[#0D0F14] py-5 sm:py-8",
           iconColor: "text-[#00F0FF]",
           titleColor: "text-[#00F0FF]",
           textColor: "text-[#94A3B8]",
@@ -59,8 +59,8 @@ export const Footer = () => {
         };
       default: // classic
         return {
-          wrapper: "bg-noir-900 text-brand-100 border-t border-noir-800 mt-20",
-          topBar: "border-b border-noir-800/80 bg-noir-950 py-8",
+          wrapper: "bg-noir-900 text-brand-100 border-t border-noir-800 mt-10 sm:mt-20",
+          topBar: "border-b border-noir-800/80 bg-noir-950 py-5 sm:py-8",
           iconColor: "text-brand-500",
           titleColor: "text-brand-500",
           textColor: "text-zinc-400",
@@ -102,7 +102,7 @@ export const Footer = () => {
       </div>
 
       {/* Main Footer Links */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 grid grid-cols-1 md:grid-cols-4 gap-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-10">
         
         {/* Col 1: Brand Info */}
         <div className="space-y-4">

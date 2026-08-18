@@ -19,7 +19,7 @@ const MainContent = () => {
 export default function App() {
   return (
     <ShopProvider>
-      <div className="min-h-screen flex flex-col bg-brand-50 text-noir-900 font-sans">
+      <div className="min-h-screen overflow-x-hidden flex flex-col bg-brand-50 text-noir-900 font-sans">
         <Navbar />
         <MainContent />
         <Footer />

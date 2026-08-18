@@ -1,4 +1,4 @@
-﻿import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useShop } from '../../../context/ShopContext';
 import { formatPrice } from '../../../data/mockData';
 import { MessageSquare, Copy, Check, Sparkles, User, Truck, Store, ArrowLeft, RefreshCcw, Settings } from 'lucide-react';
@@ -126,7 +126,7 @@ export const DarkOrderSummaryPage = () => {
               {formattedOrderText}
             </div>
 
-            <a href={whatsappUrl} target="_blank" rel="noreferrer" onClick={() => showToast(`Opening WhatsApp to ${storePhoneNumber}...`, 'success')} className="w-full py-4 font-bold text-xs uppercase tracking-widest rounded-full transition-all flex items-center justify-center gap-2" style={{ background: '#15803d', color: '#fff' }}>
+            <a href={whatsappUrl} target="_blank" rel="noreferrer" onClick={() => showToast(`Opening WhatsApp to ${storePhoneNumber}...`, 'success')} className="w-full py-4 font-bold text-xs uppercase tracking-wider sm:tracking-widest rounded-full transition-all flex items-center justify-center gap-2" style={{ background: '#15803d', color: '#fff' }}>
               <MessageSquare className="w-5 h-5" /> <span>{t('sendToWhatsApp')} ({storePhoneNumber})</span>
             </a>
 
@@ -136,7 +136,7 @@ export const DarkOrderSummaryPage = () => {
             </button>
           </div>
 
-          <div className="flex justify-between items-center text-xs">
+          <div className="flex flex-col sm:flex-row gap-3 sm:justify-between items-center text-xs">
             <button onClick={() => navigateTo('delivery')} className="flex items-center gap-1 font-semibold transition-opacity hover:opacity-70" style={{ color: D.muted }}>
               <ArrowLeft className="w-3.5 h-3.5" /> <span>{t('editDeliveryInfo')}</span>
             </button>

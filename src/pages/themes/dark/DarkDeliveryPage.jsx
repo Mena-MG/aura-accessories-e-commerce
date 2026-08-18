@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { useShop } from '../../../context/ShopContext';
 import { PICKUP_LOCATIONS } from '../../../data/mockData';
 import { Truck, Store, MapPin, Clock, ArrowRight, ArrowLeft, CheckCircle2, User, Home } from 'lucide-react';
@@ -23,7 +23,7 @@ export const DarkDeliveryPage = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in">
       {/* Header */}
-      <div className="flex items-center justify-between pb-6" style={{ borderBottom: `1px solid ${D.border}` }}>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-6" style={{ borderBottom: `1px solid ${D.border}` }}>
         <div>
           <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: D.accent }}>{t('checkoutStep2')}</span>
           <h1 className="font-serif text-3xl sm:text-4xl font-light mt-1" style={{ color: D.text }}>{t('fulfillmentMethod')}</h1>
@@ -36,7 +36,7 @@ export const DarkDeliveryPage = () => {
       {/* Method Toggle */}
       <div className="grid grid-cols-2 p-1.5 rounded-2xl max-w-lg mx-auto" style={{ background: '#111009', border: `1px solid ${D.cardBorder}` }}>
         {[['delivery', t('courierDelivery'), Truck], ['pickup', t('boutiquePickup'), Store]].map(([method, label, Icon]) => (
-          <button key={method} onClick={() => setDeliveryMethod(method)} className="py-3.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2" style={deliveryMethod === method ? { background: 'linear-gradient(135deg, #C5A059, #E6C280)', color: '#0D0C0B' } : { color: D.muted }}>
+          <button key={method} onClick={() => setDeliveryMethod(method)} className="py-3 px-2 sm:py-3.5 sm:px-4 rounded-xl text-xs font-bold uppercase tracking-normal sm:tracking-wider transition-all duration-300 flex items-center justify-center gap-2" style={deliveryMethod === method ? { background: 'linear-gradient(135deg, #C5A059, #E6C280)', color: '#0D0C0B' } : { color: D.muted }}>
             <Icon className="w-4 h-4" /> <span>{label}</span>
           </button>
         ))}
@@ -56,12 +56,12 @@ export const DarkDeliveryPage = () => {
             ].map(({ id, name, label, placeholder, type, required }) => (
               <div key={id} className="space-y-1.5">
                 <label htmlFor={`dark-${id}`} className="text-xs font-bold uppercase tracking-wider" style={{ color: D.text }}>{label}</label>
-                <input id={`dark-${id}`} type={type} name={name} required={required} value={deliveryDetails[name]} onChange={handleInputChange} placeholder={placeholder} className="w-full text-xs rounded-xl px-4 py-3 focus:outline-none" style={inputStyle} />
+                <input id={`dark-${id}`} type={type} name={name} required={required} value={deliveryDetails[name]} onChange={handleInputChange} placeholder={placeholder} className="w-full text-base sm:text-xs rounded-xl px-4 py-3 focus:outline-none" style={inputStyle} />
               </div>
             ))}
             <div className="sm:col-span-2 space-y-1.5">
               <label htmlFor="dark-address" className="text-xs font-bold uppercase tracking-wider" style={{ color: D.text }}>{t('streetAddress')}</label>
-              <input id="dark-address" type="text" name="address" required value={deliveryDetails.address} onChange={handleInputChange} placeholder="e.g. 15 El-Bostan Street" className="w-full text-xs rounded-xl px-4 py-3 focus:outline-none" style={inputStyle} />
+              <input id="dark-address" type="text" name="address" required value={deliveryDetails.address} onChange={handleInputChange} placeholder="e.g. 15 El-Bostan Street" className="w-full text-base sm:text-xs rounded-xl px-4 py-3 focus:outline-none" style={inputStyle} />
             </div>
             {[
               { id: 'city', name: 'city', label: t('cityPostal'), placeholder: 'e.g. Heliopolis, Cairo', required: true },
@@ -69,7 +69,7 @@ export const DarkDeliveryPage = () => {
             ].map(({ id, name, label, placeholder, required }) => (
               <div key={id} className="space-y-1.5">
                 <label htmlFor={`dark-${id}`} className="text-xs font-bold uppercase tracking-wider" style={{ color: D.text }}>{label}</label>
-                <input id={`dark-${id}`} type="text" name={name} required={required} value={deliveryDetails[name]} onChange={handleInputChange} placeholder={placeholder} className="w-full text-xs rounded-xl px-4 py-3 focus:outline-none" style={inputStyle} />
+                <input id={`dark-${id}`} type="text" name={name} required={required} value={deliveryDetails[name]} onChange={handleInputChange} placeholder={placeholder} className="w-full text-base sm:text-xs rounded-xl px-4 py-3 focus:outline-none" style={inputStyle} />
               </div>
             ))}
           </div>
@@ -120,7 +120,7 @@ export const DarkDeliveryPage = () => {
               {[{ id: 'pickup-name', name: 'name', label: t('fullName'), ph: 'Mariam Hassan' }, { id: 'pickup-phone', name: 'phone', label: t('phoneNumber'), ph: '+20 100 234 5678' }].map(({ id, name, label, ph }) => (
                 <div key={id} className="space-y-1">
                   <label htmlFor={`dark-${id}`} className="text-[11px] font-semibold" style={{ color: D.muted }}>{label}</label>
-                  <input id={`dark-${id}`} type="text" name={name} value={deliveryDetails[name]} onChange={handleInputChange} placeholder={ph} className="w-full text-xs rounded-xl px-3.5 py-2.5 focus:outline-none" style={inputStyle} />
+                  <input id={`dark-${id}`} type="text" name={name} value={deliveryDetails[name]} onChange={handleInputChange} placeholder={ph} className="w-full text-base sm:text-xs rounded-xl px-3.5 py-2.5 focus:outline-none" style={inputStyle} />
                 </div>
               ))}
             </div>

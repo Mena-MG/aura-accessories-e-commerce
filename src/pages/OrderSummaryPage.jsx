@@ -231,7 +231,7 @@ Thank you! Please confirm item availability and pickup/delivery window.`;
               target="_blank"
               rel="noreferrer"
               onClick={() => showToast(`Opening WhatsApp to send to ${storePhoneNumber}...`, 'success')}
-              className="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-widest rounded-full transition-all duration-300 shadow-luxe flex items-center justify-center gap-2 group"
+              className="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider sm:tracking-widest rounded-full transition-all duration-300 shadow-luxe flex items-center justify-center gap-2 group"
             >
               <MessageSquare className="w-5 h-5 text-white" />
               <span>Send to WhatsApp ({storePhoneNumber})</span>
@@ -248,7 +248,7 @@ Thank you! Please confirm item availability and pickup/delivery window.`;
           </div>
 
           {/* Navigation Back */}
-          <div className="flex justify-between items-center text-xs">
+          <div className="flex flex-col sm:flex-row gap-3 sm:justify-between sm:items-center text-xs">
             <button
               onClick={() => navigateTo('delivery')}
               className="text-zinc-500 hover:text-noir-900 transition-colors flex items-center gap-1 font-semibold"

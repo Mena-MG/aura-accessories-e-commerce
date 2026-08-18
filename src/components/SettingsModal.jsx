@@ -89,7 +89,7 @@ export const SettingsModal = () => {
       <div className="bg-white max-w-lg w-full rounded-3xl border border-brand-200 shadow-floating overflow-hidden space-y-6">
         
         {/* Modal Header */}
-        <div className="bg-noir-900 text-white p-6 flex items-center justify-between">
+        <div className="bg-noir-900 text-white p-4 sm:p-6 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-full bg-brand-500/20 flex items-center justify-center text-brand-400">
               <Settings className="w-4 h-4" />
@@ -102,14 +102,14 @@ export const SettingsModal = () => {
 
           <button
             onClick={() => setSettingsOpen(false)}
-            className="p-1.5 rounded-full hover:bg-noir-800 text-zinc-400 hover:text-white transition-colors"
+            className="p-2 rounded-full hover:bg-noir-800 text-zinc-400 hover:text-white transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Modal Body */}
-        <form onSubmit={handleSave} className="p-6 pt-0 space-y-5 max-h-[80vh] overflow-y-auto">
+        <form onSubmit={handleSave} className="p-4 pt-0 sm:p-6 sm:pt-0 space-y-5 max-h-[80vh] overflow-y-auto">
           
           {/* SECTION 1: GLOBAL THEME STYLE SELECTOR */}
           <div className="space-y-2">
@@ -121,7 +121,7 @@ export const SettingsModal = () => {
               Applies custom color palettes, background tones, and card styling across the <strong>ENTIRE website</strong>.
             </p>
 
-            <div className="grid grid-cols-2 gap-3 pt-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
               {themeOptions.map((opt) => {
                 const isSelected = theme === opt.id;
                 return (
@@ -204,11 +204,11 @@ export const SettingsModal = () => {
               <Phone className="w-4 h-4 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2 rtl:right-3.5 rtl:left-auto" />
               <input
                 id="store-phone-input"
-                type="text"
+                type="tel"
                 value={phoneInput}
                 onChange={(e) => setPhoneInput(e.target.value)}
                 placeholder="+201005550192"
-                className="w-full text-xs font-mono bg-brand-50 border border-brand-200 rounded-xl pl-10 pr-4 rtl:pr-10 rtl:pl-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                className="w-full text-base sm:text-xs font-mono bg-brand-50 border border-brand-200 rounded-xl pl-10 pr-4 rtl:pr-10 rtl:pl-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500"
               />
             </div>
           </div>
@@ -236,13 +236,13 @@ export const SettingsModal = () => {
             <button
               type="button"
               onClick={() => setSettingsOpen(false)}
-              className="px-5 py-2.5 rounded-full text-xs font-semibold text-zinc-600 hover:text-noir-900"
+              className="px-5 py-3 sm:py-2.5 rounded-full text-xs font-semibold text-zinc-600 hover:text-noir-900"
             >
               {t('cancel')}
             </button>
             <button
               type="submit"
-              className="px-6 py-2.5 bg-noir-900 hover:bg-brand-600 text-white rounded-full text-xs font-semibold uppercase tracking-wider transition-colors shadow-md"
+              className="px-6 py-3 sm:py-2.5 bg-noir-900 hover:bg-brand-600 text-white rounded-full text-xs font-semibold uppercase tracking-wider transition-colors shadow-md"
             >
               {t('saveSettings')}
             </button>

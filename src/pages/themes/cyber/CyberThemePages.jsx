@@ -44,22 +44,22 @@ export const CyberHomePage = () => {
   ];
 
   return (
-    <div className="space-y-20 animate-fade-in font-mono" style={{ background: C.bg, color: C.text }}>
+    <div className="space-y-10 sm:space-y-20 animate-fade-in font-mono" style={{ background: C.bg, color: C.text }}>
       
       {/* HERO SECTION */}
-      <section className="relative overflow-hidden pt-8 pb-20 lg:py-28" style={{ background: 'linear-gradient(180deg, #0A0D14 0%, #060709 100%)', borderBottom: `1px solid ${C.border}` }}>
+      <section className="relative overflow-hidden pt-8 pb-10 lg:pb-20" style={{ background: 'linear-gradient(180deg, #0A0D14 0%, #060709 100%)', borderBottom: `1px solid ${C.border}` }}>
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(0,240,255,0.08) 0%, rgba(168,85,247,0.04) 50%, transparent 70%)' }} />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
             <div className="lg:col-span-7 space-y-6 text-center lg:text-left rtl:lg:text-right">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md text-xs font-bold uppercase tracking-widest" style={{ background: C.accentBg, border: `1px solid ${C.cardBorder}`, color: C.accent }}>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md text-xs font-bold uppercase tracking-wider sm:tracking-widest" style={{ background: C.accentBg, border: `1px solid ${C.cardBorder}`, color: C.accent }}>
                 <Terminal className="w-3.5 h-3.5 text-[#00F0FF] animate-pulse" />
                 <span>SYSTEM ONLINE • CAIRO CYBER EDITION</span>
               </div>
 
-              <h1 className="font-serif text-4xl sm:text-6xl font-light leading-tight" style={{ color: C.text }}>
+              <h1 className="font-serif text-2xl sm:text-4xl md:text-6xl font-light leading-tight" style={{ color: C.text }}>
                 {t('heroTitle1')} <br />
                 <span className="font-sans font-bold" style={{ background: 'linear-gradient(135deg, #00F0FF 0%, #A855F7 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                   {t('heroTitle2')}
@@ -81,11 +81,11 @@ export const CyberHomePage = () => {
                 </button>
               </div>
 
-              <div className="pt-6 grid grid-cols-3 gap-4 border-t" style={{ borderColor: C.border }}>
+              <div className="pt-6 grid grid-cols-3 gap-2 sm:gap-4 border-t" style={{ borderColor: C.border }}>
                 {[['100%', t('handmadeQuality')], ['WhatsApp', t('instantCheckout')], ['Same Day', t('sameDayPickup')]].map(([val, label]) => (
                   <div key={label} className="text-center lg:text-left">
-                    <div className="text-xl font-bold font-mono" style={{ color: C.accent }}>{val}</div>
-                    <div className="text-[10px] uppercase font-mono mt-0.5" style={{ color: C.muted }}>{label}</div>
+                    <div className="text-base sm:text-xl font-bold font-mono" style={{ color: C.accent }}>{val}</div>
+                    <div className="text-[9px] sm:text-[10px] uppercase font-mono mt-0.5" style={{ color: C.muted }}>{label}</div>
                   </div>
                 ))}
               </div>
@@ -152,7 +152,7 @@ export const CyberHomePage = () => {
 
       {/* PROMO BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="relative rounded-2xl p-8 sm:p-12 overflow-hidden border shadow-[0_0_40px_rgba(0,240,255,0.15)]" style={{ background: 'linear-gradient(135deg, #0A0F1D 0%, #150A21 100%)', borderColor: C.cardBorder }}>
+        <div className="relative rounded-2xl p-5 sm:p-8 md:p-12 overflow-hidden border shadow-[0_0_40px_rgba(0,240,255,0.15)]" style={{ background: 'linear-gradient(135deg, #0A0F1D 0%, #150A21 100%)', borderColor: C.cardBorder }}>
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
             <div className="md:col-span-8 space-y-3">
               <span className="text-xs font-bold uppercase tracking-widest" style={{ color: C.accent }}>{t('exclusiveOffer')}</span>
@@ -162,7 +162,7 @@ export const CyberHomePage = () => {
               </p>
             </div>
             <div className="md:col-span-4 flex justify-start md:justify-end">
-              <button onClick={() => navigateTo('catalog')} className="px-8 py-3.5 font-bold text-xs uppercase tracking-widest rounded-md" style={C.btnPrimary}>
+              <button onClick={() => navigateTo('catalog')} className="w-full sm:w-auto px-8 py-3.5 font-bold text-xs uppercase tracking-widest rounded-md" style={C.btnPrimary}>
                 {t('claimDiscount')}
               </button>
             </div>
@@ -394,7 +394,7 @@ export const CyberCartPage = () => {
         <div className="lg:col-span-8 space-y-4">
           {cart.map(({ product, quantity }) => (
             <div key={product.id} className="p-4 rounded-xl border flex flex-col sm:flex-row items-center gap-6" style={{ background: C.card, borderColor: C.cardBorder }}>
-              <img src={product.image} alt={product.name} className="w-20 h-20 object-cover rounded-lg border" style={{ borderColor: C.cardBorder }} />
+              <img src={product.image} alt={product.name} className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg border" style={{ borderColor: C.cardBorder }} />
               <div className="flex-1 text-center sm:text-left rtl:sm:text-right space-y-1">
                 <span className="text-[10px] font-bold uppercase block" style={{ color: C.accent }}>{product.category}</span>
                 <h3 className="font-serif text-lg font-medium" style={{ color: C.text }}>{product.name}</h3>
@@ -402,11 +402,11 @@ export const CyberCartPage = () => {
               </div>
               <div className="flex items-center gap-3">
                 <div className="flex items-center rounded-lg border p-1" style={{ borderColor: C.cardBorder, background: C.accentBg }}>
-                  <button onClick={() => updateCartQuantity(product.id, quantity - 1)} className="w-7 h-7 flex items-center justify-center"><Minus className="w-3 h-3" /></button>
-                  <span className="w-8 text-center font-bold text-xs" style={{ color: C.accent }}>{quantity}</span>
-                  <button onClick={() => updateCartQuantity(product.id, quantity + 1)} className="w-7 h-7 flex items-center justify-center"><Plus className="w-3 h-3" /></button>
+                  <button onClick={() => updateCartQuantity(product.id, quantity - 1)} className="w-9 h-9 sm:w-7 sm:h-7 flex items-center justify-center"><Minus className="w-3 h-3" /></button>
+                  <span className="w-9 sm:w-8 text-center font-bold text-xs" style={{ color: C.accent }}>{quantity}</span>
+                  <button onClick={() => updateCartQuantity(product.id, quantity + 1)} className="w-9 h-9 sm:w-7 sm:h-7 flex items-center justify-center"><Plus className="w-3 h-3" /></button>
                 </div>
-                <span className="text-sm font-bold w-24 text-right" style={{ color: C.text }}>{formatPrice(product.price * quantity)}</span>
+                <span className="text-sm font-bold w-20 sm:w-24 text-right" style={{ color: C.text }}>{formatPrice(product.price * quantity)}</span>
                 <button onClick={() => removeFromCart(product.id)} className="p-2 text-slate-400 hover:text-red-400"><Trash2 className="w-4 h-4" /></button>
               </div>
             </div>
@@ -473,9 +473,9 @@ export const CyberDeliveryPage = () => {
             {PICKUP_LOCATIONS.map(loc => {
               const isSelected = selectedPickupLocation.id === loc.id;
               return (
-                <div key={loc.id} onClick={() => setSelectedPickupLocation(loc)} className="p-4 rounded-lg border cursor-pointer flex justify-between items-center" style={{ borderColor: isSelected ? C.accent : C.cardBorder, background: isSelected ? C.accentBg : C.inputBg }}>
+                <div key={loc.id} onClick={() => setSelectedPickupLocation(loc)} className="p-4 rounded-lg border cursor-pointer flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-3" style={{ borderColor: isSelected ? C.accent : C.cardBorder, background: isSelected ? C.accentBg : C.inputBg }}>
                   <div><div className="font-bold text-sm" style={{ color: C.text }}>{loc.name}</div><div className="text-xs text-slate-400">{loc.address}</div></div>
-                  <button type="button" className="px-3 py-1 text-xs font-bold rounded border" style={isSelected ? C.btnPrimary : { background: C.accentBg, borderColor: C.cardBorder, color: C.accent }}>{isSelected ? t('selected') : t('chooseStore')}</button>
+                  <button type="button" className="w-full sm:w-auto px-3 py-1 text-xs font-bold rounded border" style={isSelected ? C.btnPrimary : { background: C.accentBg, borderColor: C.cardBorder, color: C.accent }}>{isSelected ? t('selected') : t('chooseStore')}</button>
                 </div>
               );
             })}
@@ -516,7 +516,7 @@ export const CyberOrderSummaryPage = () => {
         <div className="lg:col-span-7 p-6 rounded-xl border space-y-6" style={{ background: C.card, borderColor: C.cardBorder }}>
           <div className="flex justify-between border-b pb-3" style={{ borderColor: C.border }}><span className="font-bold">Order #{orderId}</span><span className="text-xs font-bold text-emerald-400">Pending Send</span></div>
           {cart.map(({ product, quantity }) => (
-            <div key={product.id} className="flex justify-between text-xs font-bold"><span>{quantity}x {product.name}</span><span style={{ color: C.accent }}>{formatPrice(product.price * quantity)}</span></div>
+            <div key={product.id} className="flex flex-wrap justify-between gap-1 text-xs font-bold"><span>{quantity}x {product.name}</span><span style={{ color: C.accent }}>{formatPrice(product.price * quantity)}</span></div>
           ))}
           <div className="border-t pt-3 flex justify-between font-bold text-lg" style={{ borderColor: C.border }}><span>Total Payable</span><span style={{ color: C.accent }}>{formatPrice(total)}</span></div>
         </div>
