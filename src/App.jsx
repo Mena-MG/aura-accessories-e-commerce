@@ -4,38 +4,14 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { Toast } from './components/Toast';
 import { SettingsModal } from './components/SettingsModal';
-import { BoutiqueHomeMaster } from './pages/home-showcase/BoutiqueHomeMaster';
-import { CatalogPage } from './pages/CatalogPage';
-import { ProductDetailPage } from './pages/ProductDetailPage';
-import { CartPage } from './pages/CartPage';
-import { DeliveryPage } from './pages/DeliveryPage';
-import { OrderSummaryPage } from './pages/OrderSummaryPage';
+import { ThemedRouter } from './pages/ThemedRouter';
 
 const MainContent = () => {
   const { activePage } = useShop();
 
-  const renderPage = () => {
-    switch (activePage) {
-      case 'home':
-        return <BoutiqueHomeMaster />;
-      case 'catalog':
-        return <CatalogPage />;
-      case 'product-detail':
-        return <ProductDetailPage />;
-      case 'cart':
-        return <CartPage />;
-      case 'delivery':
-        return <DeliveryPage />;
-      case 'summary':
-        return <OrderSummaryPage />;
-      default:
-        return <BoutiqueHomeMaster />;
-    }
-  };
-
   return (
     <main className="flex-1">
-      {renderPage()}
+      <ThemedRouter page={activePage} />
     </main>
   );
 };
