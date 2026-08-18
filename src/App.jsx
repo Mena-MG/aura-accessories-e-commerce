@@ -4,7 +4,7 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { Toast } from './components/Toast';
 import { SettingsModal } from './components/SettingsModal';
-import { HomePage } from './pages/HomePage';
+import { BoutiqueHomeMaster } from './pages/home-showcase/BoutiqueHomeMaster';
 import { CatalogPage } from './pages/CatalogPage';
 import { ProductDetailPage } from './pages/ProductDetailPage';
 import { CartPage } from './pages/CartPage';
@@ -17,7 +17,7 @@ const MainContent = () => {
   const renderPage = () => {
     switch (activePage) {
       case 'home':
-        return <HomePage />;
+        return <BoutiqueHomeMaster />;
       case 'catalog':
         return <CatalogPage />;
       case 'product-detail':
@@ -29,7 +29,7 @@ const MainContent = () => {
       case 'summary':
         return <OrderSummaryPage />;
       default:
-        return <HomePage />;
+        return <BoutiqueHomeMaster />;
     }
   };
 
