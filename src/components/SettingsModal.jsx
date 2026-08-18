@@ -30,7 +30,8 @@ export const SettingsModal = () => {
   const themeOptions = [
     { 
       id: 'classic', 
-      name: t('themeClassic'), 
+      name: t('themeClassic'),
+      desc: 'Boutique Classic', 
       bg: '#FDFBF7', 
       accent: '#C5A059', 
       border: '#DED1BC' 
@@ -38,6 +39,7 @@ export const SettingsModal = () => {
     { 
       id: 'dark-glamour', 
       name: t('themeDark'), 
+      desc: 'Obsidian Editorial',
       bg: '#0D0C0B', 
       accent: '#E6C280', 
       border: '#332E27' 
@@ -45,6 +47,7 @@ export const SettingsModal = () => {
     { 
       id: 'rose-blush', 
       name: t('themeRose'), 
+      desc: 'Romantic Velvet',
       bg: '#FDF6F6', 
       accent: '#D4889B', 
       border: '#E8D3D3' 
@@ -52,9 +55,26 @@ export const SettingsModal = () => {
     { 
       id: 'ocean-coastal', 
       name: t('themeOcean'), 
-      bg: '#F4F8FA', 
+      desc: 'Coastal Sapphire',
+      bg: '#EDF5F9', 
       accent: '#00A896', 
       border: '#C8DCE6' 
+    },
+    { 
+      id: 'artisanal-heritage', 
+      name: t('themeHeritage'), 
+      desc: 'Craft & Terracotta',
+      bg: '#F7F4EE', 
+      accent: '#C85A32', 
+      border: '#D9CEBE' 
+    },
+    { 
+      id: 'cyber-luxe', 
+      name: t('themeCyber'), 
+      desc: 'Futuristic Cyber Neon',
+      bg: '#060709', 
+      accent: '#00F0FF', 
+      border: '#141720' 
     },
   ];
 
@@ -122,9 +142,14 @@ export const SettingsModal = () => {
                       <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: opt.accent }} />
                     </div>
 
-                    <span className="text-xs font-semibold text-noir-900 flex-1 line-clamp-1">
-                      {opt.name}
-                    </span>
+                    <div className="flex-1 min-w-0">
+                      <span className="text-xs font-semibold text-noir-900 block truncate">
+                        {opt.name}
+                      </span>
+                      <span className="text-[10px] text-zinc-400 font-mono block">
+                        {opt.desc}
+                      </span>
+                    </div>
 
                     {isSelected && (
                       <Check className="w-4 h-4 text-brand-600 flex-shrink-0" />

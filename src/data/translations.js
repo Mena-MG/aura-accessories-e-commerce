@@ -16,10 +16,12 @@ export const translations = {
     
     // Themes
     themeSelect: "Global Website Theme Style",
-    themeClassic: "Classic Alabaster",
-    themeDark: "Dark Obsidian Glamour",
-    themeRose: "French Rose & Blush",
-    themeOcean: "Coastal Riviera Sapphire",
+    themeClassic: "Classic Parisian Boutique",
+    themeDark: "Dark Obsidian Editorial",
+    themeRose: "Rose Velvet Minimalist",
+    themeOcean: "Coastal Sapphire Riviera",
+    themeHeritage: "Artisanal Craft Heritage",
+    themeCyber: "Futuristic Cyber Luxury",
     
     // Hero Section
     heroBadge: "Handcrafted Boutique Collection Cairo 2026",
@@ -172,10 +174,12 @@ export const translations = {
     
     // Themes
     themeSelect: "ستايل وتصميم الموقع بالكامل",
-    themeClassic: "البوتيك العاجي (Classic)",
-    themeDark: "الظلام الفاخر (Dark Obsidian)",
-    themeRose: "الورد الفرنسي (Rose & Blush)",
-    themeOcean: "الأزرق الساحلي (Coastal Riviera)",
+    themeClassic: "البوتيك الباريسي الكلاسيكي",
+    themeDark: "الفخامة التحريرية (Obsidian Luxe)",
+    themeRose: "الورد المخملي (Rose Velvet)",
+    themeOcean: "الساحل الأزرق (Coastal Sapphire)",
+    themeHeritage: "التراث اليدوي (Artisanal Craft)",
+    themeCyber: "المستقبلي النيون (Cyber Luxury)",
     
     // Hero Section
     heroBadge: "تشكيلة البوتيك اليدوية — القاهرة 2026",

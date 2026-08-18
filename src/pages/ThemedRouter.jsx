@@ -1,7 +1,7 @@
 import React from 'react';
 import { useShop } from '../context/ShopContext';
 
-// Classic theme (existing pages)
+// 1. Classic theme (Parisian Boutique)
 import { HomePage } from './HomePage';
 import { CatalogPage } from './CatalogPage';
 import { ProductDetailPage } from './ProductDetailPage';
@@ -9,7 +9,7 @@ import { CartPage } from './CartPage';
 import { DeliveryPage } from './DeliveryPage';
 import { OrderSummaryPage } from './OrderSummaryPage';
 
-// Dark Glamour theme
+// 2. Dark Glamour theme (Obsidian Luxe Editorial)
 import { DarkHomePage } from './themes/dark/DarkHomePage';
 import { DarkCatalogPage } from './themes/dark/DarkCatalogPage';
 import { DarkProductDetailPage } from './themes/dark/DarkProductDetailPage';
@@ -17,7 +17,7 @@ import { DarkCartPage } from './themes/dark/DarkCartPage';
 import { DarkDeliveryPage } from './themes/dark/DarkDeliveryPage';
 import { DarkOrderSummaryPage } from './themes/dark/DarkOrderSummaryPage';
 
-// Rose Blush theme
+// 3. Rose Blush theme (Rose Velvet Minimalist)
 import {
   RoseHomePage,
   RoseCatalogPage,
@@ -27,7 +27,7 @@ import {
   RoseOrderSummaryPage,
 } from './themes/rose/RoseThemePages';
 
-// Ocean Coastal theme
+// 4. Ocean Coastal theme (Mediterranean Sapphire Riviera)
 import {
   OceanHomePage,
   OceanCatalogPage,
@@ -36,6 +36,26 @@ import {
   OceanDeliveryPage,
   OceanOrderSummaryPage,
 } from './themes/ocean/OceanThemePages';
+
+// 5. Artisanal Heritage theme (Craft & Terracotta)
+import {
+  HeritageHomePage,
+  HeritageCatalogPage,
+  HeritageProductDetailPage,
+  HeritageCartPage,
+  HeritageDeliveryPage,
+  HeritageOrderSummaryPage,
+} from './themes/heritage/HeritageThemePages';
+
+// 6. Cyber Luxe theme (Futuristic Cyber Neon)
+import {
+  CyberHomePage,
+  CyberCatalogPage,
+  CyberProductDetailPage,
+  CyberCartPage,
+  CyberDeliveryPage,
+  CyberOrderSummaryPage,
+} from './themes/cyber/CyberThemePages';
 
 const PAGE_MAP = {
   classic: {
@@ -70,30 +90,53 @@ const PAGE_MAP = {
     delivery: OceanDeliveryPage,
     summary: OceanOrderSummaryPage,
   },
+  'artisanal-heritage': {
+    home: HeritageHomePage,
+    catalog: HeritageCatalogPage,
+    'product-detail': HeritageProductDetailPage,
+    cart: HeritageCartPage,
+    delivery: HeritageDeliveryPage,
+    summary: HeritageOrderSummaryPage,
+  },
+  'cyber-luxe': {
+    home: CyberHomePage,
+    catalog: CyberCatalogPage,
+    'product-detail': CyberProductDetailPage,
+    cart: CyberCartPage,
+    delivery: CyberDeliveryPage,
+    summary: CyberOrderSummaryPage,
+  },
 };
 
 /**
- * ThemedRouter: Given the current page key and theme from ShopContext,
- * renders the appropriate themed page component.
+ * ThemedRouter: Reads 'theme' from ShopContext and dispatches to the correct 
+ * themed layout component for the current active page.
  */
 export const ThemedRouter = ({ page }) => {
   const { theme } = useShop();
 
-  // Resolve theme key, fallback to classic
   const themeMap = PAGE_MAP[theme] ?? PAGE_MAP['classic'];
   const PageComponent = themeMap[page] ?? themeMap['home'];
 
-  // Wrap dark-glamour in a dark background wrapper
-  const wrapperStyle = theme === 'dark-glamour'
-    ? { background: '#0D0C0B', minHeight: '100vh' }
-    : theme === 'rose-blush'
-    ? { background: '#FDF6F6', minHeight: '100vh' }
-    : theme === 'ocean-coastal'
-    ? { background: '#EDF5F9', minHeight: '100vh' }
-    : {};
+  const getWrapperStyle = () => {
+    switch (theme) {
+      case 'dark-glamour':
+        return { background: '#0D0C0B', color: '#F4EFEA', minHeight: '100vh' };
+      case 'rose-blush':
+        return { background: '#FDF6F6', color: '#36121D', minHeight: '100vh' };
+      case 'ocean-coastal':
+        return { background: '#EDF5F9', color: '#0B2545', minHeight: '100vh' };
+      case 'artisanal-heritage':
+        return { background: '#F7F4EE', color: '#2A2421', minHeight: '100vh' };
+      case 'cyber-luxe':
+        return { background: '#060709', color: '#E2E8F0', minHeight: '100vh' };
+      default:
+        return { background: '#FDFBF7', color: '#161513', minHeight: '100vh' };
+    }
+  };
 
   return (
-    <div style={wrapperStyle}>
+    <div style={getWrapperStyle()}>
       <PageComponent />
     </div>
   );
