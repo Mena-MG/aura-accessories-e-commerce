@@ -1,15 +1,17 @@
 import React from 'react';
 import { useShop } from '../context/ShopContext';
 
-// 1. Classic theme (Parisian Boutique)
+// Core Components
 import { HomePage } from './HomePage';
 import { CatalogPage } from './CatalogPage';
 import { ProductDetailPage } from './ProductDetailPage';
 import { CartPage } from './CartPage';
 import { DeliveryPage } from './DeliveryPage';
 import { OrderSummaryPage } from './OrderSummaryPage';
+import { KitchenCalculator } from '../components/KitchenCalculator';
+import { Kitchen3DViewer } from '../components/Kitchen3DViewer';
 
-// 2. Dark Glamour theme (Obsidian Luxe Editorial)
+// Theme-specific page components
 import { DarkHomePage } from './themes/dark/DarkHomePage';
 import { DarkCatalogPage } from './themes/dark/DarkCatalogPage';
 import { DarkProductDetailPage } from './themes/dark/DarkProductDetailPage';
@@ -17,7 +19,6 @@ import { DarkCartPage } from './themes/dark/DarkCartPage';
 import { DarkDeliveryPage } from './themes/dark/DarkDeliveryPage';
 import { DarkOrderSummaryPage } from './themes/dark/DarkOrderSummaryPage';
 
-// 3. Rose Blush theme (Rose Velvet Minimalist)
 import {
   RoseHomePage,
   RoseCatalogPage,
@@ -27,7 +28,6 @@ import {
   RoseOrderSummaryPage,
 } from './themes/rose/RoseThemePages';
 
-// 4. Ocean Coastal theme (Mediterranean Sapphire Riviera)
 import {
   OceanHomePage,
   OceanCatalogPage,
@@ -37,7 +37,6 @@ import {
   OceanOrderSummaryPage,
 } from './themes/ocean/OceanThemePages';
 
-// 5. Artisanal Heritage theme (Craft & Terracotta)
 import {
   HeritageHomePage,
   HeritageCatalogPage,
@@ -47,7 +46,6 @@ import {
   HeritageOrderSummaryPage,
 } from './themes/heritage/HeritageThemePages';
 
-// 6. Cyber Luxe theme (Futuristic Cyber Neon)
 import {
   CyberHomePage,
   CyberCatalogPage,
@@ -62,6 +60,8 @@ const PAGE_MAP = {
     home: HomePage,
     catalog: CatalogPage,
     'product-detail': ProductDetailPage,
+    calculator: KitchenCalculator,
+    studio3d: Kitchen3DViewer,
     cart: CartPage,
     delivery: DeliveryPage,
     summary: OrderSummaryPage,
@@ -70,6 +70,8 @@ const PAGE_MAP = {
     home: DarkHomePage,
     catalog: DarkCatalogPage,
     'product-detail': DarkProductDetailPage,
+    calculator: KitchenCalculator,
+    studio3d: Kitchen3DViewer,
     cart: DarkCartPage,
     delivery: DarkDeliveryPage,
     summary: DarkOrderSummaryPage,
@@ -78,6 +80,8 @@ const PAGE_MAP = {
     home: RoseHomePage,
     catalog: RoseCatalogPage,
     'product-detail': RoseProductDetailPage,
+    calculator: KitchenCalculator,
+    studio3d: Kitchen3DViewer,
     cart: RoseCartPage,
     delivery: RoseDeliveryPage,
     summary: RoseOrderSummaryPage,
@@ -86,6 +90,8 @@ const PAGE_MAP = {
     home: OceanHomePage,
     catalog: OceanCatalogPage,
     'product-detail': OceanProductDetailPage,
+    calculator: KitchenCalculator,
+    studio3d: Kitchen3DViewer,
     cart: OceanCartPage,
     delivery: OceanDeliveryPage,
     summary: OceanOrderSummaryPage,
@@ -94,6 +100,8 @@ const PAGE_MAP = {
     home: HeritageHomePage,
     catalog: HeritageCatalogPage,
     'product-detail': HeritageProductDetailPage,
+    calculator: KitchenCalculator,
+    studio3d: Kitchen3DViewer,
     cart: HeritageCartPage,
     delivery: HeritageDeliveryPage,
     summary: HeritageOrderSummaryPage,
@@ -102,16 +110,14 @@ const PAGE_MAP = {
     home: CyberHomePage,
     catalog: CyberCatalogPage,
     'product-detail': CyberProductDetailPage,
+    calculator: KitchenCalculator,
+    studio3d: Kitchen3DViewer,
     cart: CyberCartPage,
     delivery: CyberDeliveryPage,
     summary: CyberOrderSummaryPage,
   },
 };
 
-/**
- * ThemedRouter: Reads 'theme' from ShopContext and dispatches to the correct 
- * themed layout component for the current active page.
- */
 export const ThemedRouter = ({ page }) => {
   const { theme } = useShop();
 

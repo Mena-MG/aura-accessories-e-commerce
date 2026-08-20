@@ -1,9 +1,9 @@
 import React, { useMemo, useState } from 'react';
 import { useShop } from '../context/ShopContext';
-import { formatPrice } from '../data/mockData';
+import { formatPrice, UNIT_LABELS } from '../data/mockData';
 import { 
   MessageSquare, Copy, Check, Sparkles, ShoppingBag, 
-  MapPin, Phone, User, Tag, Truck, Store, ArrowLeft, RefreshCcw, Settings 
+  MapPin, Phone, User, Tag, Truck, Store, ArrowLeft, RefreshCcw, Settings, Printer, CreditCard, CheckCircle2
 } from 'lucide-react';
 
 export const OrderSummaryPage = () => {
@@ -17,258 +17,293 @@ export const OrderSummaryPage = () => {
     selectedPickupLocation, 
     deliveryFee, 
     total, 
+    paymentMethod,
+    instapayScreenshot,
+    transactionRef,
     navigateTo, 
     showToast,
     clearCart,
     storePhoneNumber,
-    setSettingsOpen
+    language,
+    t
   } = useShop();
 
+  const isAr = language === 'ar';
   const [copied, setCopied] = useState(false);
-  const [orderId] = useState(() => `AUR-${Math.floor(10000 + Math.random() * 90000)}`);
+  const [orderId] = useState(() => `AUR-KITCHEN-${Math.floor(10000 + Math.random() * 90000)}`);
 
-  const cleanPhone = storePhoneNumber.replace(/[^0-9+]/g, '');
+  const cleanPhone = storePhoneNumber.replace(/[^0-9]/g, '');
 
-  // Generate formatted WhatsApp message text with EGP
+  // Formatted WhatsApp message generator
   const formattedOrderText = useMemo(() => {
-    const itemsList = cart.map(item => 
-      `• ${item.quantity}x ${item.product.name} (${formatPrice(item.product.price)} ea)`
-    ).join('\n');
+    const currency = isAr ? 'ج.م' : 'EGP';
+    const fmt = (n) => n.toLocaleString('en-US');
 
-    const fulfillmentText = deliveryMethod === 'delivery' 
-      ? `🚚 *METHOD:* Courier Delivery\n📍 *Address:* ${deliveryDetails.address}, ${deliveryDetails.city}\n📝 *Notes:* ${deliveryDetails.notes || 'None'}`
-      : `🏪 *METHOD:* Boutique Store Pickup\n📍 *Store:* ${selectedPickupLocation.name}\n📍 *Address:* ${selectedPickupLocation.address}`;
+    const header = isAr
+      ? `╔═══════════════════════════════╗\n    🏠 أورا كيتشن ماركت\n       طلب توريد وتنفيذ جديد\n╚═══════════════════════════════╝`
+      : `╔═══════════════════════════════╗\n    🏠 AURA KITCHEN MARKET\n       New Fit-Out & Material Order\n╚═══════════════════════════════╝`;
 
-    const discountText = appliedCoupon 
-      ? `\n🏷️ *Discount (${appliedCoupon.code}):* -${formatPrice(discountAmount)}`
-      : '';
+    const meta = isAr
+      ? `\n📋 رقم المقايسة: #${orderId}\n📅 التاريخ: ${new Date().toLocaleDateString('ar-EG', { dateStyle: 'long' })}`
+      : `\n📋 Order ID: #${orderId}\n📅 Date: ${new Date().toLocaleDateString('en-US', { dateStyle: 'long' })}`;
 
-    const deliveryFeeText = deliveryFee > 0 ? `\n🚚 *Delivery Fee:* ${formatPrice(deliveryFee)}` : `\n🚚 *Delivery Fee:* FREE`;
+    const customer = isAr
+      ? `\n\n👤 بيانات العميل:\n━━━━━━━━━━━━━━━━━━\n• الاسم: ${deliveryDetails.name}\n• الموبايل: ${deliveryDetails.phone}`
+      : `\n\n👤 Client Details:\n━━━━━━━━━━━━━━━━━━\n• Name: ${deliveryDetails.name}\n• Phone: ${deliveryDetails.phone}`;
 
-    return `🛍️ *NEW ORDER FROM AURA & CO. WEBSITE*
-----------------------------------------
-📋 *Order ID:* #${orderId}
-👤 *Customer:* ${deliveryDetails.name || 'Valued Customer'}
-📞 *Phone:* ${deliveryDetails.phone || 'N/A'}
+    let fulfillment = '';
+    if (deliveryMethod === 'delivery') {
+      fulfillment = isAr
+        ? `\n\n📦 طريقة التوريد: شحن لموقع المشروع\n📍 العنوان: ${deliveryDetails.address}, ${deliveryDetails.city}\n📝 ملاحظات: ${deliveryDetails.notes || 'لا يوجد'}`
+        : `\n\n📦 Delivery Method: Site Freight Delivery\n📍 Address: ${deliveryDetails.address}, ${deliveryDetails.city}\n📝 Notes: ${deliveryDetails.notes || 'None'}`;
+    } else {
+      fulfillment = isAr
+        ? `\n\n📦 طريقة التوريد: استلام ومعاينة بالمعرض\n📍 المعرض: ${selectedPickupLocation?.nameAr || selectedPickupLocation?.name}\n📍 العنوان: ${selectedPickupLocation?.addressAr || selectedPickupLocation?.address}`
+        : `\n\n📦 Delivery Method: Showroom Pickup\n📍 Hub: ${selectedPickupLocation?.name}\n📍 Address: ${selectedPickupLocation?.address}`;
+    }
 
-${fulfillmentText}
+    const itemsHeader = isAr ? `\n\n🛒 الخامات المطلوبة:\n━━━━━━━━━━━━━━━━━━` : `\n\n🛒 Selected Materials:\n━━━━━━━━━━━━━━━━━━`;
+    
+    const itemsList = cart.map((item, idx) => {
+      const product = item.product;
+      const name = isAr ? (product.nameAr || product.name) : product.name;
+      const unit = product.unitType ? (UNIT_LABELS[product.unitType]?.[language] || '') : '';
+      const custom = item.customNote ? `\n   ↳ [${item.customNote}]` : '';
+      return `\n${idx + 1}️⃣ ${name}${custom}\n   • الكمية: ${item.quantity} ${unit} × ${fmt(product.price)} ${currency} = ${fmt(product.price * item.quantity)} ${currency}`;
+    }).join('\n');
 
-----------------------------------------
-🛒 *ORDER ITEMS:*
-${itemsList}
+    const paymentLabel = {
+      instapay: isAr ? 'تحويل إنستاباي الفوري (مرفق الإيصال ✅)' : 'Instapay Transfer (Receipt Attached ✅)',
+      cod: isAr ? 'الدفع نقداً عند الاستلام والمعاينة' : 'Cash on Delivery / On Site Inspection',
+      pickup: isAr ? 'السداد بالمعرض عند اعتماد العينات' : 'Pay at Showroom / Atelier',
+    }[paymentMethod] || 'Instapay';
 
-----------------------------------------
-💵 *Subtotal:* ${formatPrice(subtotal)}${discountText}${deliveryFeeText}
-✨ *TOTAL DUE:* ${formatPrice(total)}
-----------------------------------------
-Thank you! Please confirm item availability and pickup/delivery window.`;
-  }, [cart, orderId, deliveryDetails, deliveryMethod, selectedPickupLocation, subtotal, appliedCoupon, discountAmount, deliveryFee, total]);
+    const txRef = transactionRef ? `\n• رقم العملية: ${transactionRef}` : '';
 
-  // Encoded URL for WhatsApp using storePhoneNumber
-  const whatsappUrl = `https://wa.me/${cleanPhone.replace('+', '')}?text=${encodeURIComponent(formattedOrderText)}`;
+    const summary = isAr
+      ? `\n\n💰 ملخص الحساب:\n━━━━━━━━━━━━━━━━━━\n• إجمالي الخامات: ${fmt(subtotal)} ${currency}${discountAmount > 0 ? `\n• الخصم (${appliedCoupon?.code}): -${fmt(discountAmount)} ${currency}` : ''}\n• التوصيل والنقل: ${deliveryFee === 0 ? 'مجاناً ✨' : `${fmt(deliveryFee)} ${currency}`}\n─────────────────────\n💵 الإجمالي المستحق: ${fmt(total)} ${currency}\n\n💳 طريقة الدفع: ${paymentLabel}${txRef}`
+      : `\n\n💰 Financial Summary:\n━━━━━━━━━━━━━━━━━━\n• Materials Subtotal: ${fmt(subtotal)} ${currency}${discountAmount > 0 ? `\n• Discount (${appliedCoupon?.code}): -${fmt(discountAmount)} ${currency}` : ''}\n• Freight / Delivery: ${deliveryFee === 0 ? 'FREE ✨' : `${fmt(deliveryFee)} ${currency}`}\n─────────────────────\n💵 Total Payable: ${fmt(total)} ${currency}\n\n💳 Payment: ${paymentLabel}${txRef}`;
+
+    const footer = isAr
+      ? `\n\n━━━━━━━━━━━━━━━━━━\nتم الإرسال عبر منصة أورا كيتشن ماركت 🏠`
+      : `\n\n━━━━━━━━━━━━━━━━━━\nSent via Aura Kitchen Market 🏠`;
+
+    return header + meta + customer + fulfillment + itemsHeader + itemsList + summary + footer;
+  }, [cart, subtotal, discountAmount, appliedCoupon, deliveryMethod, deliveryDetails, selectedPickupLocation, deliveryFee, total, paymentMethod, transactionRef, orderId, isAr, language]);
+
+  const handleSendWhatsApp = () => {
+    const url = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(formattedOrderText)}`;
+    window.open(url, '_blank');
+  };
 
   const handleCopySummary = () => {
     navigator.clipboard.writeText(formattedOrderText);
     setCopied(true);
-    showToast('Order summary text copied to clipboard!', 'success');
-    setTimeout(() => setCopied(false), 2000);
+    showToast(t('summaryCopied'), 'success');
+    setTimeout(() => setCopied(false), 2500);
+  };
+
+  const handlePrint = () => {
+    window.print();
   };
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in">
       
-      {/* Top Banner Notice */}
-      <div className="bg-brand-50 border border-brand-200/80 p-6 rounded-3xl text-center space-y-3 shadow-soft">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-500 text-white text-xs font-bold uppercase tracking-wider">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Final Step — Direct WhatsApp Checkout</span>
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-brand-200 pb-6">
+        <div>
+          <span className="text-xs font-bold uppercase tracking-widest text-accent-gold">{isAr ? 'المرحلة الثالثة: اعتماد الطلب' : 'Step 3: Order Confirmation'}</span>
+          <h1 className="font-serif text-3xl sm:text-4xl font-bold text-noir-900 mt-1">{t('orderSummary')}</h1>
+          <p className="text-xs text-noir-600 font-mono mt-0.5">Reference #{orderId}</p>
         </div>
-        <h1 className="font-serif text-3xl sm:text-4xl font-light text-noir-900">
-          Your Order is Ready to Send!
-        </h1>
-        <p className="text-xs sm:text-sm text-noir-800/70 max-w-xl mx-auto font-light">
-          No payment info required on site. Clicking <strong>"Send via WhatsApp"</strong> transmits this order directly to recipient phone <code className="bg-white px-2 py-0.5 rounded border border-brand-200 font-mono font-bold text-brand-900">{storePhoneNumber}</code>.
-        </p>
 
-        {/* Change Phone Trigger */}
-        <div className="pt-1">
+        <div className="flex items-center gap-2">
           <button
-            onClick={() => setSettingsOpen(true)}
-            className="inline-flex items-center gap-1.5 text-xs text-brand-700 hover:text-noir-900 font-semibold hover:underline"
+            onClick={handlePrint}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-brand-100 hover:bg-brand-200 text-noir-800 text-xs font-bold transition-colors shadow-xs"
           >
-            <Settings className="w-3.5 h-3.5" />
-            <span>Change target WhatsApp phone number ({storePhoneNumber})</span>
+            <Printer size={15} />
+            <span>{t('printSummary')}</span>
+          </button>
+
+          <button
+            onClick={() => navigateTo('delivery')}
+            className="text-xs font-bold text-noir-700 hover:text-accent-gold px-3 py-2"
+          >
+            {t('editInfo')}
           </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      {/* Main Order Card */}
+      <div className="p-6 sm:p-8 rounded-3xl bg-brand-50 border border-brand-200 shadow-xl space-y-8">
         
-        {/* Left Column: Full Order Breakdown */}
-        <div className="lg:col-span-7 space-y-6">
+        {/* Recipient & Fulfillment Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-5 rounded-2xl bg-brand-100/40 border border-brand-200 text-xs">
           
-          <div className="bg-white p-6 rounded-3xl border border-brand-200/60 shadow-soft space-y-6">
-            <div className="flex justify-between items-center border-b border-brand-100 pb-4">
+          <div className="space-y-2">
+            <h3 className="font-bold text-xs uppercase tracking-wider text-accent-gold flex items-center gap-1.5">
+              <User size={14} />
+              <span>{t('customerInfo')}</span>
+            </h3>
+            <p className="font-bold text-sm text-noir-900">{deliveryDetails.name}</p>
+            <p className="text-noir-600 font-mono">{deliveryDetails.phone}</p>
+          </div>
+
+          <div className="space-y-2">
+            <h3 className="font-bold text-xs uppercase tracking-wider text-accent-gold flex items-center gap-1.5">
+              {deliveryMethod === 'delivery' ? <Truck size={14} /> : <Store size={14} />}
+              <span>{t('deliveryInfo')}</span>
+            </h3>
+            {deliveryMethod === 'delivery' ? (
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-brand-600 block">Order Reference</span>
-                <span className="font-mono font-bold text-lg text-noir-900">#{orderId}</span>
+                <p className="font-bold text-noir-900">{deliveryDetails.address}</p>
+                <p className="text-noir-600">{deliveryDetails.city}</p>
+                {deliveryDetails.notes && <p className="text-[11px] text-noir-500 italic mt-1">{deliveryDetails.notes}</p>}
               </div>
-              <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full">
-                Pending Send
-              </span>
-            </div>
-
-            {/* Items Recap */}
-            <div className="space-y-4">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-noir-900">Items Ordered</h3>
-              {cart.map(({ product, quantity }) => (
-                <div key={product.id} className="flex items-center justify-between gap-4 text-xs">
-                  <div className="flex items-center gap-3">
-                    <img src={product.image} alt={product.name} className="w-12 h-12 object-cover rounded-xl border border-brand-100" />
-                    <div>
-                      <span className="font-semibold text-noir-900 block">{product.name}</span>
-                      <span className="text-zinc-400">Qty: {quantity} × {formatPrice(product.price)}</span>
-                    </div>
-                  </div>
-                  <span className="font-bold text-noir-900">
-                    {formatPrice(product.price * quantity)}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            {/* Customer & Fulfillment Recap */}
-            <div className="pt-4 border-t border-brand-100 space-y-3 text-xs">
-              <h3 className="font-bold uppercase tracking-wider text-noir-900">Fulfillment Details</h3>
-              <div className="p-4 bg-brand-50/70 rounded-2xl space-y-2 border border-brand-100">
-                <div className="flex items-center gap-2 text-noir-900 font-semibold">
-                  <User className="w-4 h-4 text-brand-600" />
-                  <span>{deliveryDetails.name} ({deliveryDetails.phone})</span>
-                </div>
-
-                {deliveryMethod === 'delivery' ? (
-                  <div className="flex items-start gap-2 text-zinc-600">
-                    <Truck className="w-4 h-4 text-brand-600 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="text-noir-900">Courier Delivery:</strong> {deliveryDetails.address}, {deliveryDetails.city}
-                      {deliveryDetails.notes && <p className="italic text-[11px] text-zinc-500 mt-0.5">"{deliveryDetails.notes}"</p>}
-                    </div>
-                  </div>
-                ) : (
-                  <div className="flex items-start gap-2 text-zinc-600">
-                    <Store className="w-4 h-4 text-brand-600 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="text-noir-900">Store Pickup:</strong> {selectedPickupLocation.name}
-                      <p className="text-[11px] text-zinc-500">{selectedPickupLocation.address}</p>
-                    </div>
-                  </div>
-                )}
+            ) : (
+              <div>
+                <p className="font-bold text-noir-900">{isAr ? selectedPickupLocation?.nameAr : selectedPickupLocation?.name}</p>
+                <p className="text-noir-600">{isAr ? selectedPickupLocation?.addressAr : selectedPickupLocation?.address}</p>
               </div>
-            </div>
-
-            {/* Financial Recap */}
-            <div className="pt-4 border-t border-brand-100 space-y-2 text-xs">
-              <div className="flex justify-between text-zinc-600">
-                <span>Subtotal</span>
-                <span className="font-semibold text-noir-900">{formatPrice(subtotal)}</span>
-              </div>
-
-              {appliedCoupon && (
-                <div className="flex justify-between text-emerald-600 font-semibold">
-                  <span>Discount ({appliedCoupon.code})</span>
-                  <span>-{formatPrice(discountAmount)}</span>
-                </div>
-              )}
-
-              {deliveryFee > 0 ? (
-                <div className="flex justify-between text-zinc-600">
-                  <span>Delivery Fee</span>
-                  <span className="font-semibold text-noir-900">{formatPrice(deliveryFee)}</span>
-                </div>
-              ) : (
-                <div className="flex justify-between text-emerald-600 font-semibold">
-                  <span>Delivery Fee</span>
-                  <span>FREE</span>
-                </div>
-              )}
-
-              <div className="pt-3 border-t border-brand-100 flex justify-between items-baseline">
-                <span className="font-serif text-xl font-bold text-noir-900">Total Payable</span>
-                <span className="text-2xl font-bold text-noir-900">{formatPrice(total)}</span>
-              </div>
-            </div>
-
+            )}
           </div>
 
         </div>
 
-        {/* Right Column: Generated Text Box & Primary WhatsApp Action Buttons */}
-        <div className="lg:col-span-5 space-y-6">
-          
-          <div className="bg-noir-900 text-white p-6 rounded-3xl shadow-floating space-y-4 border border-noir-800">
-            <div className="flex items-center justify-between border-b border-noir-800 pb-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-brand-400 flex items-center gap-1.5">
-                <MessageSquare className="w-4 h-4" />
-                Generated WhatsApp Text
+        {/* Selected Materials List */}
+        <div className="space-y-4">
+          <h3 className="font-serif font-bold text-base text-noir-900 border-b border-brand-200 pb-2">
+            {t('orderItems')} ({cart.length})
+          </h3>
+
+          <div className="divide-y divide-brand-200">
+            {cart.map((item, idx) => {
+              const product = item.product;
+              const unit = product.unitType ? (UNIT_LABELS[product.unitType]?.[language] || '') : '';
+              return (
+                <div key={idx} className="py-3 flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-12 h-12 rounded-xl object-cover border border-brand-200 shrink-0"
+                    />
+                    <div>
+                      <h4 className="font-bold text-xs text-noir-900">{isAr ? (product.nameAr || product.name) : product.name}</h4>
+                      <p className="text-[11px] text-noir-600">
+                        {item.quantity} {unit} × {formatPrice(product.price, language)}
+                      </p>
+                      {item.customNote && (
+                        <span className="text-[10px] text-accent-gold font-mono">{item.customNote}</span>
+                      )}
+                    </div>
+                  </div>
+
+                  <span className="font-mono font-bold text-xs sm:text-sm text-noir-900 whitespace-nowrap">
+                    {formatPrice(product.price * item.quantity, language)}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Payment & Receipt Preview Banner */}
+        <div className="p-5 rounded-2xl bg-brand-100/60 border border-brand-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <CreditCard size={16} className="text-accent-gold" />
+              <span className="font-bold text-xs text-noir-900 uppercase">
+                {paymentMethod === 'instapay' ? t('instapayOption') : (paymentMethod === 'cod' ? t('codOption') : t('pickupPayOption'))}
               </span>
-              <button
-                onClick={handleCopySummary}
-                className="text-[11px] font-semibold text-zinc-400 hover:text-white flex items-center gap-1"
-              >
-                {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                <span>{copied ? 'Copied!' : 'Copy Text'}</span>
-              </button>
             </div>
-
-            {/* Generated Order Text Block */}
-            <div className="bg-noir-950 p-4 rounded-2xl border border-noir-800 text-[11px] font-mono leading-relaxed text-zinc-300 whitespace-pre-wrap select-all max-h-80 overflow-y-auto">
-              {formattedOrderText}
-            </div>
-
-            {/* Primary Action Button: Send via WhatsApp */}
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => showToast(`Opening WhatsApp to send to ${storePhoneNumber}...`, 'success')}
-              className="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider sm:tracking-widest rounded-full transition-all duration-300 shadow-luxe flex items-center justify-center gap-2 group"
-            >
-              <MessageSquare className="w-5 h-5 text-white" />
-              <span>Send to WhatsApp ({storePhoneNumber})</span>
-            </a>
-
-            {/* Secondary Action: Copy Order Summary */}
-            <button
-              onClick={handleCopySummary}
-              className="w-full py-3 bg-noir-800 hover:bg-noir-700 text-zinc-200 border border-noir-700 font-semibold text-xs uppercase tracking-wider rounded-full transition-colors flex items-center justify-center gap-2"
-            >
-              {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-brand-400" />}
-              <span>{copied ? 'Copied to Clipboard' : 'Copy Order Summary'}</span>
-            </button>
+            {paymentMethod === 'instapay' && instapayScreenshot && (
+              <p className="text-xs text-emerald-800 font-semibold flex items-center gap-1">
+                <CheckCircle2 size={13} />
+                <span>{t('screenshotAttachedNote')}</span>
+              </p>
+            )}
           </div>
 
-          {/* Navigation Back */}
-          <div className="flex flex-col sm:flex-row gap-3 sm:justify-between sm:items-center text-xs">
+          {paymentMethod === 'instapay' && instapayScreenshot && (
+            <div className="flex items-center gap-2">
+              <img
+                src={instapayScreenshot}
+                alt="Instapay Proof"
+                className="w-14 h-14 rounded-xl object-cover border border-emerald-400 shadow-sm"
+              />
+            </div>
+          )}
+        </div>
+
+        {/* Financial Breakdown */}
+        <div className="p-5 rounded-2xl bg-brand-100/40 border border-brand-200 space-y-2.5 text-xs">
+          <div className="flex justify-between items-center text-noir-700">
+            <span>{t('subtotal')}</span>
+            <span className="font-mono font-bold text-noir-900">{formatPrice(subtotal, language)}</span>
+          </div>
+
+          {discountAmount > 0 && (
+            <div className="flex justify-between items-center text-emerald-700 font-bold">
+              <span>{t('discount')} ({appliedCoupon?.code})</span>
+              <span className="font-mono">-{formatPrice(discountAmount, language)}</span>
+            </div>
+          )}
+
+          <div className="flex justify-between items-center text-noir-700">
+            <span>{t('deliveryFee')}</span>
+            <span className="font-mono font-bold text-noir-900">
+              {deliveryFee === 0 ? t('freeDelivery') : formatPrice(deliveryFee, language)}
+            </span>
+          </div>
+
+          <div className="pt-3 border-t-2 border-brand-300 flex justify-between items-baseline">
+            <span className="font-serif font-bold text-sm text-noir-900">{t('total')}</span>
+            <span className="text-2xl font-serif font-bold text-accent-gold font-mono">
+              {formatPrice(total, language)}
+            </span>
+          </div>
+        </div>
+
+        {/* WhatsApp Dispatch Action Zone */}
+        <div className="space-y-4 pt-2">
+          
+          <button
+            onClick={handleSendWhatsApp}
+            className="w-full py-4 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-xl transition-all flex items-center justify-center gap-3 animate-pulse-subtle"
+          >
+            <MessageSquare size={20} />
+            <span>{t('sendToWhatsApp')}</span>
+          </button>
+
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
             <button
-              onClick={() => navigateTo('delivery')}
-              className="text-zinc-500 hover:text-noir-900 transition-colors flex items-center gap-1 font-semibold"
+              onClick={handleCopySummary}
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-brand-100 hover:bg-brand-200 border border-brand-300 text-xs font-bold text-noir-800 transition-colors flex items-center justify-center gap-2"
             >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Edit Delivery Info</span>
+              {copied ? <Check size={14} className="text-emerald-600" /> : <Copy size={14} />}
+              <span>{copied ? (isAr ? 'تم نسخ الطلب!' : 'Copied!') : t('copySummary')}</span>
             </button>
 
             <button
               onClick={() => {
-                clearCart();
-                navigateTo('home');
-                showToast('Order complete! Thank you for shopping.', 'success');
+                if (window.confirm(isAr ? 'بدء طلب جديد وتفريغ السلة الحالية؟' : 'Clear current cart and start a new order?')) {
+                  clearCart();
+                  navigateTo('catalog');
+                }
               }}
-              className="text-brand-700 hover:text-brand-900 font-bold transition-colors flex items-center gap-1"
+              className="text-xs text-noir-500 hover:text-noir-900 flex items-center gap-1"
             >
-              <RefreshCcw className="w-3.5 h-3.5" />
-              <span>Start New Order</span>
+              <RefreshCcw size={13} />
+              <span>{t('startNewOrder')}</span>
             </button>
           </div>
+
+          <p className="text-[11px] text-noir-500 text-center leading-relaxed">
+            {t('whatsAppInstruction')}
+          </p>
 
         </div>
 

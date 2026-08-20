@@ -1,23 +1,39 @@
 import React, { useState } from 'react';
 import { useShop } from '../context/ShopContext';
-import { PRODUCTS, formatPrice } from '../data/mockData';
 import { ProductCard } from '../components/ProductCard';
+import { formatPrice, UNIT_LABELS } from '../data/mockData';
 import { 
   ShoppingBag, Heart, Star, Sparkles, CheckCircle2, 
-  ArrowLeft, Plus, Minus, MessageSquare, Share2 
+  ArrowLeft, Plus, Minus, MessageSquare, Share2, Box, ShieldCheck, Ruler, Layers, Globe
 } from 'lucide-react';
 
 export const ProductDetailPage = () => {
-  const { selectedProduct, addToCart, navigateTo, wishlist, toggleWishlist, showToast, storePhoneNumber, t } = useShop();
+  const { 
+    selectedProduct, 
+    products, 
+    addToCart, 
+    navigateTo, 
+    wishlist, 
+    toggleWishlist, 
+    showToast, 
+    storePhoneNumber, 
+    t, 
+    language,
+    setSurfaceMaterial 
+  } = useShop();
+
+  const isAr = language === 'ar';
   const [quantity, setQuantity] = useState(1);
   const [addedAnimation, setAddedAnimation] = useState(false);
 
   const isWishlisted = wishlist.includes(selectedProduct.id);
-  const cleanPhone = storePhoneNumber.replace(/[^0-9+]/g, '');
+  const cleanPhone = storePhoneNumber.replace(/[^0-9]/g, '');
 
-  const relatedProducts = PRODUCTS.filter(
-    p => p.id !== selectedProduct.id
+  const relatedProducts = products.filter(
+    p => p.id !== selectedProduct.id && (p.category === selectedProduct.category || p.surfaceType === selectedProduct.surfaceType)
   ).slice(0, 3);
+
+  const unitLabel = selectedProduct.unitType ? (UNIT_LABELS[selectedProduct.unitType]?.[language] || '') : '';
 
   const handleAddToCart = () => {
     addToCart(selectedProduct, quantity);
@@ -27,207 +43,277 @@ export const ProductDetailPage = () => {
     }, 1500);
   };
 
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
-    showToast('Product link copied to clipboard!', 'info');
+  const handleLaunchIn3D = () => {
+    const surface = selectedProduct.surfaceType || 'countertop';
+    setSurfaceMaterial(surface, selectedProduct.id);
+    navigateTo('studio3d');
+  };
+
+  const handleWhatsAppInquiry = () => {
+    const currency = isAr ? 'ج.م' : 'EGP';
+    const msg = isAr
+      ? `مرحباً أورا للمطابخ! 🏠 أرغب في الاستفسار عن تفاصيل وأسعار خامة: ${selectedProduct.nameAr || selectedProduct.name} (${selectedProduct.price} ${currency} ${unitLabel}).`
+      : `Hello Aura Kitchen Market! 🏠 I would like to inquire about: ${selectedProduct.name} (${selectedProduct.price} ${currency} ${unitLabel}).`;
+    
+    const url = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 sm:space-y-16 animate-fade-in">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12 sm:space-y-16 animate-fade-in">
       
       {/* Back Button Breadcrumb */}
       <button
         onClick={() => navigateTo('catalog')}
-        className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-noir-800/70 hover:text-brand-600 transition-colors"
+        className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-noir-700 hover:text-accent-gold transition-colors"
       >
         <ArrowLeft className="w-4 h-4 rtl:rotate-180" />
         <span>{t('backToCatalog')}</span>
       </button>
 
       {/* Main Product Detail Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         
-        {/* Left Column: Product Image Gallery / Showcase */}
+        {/* Left Column: Product Image Gallery */}
         <div className="lg:col-span-6 space-y-4">
-          <div className="relative aspect-square w-full rounded-3xl overflow-hidden bg-brand-50 border border-brand-200/60 shadow-floating group">
+          <div className="relative aspect-square w-full rounded-3xl overflow-hidden bg-brand-100/50 border border-brand-300 shadow-2xl group">
             <img 
               src={selectedProduct.image} 
               alt={selectedProduct.name}
               className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
             />
             {selectedProduct.badge && (
-              <div className="absolute top-4 left-4 rtl:right-4 rtl:left-auto bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-brand-200 shadow-sm flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-brand-500" />
-                <span className="text-xs font-semibold uppercase tracking-wider text-brand-900">
-                  {selectedProduct.badge}
+              <div className="absolute top-4 left-4 rtl:right-4 rtl:left-auto bg-brand-50/95 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-brand-300 shadow-sm flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-accent-gold" />
+                <span className="text-xs font-bold uppercase tracking-wider text-noir-900 font-sans">
+                  {isAr ? (selectedProduct.badgeAr || selectedProduct.badge) : selectedProduct.badge}
                 </span>
               </div>
             )}
 
             <button
               onClick={() => toggleWishlist(selectedProduct.id)}
-              className={`absolute top-4 right-4 rtl:left-4 rtl:right-auto w-10 h-10 rounded-full backdrop-blur-md flex items-center justify-center transition-all ${
-                isWishlisted ? 'bg-rose-50 text-rose-500 shadow-sm' : 'bg-white/80 text-noir-800 hover:bg-white'
+              aria-label="Add to wishlist"
+              className={`absolute top-4 right-4 rtl:left-4 rtl:right-auto w-11 h-11 rounded-full backdrop-blur-md flex items-center justify-center transition-all duration-300 shadow-md ${
+                isWishlisted 
+                  ? 'bg-rose-50 text-rose-500' 
+                  : 'bg-brand-50/90 text-noir-800 hover:bg-brand-50 hover:text-rose-500'
               }`}
             >
               <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-current' : ''}`} />
             </button>
           </div>
+
+          {/* 3D Launch Action Banner */}
+          {selectedProduct.surfaceType && selectedProduct.surfaceType !== 'none' && (
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-noir-950 via-noir-900 to-noir-950 text-white border border-noir-800 shadow-xl flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-accent-gold/20 text-accent-gold flex items-center justify-center font-bold">
+                  <Box size={20} />
+                </div>
+                <div>
+                  <h4 className="font-serif text-sm font-bold">{isAr ? 'معاينة الخامة في استوديو 3D' : 'Preview Material in 3D Studio'}</h4>
+                  <p className="text-[11px] text-zinc-400">{isAr ? 'شاهد الخامة مطبقة على أسطح المطبخ ثلاثية الأبعاد' : 'Render this material onto interactive 3D surfaces'}</p>
+                </div>
+              </div>
+              <button
+                onClick={handleLaunchIn3D}
+                className="px-4 py-2 rounded-xl bg-accent-gold text-noir-950 text-xs font-bold hover:opacity-90 transition-opacity shadow-md whitespace-nowrap"
+              >
+                {t('viewIn3D')}
+              </button>
+            </div>
+          )}
         </div>
 
-        {/* Right Column: Product Information & Buying Actions */}
+        {/* Right Column: Details, Specifications, Pricing & Cart Actions */}
         <div className="lg:col-span-6 space-y-6">
           
-          {/* Category & Ratings */}
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-widest text-brand-600">
-              {selectedProduct.category}
-            </span>
-
-            <div className="flex items-center gap-1.5 text-amber-500 text-xs font-semibold">
-              <div className="flex items-center">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3.5 h-3.5 fill-current" />
-                ))}
+          <div>
+            <div className="flex items-center justify-between gap-4 mb-2">
+              <span className="text-xs font-bold tracking-widest text-accent-gold uppercase">
+                {isAr ? (selectedProduct.categoryAr || selectedProduct.category) : selectedProduct.category}
+              </span>
+              
+              <div className="flex items-center gap-1.5 text-xs text-amber-500 font-bold bg-brand-100 px-2.5 py-1 rounded-full border border-brand-200">
+                <Star className="w-3.5 h-3.5 fill-current" />
+                <span>{selectedProduct.rating}</span>
+                <span className="text-noir-500 font-normal">({selectedProduct.reviewsCount} reviews)</span>
               </div>
-              <span className="text-noir-900 ml-1 rtl:mr-1">{selectedProduct.rating}</span>
-              <span className="text-zinc-400 font-normal">({selectedProduct.reviewsCount} reviews)</span>
             </div>
+
+            <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-noir-900 leading-tight">
+              {isAr ? (selectedProduct.nameAr || selectedProduct.name) : selectedProduct.name}
+            </h1>
+
+            <p className="text-xs text-emerald-700 font-bold mt-2 flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
+              {t('inStock')}
+            </p>
           </div>
 
-          {/* Title & Price */}
-          <div className="space-y-2 border-b border-brand-100 pb-6">
-            <h1 className="font-serif text-3xl sm:text-4xl font-light text-noir-900 leading-tight">
-              {selectedProduct.name}
-            </h1>
-            <div className="flex items-baseline gap-3 pt-2">
-              <span className="text-2xl sm:text-3xl font-semibold text-noir-900">
-                {formatPrice(selectedProduct.price)}
+          {/* Pricing Box */}
+          <div className="p-4 rounded-2xl bg-brand-100/50 border border-brand-200 flex items-baseline justify-between">
+            <div className="flex items-baseline gap-2">
+              <span className="font-serif text-3xl font-bold text-noir-900 font-mono">
+                {formatPrice(selectedProduct.price, language)}
               </span>
-              {selectedProduct.originalPrice && (
-                <span className="text-sm text-slate-400 line-through">
-                  {formatPrice(selectedProduct.originalPrice)}
+              {unitLabel && (
+                <span className="text-sm font-bold text-noir-600 font-sans">
+                  {unitLabel}
                 </span>
               )}
-              <span className="bg-emerald-50 text-emerald-700 text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
-                {t('inStock')}
-              </span>
+              {selectedProduct.originalPrice && (
+                <span className="text-sm text-noir-400 line-through font-mono ml-2">
+                  {formatPrice(selectedProduct.originalPrice, language)}
+                </span>
+              )}
             </div>
+
+            <span className="text-xs font-bold text-accent-gold uppercase tracking-wider">
+              {isAr ? 'شامل التقطيع والتجهيز' : 'Fabrication Ready'}
+            </span>
           </div>
 
-          {/* Short Description */}
-          <p className="text-sm text-noir-800/80 font-light leading-relaxed">
-            {selectedProduct.description}
+          {/* Description */}
+          <p className="text-xs sm:text-sm text-noir-700 leading-relaxed font-normal">
+            {isAr ? (selectedProduct.descriptionAr || selectedProduct.description) : selectedProduct.description}
           </p>
 
-          {/* Key Attribute Pills */}
-          <div className="grid grid-cols-2 gap-3 py-2 text-xs">
-            <div className="p-3 bg-brand-50 rounded-xl border border-brand-100/80">
-              <span className="text-[10px] uppercase font-bold text-zinc-400 block">{t('material')}</span>
-              <span className="font-semibold text-noir-900">{selectedProduct.material}</span>
+          {/* Technical Specs Table */}
+          <div className="grid grid-cols-2 gap-2 text-xs border-y border-brand-200 py-4">
+            <div className="flex items-center gap-2 text-noir-700">
+              <Ruler size={14} className="text-accent-gold" />
+              <span className="font-bold">{t('specThickness')}:</span>
+              <span className="font-mono text-noir-900">{selectedProduct.thickness || '2.0 cm'}</span>
             </div>
-            <div className="p-3 bg-brand-50 rounded-xl border border-brand-100/80">
-              <span className="text-[10px] uppercase font-bold text-zinc-400 block">{t('colorPalette')}</span>
-              <span className="font-semibold text-noir-900">{selectedProduct.color}</span>
+
+            <div className="flex items-center gap-2 text-noir-700">
+              <Layers size={14} className="text-accent-gold" />
+              <span className="font-bold">{t('specFinish')}:</span>
+              <span className="text-noir-900">{isAr ? (selectedProduct.finishAr || selectedProduct.finish) : selectedProduct.finish}</span>
+            </div>
+
+            <div className="flex items-center gap-2 text-noir-700">
+              <Globe size={14} className="text-accent-gold" />
+              <span className="font-bold">{t('specOrigin')}:</span>
+              <span className="text-noir-900">{isAr ? (selectedProduct.originCountryAr || selectedProduct.originCountry) : selectedProduct.originCountry}</span>
+            </div>
+
+            <div className="flex items-center gap-2 text-noir-700">
+              <ShieldCheck size={14} className="text-accent-gold" />
+              <span className="font-bold">{t('specComposition')}:</span>
+              <span className="text-noir-900 line-clamp-1">{isAr ? (selectedProduct.materialAr || selectedProduct.material) : selectedProduct.material}</span>
             </div>
           </div>
 
-          {/* Quantity Selector & Action Buttons */}
-          <div className="space-y-4 pt-4 border-t border-brand-100">
+          {/* Quantity Stepper & Add to Cart */}
+          <div className="space-y-4 pt-2">
             <div className="flex items-center gap-4">
-              <span className="text-xs font-bold uppercase tracking-wider text-noir-900">{t('quantity')}</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-noir-700">{t('quantity')}</span>
               
-              {/* Stepper */}
-              <div className="flex items-center border border-brand-200 rounded-xl bg-brand-50/50 p-1">
+              <div className="flex items-center border border-brand-300 rounded-xl bg-brand-50 p-1">
                 <button
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="w-9 h-9 sm:w-8 sm:h-8 rounded-lg hover:bg-white text-noir-800 flex items-center justify-center transition-colors"
+                  onClick={() => setQuantity(prev => Math.max(1, prev - 1))}
+                  className="p-1.5 text-noir-600 hover:text-noir-950 rounded-lg hover:bg-brand-200 transition-colors"
                 >
-                  <Minus className="w-3.5 h-3.5" />
+                  <Minus size={14} />
                 </button>
-                <span className="w-10 text-center font-bold text-xs text-noir-900">{quantity}</span>
+                <input
+                  type="number"
+                  min="0.5"
+                  step="0.5"
+                  value={quantity}
+                  onChange={(e) => setQuantity(Math.max(0.5, Number(e.target.value)))}
+                  className="w-14 text-center font-bold text-sm bg-transparent focus:outline-none font-mono"
+                />
                 <button
-                  onClick={() => setQuantity(quantity + 1)}
-                  className="w-9 h-9 sm:w-8 sm:h-8 rounded-lg hover:bg-white text-noir-800 flex items-center justify-center transition-colors"
+                  onClick={() => setQuantity(prev => prev + 1)}
+                  className="p-1.5 text-noir-600 hover:text-noir-950 rounded-lg hover:bg-brand-200 transition-colors"
                 >
-                  <Plus className="w-3.5 h-3.5" />
+                  <Plus size={14} />
                 </button>
               </div>
+
+              {unitLabel && (
+                <span className="text-xs font-mono font-bold text-noir-600">
+                  {unitLabel} ({formatPrice(selectedProduct.price * quantity, language)})
+                </span>
+              )}
             </div>
 
-            {/* Primary Add to Cart Button */}
-            <button
-              onClick={handleAddToCart}
-              className={`w-full py-4 rounded-full font-medium text-xs uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-3 shadow-lg ${
-                addedAnimation
-                  ? 'bg-emerald-600 text-white scale-[0.99]'
-                  : 'bg-noir-900 hover:bg-brand-600 text-white shadow-luxe'
-              }`}
-            >
-              {addedAnimation ? (
-                <>
-                  <CheckCircle2 className="w-5 h-5 text-white animate-bounce" />
-                  <span>{t('addedToCart')}</span>
-                </>
-              ) : (
-                <>
-                  <ShoppingBag className="w-4 h-4 text-brand-500" />
-                  <span>{t('addToCart')} — {formatPrice(selectedProduct.price * quantity)}</span>
-                </>
-              )}
-            </button>
-
-            {/* Quick WhatsApp Inquiry */}
-            <div className="flex items-center gap-3">
-              <a
-                href={`https://wa.me/${cleanPhone.replace('+', '')}?text=Hi!%20I%20am%20interested%20in%20ordering%20${encodeURIComponent(selectedProduct.name)}`}
-                target="_blank"
-                rel="noreferrer"
-                className="flex-1 py-3 px-4 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/80 rounded-full text-xs font-semibold flex items-center justify-center gap-2 transition-colors"
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button
+                onClick={handleAddToCart}
+                className={`py-3.5 px-6 rounded-2xl font-bold text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 transition-all ${
+                  addedAnimation
+                    ? 'bg-emerald-600 text-white'
+                    : 'bg-noir-900 hover:bg-accent-gold hover:text-noir-950 text-white'
+                }`}
               >
-                <MessageSquare className="w-4 h-4 text-emerald-600" />
-                <span>{t('inquireWhatsApp')} ({storePhoneNumber})</span>
-              </a>
+                {addedAnimation ? (
+                  <>
+                    <CheckCircle2 size={16} />
+                    <span>{t('addedToCart')}</span>
+                  </>
+                ) : (
+                  <>
+                    <ShoppingBag size={16} />
+                    <span>{t('addToCart')}</span>
+                  </>
+                )}
+              </button>
 
               <button
-                onClick={handleCopyLink}
-                className="p-3 bg-brand-50 hover:bg-brand-100 text-noir-800 rounded-full border border-brand-200 transition-colors"
-                title="Share product link"
+                onClick={handleWhatsAppInquiry}
+                className="py-3.5 px-6 rounded-2xl font-bold text-xs uppercase tracking-wider bg-emerald-600 hover:bg-emerald-700 text-white shadow-md flex items-center justify-center gap-2 transition-colors"
               >
-                <Share2 className="w-4 h-4" />
+                <MessageSquare size={16} />
+                <span>{t('inquireWhatsApp')}</span>
               </button>
             </div>
           </div>
 
-          {/* Features bullet list */}
-          <div className="pt-6 border-t border-brand-100 space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-noir-900">{t('handcraftingDetails')}</h4>
-            <ul className="space-y-2 text-xs text-noir-800/70">
-              {selectedProduct.features.map((feat, idx) => (
-                <li key={idx} className="flex items-start gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-brand-600 flex-shrink-0 mt-0.5" />
-                  <span>{feat}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Key Bullet Features */}
+          {selectedProduct.features && (
+            <div className="p-5 rounded-2xl bg-brand-100/40 border border-brand-200 space-y-3 mt-6">
+              <h3 className="font-serif font-bold text-xs uppercase tracking-wider text-noir-900 flex items-center gap-2">
+                <Sparkles size={14} className="text-accent-gold" />
+                {t('handcraftingDetails')}
+              </h3>
+              <ul className="space-y-2 text-xs text-noir-700">
+                {(isAr && selectedProduct.featuresAr ? selectedProduct.featuresAr : selectedProduct.features).map((feat, idx) => (
+                  <li key={idx} className="flex items-start gap-2">
+                    <CheckCircle2 size={14} className="text-accent-gold shrink-0 mt-0.5" />
+                    <span>{feat}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
         </div>
       </div>
 
-      {/* RELATED PRODUCTS RECOMMENDATIONS */}
-      <section className="pt-12 border-t border-brand-200/60 space-y-8">
-        <div className="text-center max-w-xl mx-auto space-y-1">
-          <span className="text-xs font-semibold uppercase tracking-widest text-brand-600">{t('complementaryPieces')}</span>
-          <h3 className="font-serif text-2xl sm:text-3xl font-light text-noir-900">{t('youMayAlsoLove')}</h3>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {relatedProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      </section>
+      {/* Complementary & Related Materials */}
+      {relatedProducts.length > 0 && (
+        <section className="pt-8 border-t border-brand-200 space-y-6">
+          <div className="flex items-center justify-between">
+            <h2 className="font-serif text-2xl font-bold text-noir-900">{t('youMayAlsoLove')}</h2>
+            <button
+              onClick={() => navigateTo('catalog')}
+              className="text-xs font-bold text-accent-gold hover:underline"
+            >
+              {t('viewAllProducts')} →
+            </button>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {relatedProducts.map(p => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+        </section>
+      )}
 
     </div>
   );
